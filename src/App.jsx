@@ -110,6 +110,7 @@ const productsData = [
     pairingsFr: ["Tonic premium", "Agrumes frais", "Fruits de mer", "Fromages affinés"],
     pairingsEn: ["Premium tonic", "Fresh citrus", "Seafood", "Aged cheeses"],
     certs: ["Bio EU", "B Corp", "Distillerie historique"], emoji: "🌲",
+    img: "/Thumbnail-Arduenna-gin-aspect-ratio-1072-1372.avif",
   },
   {
     id: "noalcohol", nameFr: "Arduenna No Alcohol", nameEn: "Arduenna No Alcohol",
@@ -121,6 +122,7 @@ const productsData = [
     pairingsFr: ["Tonic léger", "Herbes fraîches", "Desserts fruités", "Apéritif"],
     pairingsEn: ["Light tonic", "Fresh herbs", "Fruity desserts", "Aperitif"],
     certs: ["Bio EU", "B Corp", "Sans alcool"], emoji: "🌿",
+    img: "/arduenna_no_alcohol_site-aspect-ratio-1072-1372.webp",
   },
   {
     id: "aperitivo", nameFr: "694 Aperitivo", nameEn: "694 Aperitivo",
@@ -132,6 +134,7 @@ const productsData = [
     pairingsFr: ["Prosecco", "Soda", "Olives & charcuterie", "Cuisine italienne"],
     pairingsEn: ["Prosecco", "Soda", "Olives & charcuterie", "Italian cuisine"],
     certs: ["Bio EU", "B Corp"], emoji: "🍊",
+    img: "/Thumbnail-Arduenna-694-aspect-ratio-1072-1372-1.avif",
   },
 ];
 
@@ -455,12 +458,12 @@ export default function ArduennaWebapp() {
       }}>
         <div style={{ maxWidth: 1100, margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between", height: 64 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
-            <span style={{
-              fontFamily: "'Cormorant Garamond', serif", fontSize: 22, fontWeight: 500,
-              letterSpacing: 4, color: "#0b363d", cursor: "pointer",
-            }} onClick={() => scrollTo("hero")}>
-              ARDUENNA
-            </span>
+            <img
+              src="/Arduennagin_logo_vert_.webp"
+              alt="Arduenna"
+              style={{ height: 20, cursor: "pointer" }}
+              onClick={() => scrollTo("hero")}
+            />
           </div>
 
           {/* Desktop nav */}
@@ -539,6 +542,12 @@ export default function ArduennaWebapp() {
           <button className="btn-primary" onClick={() => scrollTo("products")} style={{ fontSize: 13, padding: "16px 40px" }}>
             {t.hero.cta}
           </button>
+
+          <img
+            src="/Arduenna_Bouteille_50CL-V2.avif"
+            alt="Arduenna Gin"
+            style={{ marginTop: 48, width: 180, height: "auto", filter: "drop-shadow(0 20px 40px rgba(11,54,61,0.12))" }}
+          />
         </div>
       </section>
 
@@ -561,12 +570,12 @@ export default function ArduennaWebapp() {
         {/* Botanicals */}
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 24 }}>
           {[
-            { name: t.story.botanical1, latin: t.story.botanical1Latin, desc: t.story.botanical1Desc, icon: "🍑" },
-            { name: t.story.botanical2, latin: t.story.botanical2Latin, desc: t.story.botanical2Desc, icon: "🌲" },
-            { name: t.story.botanical3, latin: t.story.botanical3Latin, desc: t.story.botanical3Desc, icon: "🌸" },
+            { name: t.story.botanical1, latin: t.story.botanical1Latin, desc: t.story.botanical1Desc, img: "/Mirabelle.svg" },
+            { name: t.story.botanical2, latin: t.story.botanical2Latin, desc: t.story.botanical2Desc, img: "/Sapin.svg" },
+            { name: t.story.botanical3, latin: t.story.botanical3Latin, desc: t.story.botanical3Desc, img: "/Sureau.png" },
           ].map((b) => (
             <div key={b.name} className="card" style={{ textAlign: "center", padding: 32 }}>
-              <div style={{ fontSize: 36, marginBottom: 12 }}>{b.icon}</div>
+              <img src={b.img} alt={b.name} style={{ width: 80, height: 80, objectFit: "contain", marginBottom: 12 }} />
               <h4 style={{ fontSize: 20, fontWeight: 400, fontStyle: "italic", marginBottom: 4 }}>{b.name}</h4>
               <div style={{ fontSize: 12, fontStyle: "italic", color: "rgba(11,54,61,0.35)", marginBottom: 10, fontFamily: "'DM Sans', sans-serif" }}>
                 {b.latin}
@@ -610,7 +619,7 @@ export default function ArduennaWebapp() {
           {productsData.map((p) => (
             <div key={p.id} className="card" style={{ cursor: "pointer", padding: 32, textAlign: "center" }}
               onClick={() => setSelectedProduct(p)}>
-              <div style={{ fontSize: 48, marginBottom: 16 }}>{p.emoji}</div>
+              <img src={p.img} alt={lang === "fr" ? p.nameFr : p.nameEn} style={{ width: 120, height: 160, objectFit: "contain", marginBottom: 16 }} />
               <h3 style={{ fontSize: 22, fontWeight: 400, fontStyle: "italic", marginBottom: 8 }}>
                 {lang === "fr" ? p.nameFr : p.nameEn}
               </h3>
@@ -640,7 +649,7 @@ export default function ArduennaWebapp() {
           <div className="modal" onClick={(e) => e.stopPropagation()}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 24 }}>
               <div>
-                <div style={{ fontSize: 36, marginBottom: 8 }}>{selectedProduct.emoji}</div>
+                <img src={selectedProduct.img} alt={lang === "fr" ? selectedProduct.nameFr : selectedProduct.nameEn} style={{ width: 80, height: 110, objectFit: "contain", marginBottom: 8 }} />
                 <h3 style={{ fontSize: 26, fontWeight: 400, fontStyle: "italic" }}>
                   {lang === "fr" ? selectedProduct.nameFr : selectedProduct.nameEn}
                 </h3>
