@@ -14,7 +14,6 @@ const translations = {
       tagline2: "of nature",
       subtitle: "Gin bio premium des Ardennes belges",
       cta: "Découvrir",
-      banner: "LIVRAISON GRATUITE EN BELGIQUE À PARTIR DE 50€",
     },
     story: {
       sectionLabel: "Notre histoire",
@@ -82,7 +81,7 @@ const translations = {
   },
   en: {
     nav: { story: "Story", products: "Products", cocktails: "Cocktail Lab", toolbox: "Pro Toolbox", sustainability: "Sustainability", club: "Club" },
-    hero: { tagline: "Original taste", tagline2: "of nature", subtitle: "Premium organic gin from the Belgian Ardennes", cta: "Discover", banner: "FREE DELIVERY IN BELGIUM FROM €50" },
+    hero: { tagline: "Original taste", tagline2: "of nature", subtitle: "Premium organic gin from the Belgian Ardennes", cta: "Discover" },
     story: {
       sectionLabel: "Our story", title: "Born from the passion of two Ardennais",
       p1: "Arduenna was born from the desire of Martin and François, passionate about the nature of the Ardennes and epicureans at heart, to offer you original and convivial moments.",
@@ -118,7 +117,7 @@ const productsData = [
     pairingsFr: ["Tonic premium", "Agrumes frais", "Fruits de mer", "Fromages affinés"],
     pairingsEn: ["Premium tonic", "Fresh citrus", "Seafood", "Aged cheeses"],
     certs: ["Bio EU", "B Corp", "Distillerie historique"],
-    img: "/Thumbnail-Arduenna-gin-aspect-ratio-1072-1372.avif",
+    img: "/Arduenna_Bouteille_50CL-V2.avif",
     perfectServeFr: "5 cl Gin + Fever-Tree Indian Tonic + romarin & pamplemousse rose",
     perfectServeEn: "5 cl Gin + Fever-Tree Indian Tonic + rosemary & pink grapefruit",
   },
@@ -552,7 +551,11 @@ export default function ArduennaWebapp() {
     return (
       <div className="age-gate" role="dialog" aria-label="Age verification">
         <div className="age-gate__card">
-          <div className="age-gate__brand">ARDUENNA</div>
+          <img
+            src="/Arduennagin_logo_vert_.webp"
+            alt="Arduenna"
+            className="age-gate__logo"
+          />
           <h2 className="age-gate__title">{t.ageGate.title}</h2>
           <p className="age-gate__question">{t.ageGate.question}</p>
           {ageDenied && <p className="age-gate__denied" role="alert">{t.ageGate.denied}</p>}
@@ -648,27 +651,29 @@ export default function ArduennaWebapp() {
         <BotanicalDeco style={{ top: "10%", left: "-5%", width: 200, transform: "rotate(-15deg)" }} />
         <BotanicalDeco style={{ top: "15%", right: "-3%", width: 160, transform: "rotate(20deg) scaleX(-1)" }} />
 
-        <div style={{ position: "relative", zIndex: 1 }}>
-          <div className="hero__banner">{t.hero.banner}</div>
+        <div className="hero__content">
+          <div className="hero__text">
+            <h1 className="hero__heading">
+              <span style={{ display: "block" }}>{t.hero.tagline}</span>
+              <span style={{ display: "block", fontStyle: "italic" }}>
+                — <em>{t.hero.tagline2}</em> —
+              </span>
+            </h1>
 
-          <h1 className="hero__heading">
-            <span style={{ display: "block" }}>{t.hero.tagline}</span>
-            <span style={{ display: "block", fontStyle: "italic" }}>
-              — <em>{t.hero.tagline2}</em> —
-            </span>
-          </h1>
+            <p className="hero__subtitle">{t.hero.subtitle}</p>
 
-          <p className="hero__subtitle">{t.hero.subtitle}</p>
+            <button className="btn-primary" onClick={() => scrollTo("products")} style={{ padding: "16px 40px" }}>
+              {t.hero.cta}
+            </button>
+          </div>
 
-          <button className="btn-primary" onClick={() => scrollTo("products")} style={{ padding: "16px 40px" }}>
-            {t.hero.cta}
-          </button>
-
-          <img
-            src="/Arduenna_Bouteille_50CL-V2.avif"
-            alt="Arduenna Gin bottle"
-            className="hero__bottle"
-          />
+          <div className="hero__visual">
+            <img
+              src="/Arduenna_Bouteille_50CL-V2.avif"
+              alt="Arduenna Gin bottle"
+              className="hero__bottle"
+            />
+          </div>
         </div>
       </section>
 
@@ -737,7 +742,7 @@ export default function ArduennaWebapp() {
               <div className="product-card__meta">{p.volume} · {p.abv}</div>
               <div className="product-card__price">{p.price}</div>
               <div className="product-card__radar">
-                <RadarChart data={p.profile} color={p.color} size={140} />
+                <RadarChart data={p.profile} color={p.color} size={200} />
               </div>
               <div className="product-card__serve">
                 <strong>{t.products.perfectServe}</strong> — {lang === "fr" ? p.perfectServeFr : p.perfectServeEn}
@@ -782,8 +787,8 @@ export default function ArduennaWebapp() {
 
             <div className="modal__block">
               <div className="modal__block-title">{t.products.profile}</div>
-              <div style={{ maxWidth: 180, margin: "0 auto" }}>
-                <RadarChart data={selectedProduct.profile} color={selectedProduct.color} size={180} />
+              <div style={{ maxWidth: 240, margin: "0 auto" }}>
+                <RadarChart data={selectedProduct.profile} color={selectedProduct.color} size={240} />
               </div>
             </div>
 
@@ -1055,7 +1060,11 @@ export default function ArduennaWebapp() {
       {/* ═══ FOOTER ═══ */}
       <footer className="footer">
         <div className="footer__brand">
-          <div className="footer__brand-name">ARDUENNA</div>
+          <img
+            src="/Arduennagin_logo_vert_.webp"
+            alt="Arduenna"
+            className="footer__logo"
+          />
           <div className="footer__tagline">{t.footer.tagline}</div>
         </div>
 

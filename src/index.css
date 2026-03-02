@@ -809,23 +809,26 @@ a {
 
 .age-gate__card {
   background: var(--bg-surface);
-  border-radius: var(--radius-lg);
-  padding: var(--space-14) var(--space-10);
-  max-width: 440px;
+  border-radius: var(--radius-xl);
+  padding: var(--space-16) var(--space-12);
+  max-width: 420px;
   width: 100%;
   text-align: center;
   border: 1px solid var(--border-light);
-  box-shadow: var(--shadow-lg);
-  animation: scaleIn var(--duration-slow) var(--ease-out);
+  box-shadow: var(--shadow-xl);
+  animation: scaleIn 0.8s var(--ease-out);
 }
 
-.age-gate__brand {
-  font-family: var(--font-body);
-  font-size: var(--text-sm);
-  letter-spacing: var(--tracking-widest);
-  color: var(--text-muted);
-  text-transform: uppercase;
-  margin-bottom: var(--space-6);
+.age-gate__logo {
+  height: 28px;
+  width: auto;
+  margin: 0 auto var(--space-8);
+  display: block;
+  opacity: 0.85;
+}
+
+[data-theme="dark"] .age-gate__logo {
+  filter: brightness(0) invert(0.88) sepia(0.15) saturate(0.5) hue-rotate(10deg);
 }
 
 .age-gate__title {
@@ -860,25 +863,38 @@ a {
 
 /* Hero */
 .hero {
-  min-height: 90vh;
-  min-height: 90dvh;
+  min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  text-align: center;
-  padding: calc(var(--nav-height) + var(--space-12)) var(--space-6) var(--space-20);
+  padding: calc(var(--nav-height) + var(--space-10)) var(--space-8) var(--space-16);
   position: relative;
   overflow: hidden;
 }
 
-.hero__banner {
-  font-family: var(--font-body);
-  font-size: var(--text-xs);
-  letter-spacing: var(--tracking-widest);
-  text-transform: uppercase;
-  color: var(--text-muted);
-  margin-bottom: var(--space-10);
+.hero__content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-16);
+  max-width: var(--max-width);
+  width: 100%;
+}
+
+.hero__text {
+  text-align: center;
+  flex: 1;
+  max-width: 520px;
+}
+
+.hero__visual {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .hero__heading {
@@ -905,11 +921,11 @@ a {
 }
 
 .hero__bottle {
-  margin-top: var(--space-12);
-  width: 180px;
+  width: 260px;
   height: auto;
-  filter: drop-shadow(0 20px 40px rgba(11, 54, 61, 0.12));
-  animation: floatIn 1s var(--ease-out) 0.3s both;
+  filter: drop-shadow(0 30px 60px rgba(11, 54, 61, 0.15));
+  animation: floatIn 1.2s var(--ease-out) 0.3s both,
+             gentleFloat 4s ease-in-out 1.5s infinite;
 }
 
 /* Botanical cards */
@@ -983,19 +999,20 @@ a {
 .product-card {
   cursor: pointer;
   text-align: center;
-  padding: var(--space-8);
+  padding: var(--space-10) var(--space-8);
 }
 
 .product-card__img {
-  width: 120px;
-  height: 160px;
+  width: 160px;
+  height: 220px;
   object-fit: contain;
-  margin: 0 auto var(--space-4);
+  margin: 0 auto var(--space-6);
   transition: transform var(--duration-slow) var(--ease-out);
+  filter: drop-shadow(0 8px 24px rgba(11, 54, 61, 0.1));
 }
 
 .product-card:hover .product-card__img {
-  transform: scale(1.03);
+  transform: scale(1.04) translateY(-4px);
 }
 
 .product-card__name {
@@ -1023,8 +1040,8 @@ a {
 }
 
 .product-card__radar {
-  max-width: 140px;
-  margin: 0 auto;
+  max-width: 200px;
+  margin: 0 auto var(--space-2);
 }
 
 .product-card__desc {
@@ -1188,13 +1205,16 @@ a {
   margin-bottom: var(--space-8);
 }
 
-.footer__brand-name {
-  font-family: var(--font-display);
-  font-size: var(--text-xl);
-  letter-spacing: var(--tracking-widest);
-  font-weight: 500;
-  margin-bottom: var(--space-2);
-  color: var(--text-primary);
+.footer__logo {
+  height: 24px;
+  width: auto;
+  margin: 0 auto var(--space-3);
+  display: block;
+  opacity: 0.7;
+}
+
+[data-theme="dark"] .footer__logo {
+  filter: brightness(0) invert(0.88) sepia(0.15) saturate(0.5) hue-rotate(10deg);
 }
 
 .footer__tagline {
@@ -1266,8 +1286,13 @@ a {
 }
 
 @keyframes floatIn {
-  from { opacity: 0; transform: translateY(24px); }
+  from { opacity: 0; transform: translateY(32px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes gentleFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
 }
 
 /* Scroll reveal */
@@ -1298,13 +1323,22 @@ a {
   }
 
   .hero {
-    min-height: 80vh;
-    min-height: 80dvh;
-    padding: calc(var(--nav-height) + var(--space-8)) var(--space-5) var(--space-12);
+    min-height: 100vh;
+    min-height: 100dvh;
+    padding: calc(var(--nav-height) + var(--space-6)) var(--space-5) var(--space-12);
+  }
+
+  .hero__content {
+    flex-direction: column;
+    gap: var(--space-10);
+  }
+
+  .hero__text {
+    max-width: 100%;
   }
 
   .hero__bottle {
-    width: 140px;
+    width: 180px;
   }
 
   .grid-2,
