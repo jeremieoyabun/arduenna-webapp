@@ -2,17 +2,23 @@ import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../components/auth/AuthProvider";
 
+const roleLabels = {
+  bartender: "Bartender",
+  commercial: "Commercial",
+  caviste: "Caviste / Distributeur",
+};
+
 export const LoginPage = () => {
   const { login, loginWithGoogle, signup, setRole } = useAuth();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [firstName, setFirstName] = useState("");
   const [selectedRole, setSelectedRole] = useState("bartender");
   const [isSignup, setIsSignup] = useState(false);
   const [error, setError] = useState(null);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
     setError(null);
     try {
       if (isSignup) {
@@ -37,70 +43,135 @@ export const LoginPage = () => {
     }
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") handleSubmit();
+  };
+
   const inputStyle = {
     width: "100%",
-    padding: "var(--space-3) var(--space-4)",
-    border: "1px solid var(--border-medium)",
-    borderRadius: "var(--radius-md)",
-    background: "var(--bg-primary)",
+    padding: "var(--space-3) 0",
+    border: "none",
+    borderBottom: "1px solid rgba(11,54,61,0.15)",
+    borderRadius: 0,
+    background: "transparent",
     color: "var(--text-primary)",
     fontFamily: "var(--font-body)",
-    fontSize: "var(--text-base)",
-    marginBottom: "var(--space-4)",
+    fontSize: "15px",
+    marginBottom: "var(--space-5)",
     boxSizing: "border-box",
-    transition: "border-color var(--duration-fast) var(--ease-out)",
+    transition: "border-color 0.2s ease-out",
     outline: "none",
   };
 
   return (
     <div style={{
       minHeight: "100vh",
-      background: "var(--bg-primary)",
+      background: "#fef8ec",
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
       padding: "var(--space-6)",
     }}>
       <div style={{
-        background: "var(--bg-surface)",
-        borderRadius: "var(--radius-lg)",
-        padding: "var(--space-10)",
+        background: "#ffffff",
+        borderRadius: 12,
+        padding: "var(--space-10) var(--space-8)",
         maxWidth: 400,
         width: "100%",
-        border: "1px solid var(--border-light)",
-        boxShadow: "var(--shadow-md)",
+        border: "1px solid rgba(11,54,61,0.08)",
+        boxShadow: "0 2px 12px rgba(11,54,61,0.03)",
       }}>
-        <img
-          src="/Arduennagin_logo_vert_.webp"
-          alt="Arduenna"
-          style={{ width: 120, margin: "0 auto var(--space-6)", display: "block" }}
-        />
+        {/* Logo ARDUENNA */}
+        <div style={{
+          fontFamily: "'Cormorant Garamond', Georgia, serif",
+          fontSize: 22,
+          fontWeight: 600,
+          letterSpacing: 5,
+          textAlign: "center",
+          color: "#0b363d",
+          marginBottom: 4,
+        }}>
+          ARDUENNA
+        </div>
 
-        <h1 style={{
-          fontFamily: "var(--font-display)",
-          fontSize: "var(--text-2xl)",
-          fontWeight: 400,
+        {/* Sous-titre Academy */}
+        <div style={{
+          fontFamily: "'Cormorant Garamond', Georgia, serif",
+          fontSize: 18,
           fontStyle: "italic",
           textAlign: "center",
-          color: "var(--text-primary)",
+          color: "#c2744a",
           marginBottom: "var(--space-8)",
         }}>
-          Bienvenue dans l'Academy
-        </h1>
+          Academy
+        </div>
 
+        {/* Toggle Connexion / Créer un compte */}
+        <div style={{
+          display: "flex",
+          gap: "var(--space-2)",
+          marginBottom: "var(--space-6)",
+        }}>
+          <button
+            onClick={() => setIsSignup(false)}
+            style={{
+              flex: 1,
+              padding: "var(--space-2) var(--space-3)",
+              background: !isSignup ? "#0b363d" : "transparent",
+              color: !isSignup ? "#fef8ec" : "rgba(11,54,61,0.5)",
+              border: "1px solid rgba(11,54,61,0.15)",
+              borderRadius: 8,
+              fontFamily: "'DM Sans', sans-serif",
+              fontSize: 13,
+              fontWeight: 500,
+              cursor: "pointer",
+              transition: "all 0.2s ease-out",
+            }}
+          >
+            Connexion
+          </button>
+          <button
+            onClick={() => setIsSignup(true)}
+            style={{
+              flex: 1,
+              padding: "var(--space-2) var(--space-3)",
+              background: isSignup ? "#0b363d" : "transparent",
+              color: isSignup ? "#fef8ec" : "rgba(11,54,61,0.5)",
+              border: "1px solid rgba(11,54,61,0.15)",
+              borderRadius: 8,
+              fontFamily: "'DM Sans', sans-serif",
+              fontSize: 13,
+              fontWeight: 500,
+              cursor: "pointer",
+              transition: "all 0.2s ease-out",
+            }}
+          >
+            Créer un compte
+          </button>
+        </div>
+
+        {/* Google button — ghost style */}
         <button
           onClick={handleGoogle}
-          className="btn-primary"
           style={{
             width: "100%",
-            marginBottom: "var(--space-6)",
+            padding: "12px 16px",
+            background: "transparent",
+            border: "1px solid rgba(11,54,61,0.15)",
+            borderRadius: 8,
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            gap: "var(--space-2)",
+            gap: 10,
+            cursor: "pointer",
+            fontFamily: "'DM Sans', sans-serif",
+            fontSize: 14,
+            color: "#0b363d",
+            marginBottom: "var(--space-5)",
+            transition: "background 0.2s ease-out",
           }}
         >
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+          <svg width="18" height="18" viewBox="0 0 24 24">
             <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4"/>
             <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
             <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
@@ -109,104 +180,154 @@ export const LoginPage = () => {
           Continuer avec Google
         </button>
 
+        {/* Separator */}
         <div style={{
-          textAlign: "center",
-          color: "var(--text-tertiary)",
-          fontSize: "var(--text-sm)",
+          display: "flex",
+          alignItems: "center",
+          gap: 12,
           margin: "var(--space-4) 0",
-          fontFamily: "var(--font-body)",
         }}>
-          ou
+          <div style={{ flex: 1, height: 1, background: "rgba(11,54,61,0.1)" }} />
+          <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, color: "rgba(11,54,61,0.35)" }}>ou</span>
+          <div style={{ flex: 1, height: 1, background: "rgba(11,54,61,0.1)" }} />
         </div>
 
-        <form onSubmit={handleSubmit}>
+        {/* Form fields */}
+        <div>
+          {isSignup && (
+            <input
+              type="text"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+              onKeyDown={handleKeyDown}
+              placeholder="Prénom"
+              style={inputStyle}
+            />
+          )}
+
           <input
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            onKeyDown={handleKeyDown}
             placeholder="Email"
             required
             style={inputStyle}
           />
+
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            onKeyDown={handleKeyDown}
             placeholder="Mot de passe"
             required
             minLength={6}
             style={inputStyle}
           />
 
-          {/* Role selector */}
-          <div style={{ marginBottom: "var(--space-6)" }}>
-            <label style={{
-              fontFamily: "var(--font-body)",
-              fontSize: "var(--text-sm)",
-              color: "var(--text-secondary)",
-              display: "block",
-              marginBottom: "var(--space-2)",
-              letterSpacing: "0.08em",
-              textTransform: "uppercase",
-            }}>
-              Votre rôle
-            </label>
-            <div style={{ display: "flex", gap: "var(--space-2)" }}>
-              {["bartender", "commercial", "distributeur"].map((r) => (
-                <button
-                  key={r}
-                  type="button"
-                  className={selectedRole === r ? "filter-chip filter-chip--active" : "filter-chip"}
-                  onClick={() => setSelectedRole(r)}
-                  style={{ flex: 1, textTransform: "capitalize" }}
-                >
-                  {r}
-                </button>
-              ))}
+          {/* Role selector — signup only */}
+          {isSignup && (
+            <div style={{ marginBottom: "var(--space-5)" }}>
+              <div style={{
+                fontFamily: "'DM Sans', sans-serif",
+                fontSize: 11,
+                color: "rgba(11,54,61,0.5)",
+                textTransform: "uppercase",
+                letterSpacing: 2,
+                marginBottom: "var(--space-2)",
+              }}>
+                Votre rôle
+              </div>
+              <div style={{ display: "flex", gap: 6 }}>
+                {Object.entries(roleLabels).map(([key, label]) => (
+                  <button
+                    key={key}
+                    type="button"
+                    onClick={() => setSelectedRole(key)}
+                    style={{
+                      flex: 1,
+                      padding: "8px 4px",
+                      background: selectedRole === key ? "#0b363d" : "transparent",
+                      color: selectedRole === key ? "#fef8ec" : "rgba(11,54,61,0.5)",
+                      border: "1px solid rgba(11,54,61,0.12)",
+                      borderRadius: 6,
+                      fontFamily: "'DM Sans', sans-serif",
+                      fontSize: 11,
+                      cursor: "pointer",
+                      transition: "all 0.2s ease-out",
+                    }}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
 
+          {/* Error message */}
           {error && (
             <p style={{
-              color: "var(--accent-secondary)",
-              fontSize: "var(--text-sm)",
-              fontFamily: "var(--font-body)",
+              color: "#c2744a",
+              fontSize: 13,
+              fontFamily: "'DM Sans', sans-serif",
               marginBottom: "var(--space-4)",
+              textAlign: "center",
             }}>
               {error}
             </p>
           )}
 
-          <button type="submit" className="btn-primary" style={{ width: "100%" }}>
-            {isSignup ? "Créer un compte" : "Se connecter"}
+          {/* Submit button */}
+          <button
+            onClick={handleSubmit}
+            style={{
+              width: "100%",
+              padding: "14px 24px",
+              background: "#0b363d",
+              color: "#fef8ec",
+              border: "none",
+              borderRadius: 8,
+              fontFamily: "'DM Sans', sans-serif",
+              fontSize: 14,
+              fontWeight: 500,
+              cursor: "pointer",
+              transition: "opacity 0.2s ease-out",
+            }}
+          >
+            {isSignup ? "Créer mon compte" : "Se connecter"}
           </button>
-        </form>
+        </div>
 
-        <button
-          onClick={() => setIsSignup(!isSignup)}
-          style={{
-            background: "none",
-            border: "none",
-            color: "var(--text-secondary)",
-            fontFamily: "var(--font-body)",
-            fontSize: "var(--text-sm)",
-            margin: "var(--space-4) auto 0",
-            display: "block",
-            cursor: "pointer",
-          }}
-        >
-          {isSignup ? "Déjà un compte ? Se connecter" : "Pas de compte ? S'inscrire"}
-        </button>
+        {/* Forgot password */}
+        {!isSignup && (
+          <button
+            style={{
+              background: "none",
+              border: "none",
+              color: "rgba(11,54,61,0.4)",
+              fontFamily: "'DM Sans', sans-serif",
+              fontSize: 12,
+              margin: "var(--space-3) auto 0",
+              display: "block",
+              cursor: "pointer",
+            }}
+          >
+            Mot de passe oublié ?
+          </button>
+        )}
 
+        {/* Link back to site */}
         <Link
           to="/"
           style={{
             display: "block",
             textAlign: "center",
             marginTop: "var(--space-6)",
-            color: "var(--accent-secondary)",
-            fontFamily: "var(--font-body)",
-            fontSize: "var(--text-sm)",
+            color: "#c2744a",
+            fontFamily: "'DM Sans', sans-serif",
+            fontSize: 13,
+            textDecoration: "none",
           }}
         >
           Découvrir Arduenna →
