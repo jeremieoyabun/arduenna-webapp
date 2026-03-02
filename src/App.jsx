@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 
 // ═══════════════════════════════════════════
 // ARDUENNA GIN — MVP WEBAPP
-// Palette: #fef8ec (cream) · #ffffff (white) · #0b363d (teal)
+// Design system tokens live in index.css
 // ═══════════════════════════════════════════
 
 // ─── i18n translations ───
@@ -109,7 +109,7 @@ const productsData = [
     profile: { juniper: 85, citrus: 40, floral: 70, herbal: 60, spice: 30, fruit: 75 },
     pairingsFr: ["Tonic premium", "Agrumes frais", "Fruits de mer", "Fromages affinés"],
     pairingsEn: ["Premium tonic", "Fresh citrus", "Seafood", "Aged cheeses"],
-    certs: ["Bio EU", "B Corp", "Distillerie historique"], emoji: "🌲",
+    certs: ["Bio EU", "B Corp", "Distillerie historique"],
     img: "/Thumbnail-Arduenna-gin-aspect-ratio-1072-1372.avif",
   },
   {
@@ -121,7 +121,7 @@ const productsData = [
     profile: { juniper: 70, citrus: 50, floral: 75, herbal: 55, spice: 25, fruit: 80 },
     pairingsFr: ["Tonic léger", "Herbes fraîches", "Desserts fruités", "Apéritif"],
     pairingsEn: ["Light tonic", "Fresh herbs", "Fruity desserts", "Aperitif"],
-    certs: ["Bio EU", "B Corp", "Sans alcool"], emoji: "🌿",
+    certs: ["Bio EU", "B Corp", "Sans alcool"],
     img: "/arduenna_no_alcohol_site-aspect-ratio-1072-1372.webp",
   },
   {
@@ -133,7 +133,7 @@ const productsData = [
     profile: { juniper: 30, citrus: 80, floral: 45, herbal: 70, spice: 55, fruit: 60 },
     pairingsFr: ["Prosecco", "Soda", "Olives & charcuterie", "Cuisine italienne"],
     pairingsEn: ["Prosecco", "Soda", "Olives & charcuterie", "Italian cuisine"],
-    certs: ["Bio EU", "B Corp"], emoji: "🍊",
+    certs: ["Bio EU", "B Corp"],
     img: "/Thumbnail-Arduenna-694-aspect-ratio-1072-1372-1.avif",
   },
 ];
@@ -236,11 +236,11 @@ const RadarChart = ({ data, color, size = 160 }) => {
     <svg viewBox={`0 0 ${size} ${size}`} style={{ width: "100%", maxWidth: size }}>
       {[25, 50, 75, 100].map((level) => (
         <polygon key={level} points={labels.map((_, i) => getPoint(i, level).join(",")).join(" ")}
-          fill="none" stroke="rgba(11,54,61,0.12)" strokeWidth="0.5" />
+          fill="none" stroke="var(--border-medium)" strokeWidth="0.5" />
       ))}
       {labels.map((_, i) => (
         <line key={i} x1={cx} y1={cy} x2={getPoint(i, 100)[0]} y2={getPoint(i, 100)[1]}
-          stroke="rgba(11,54,61,0.08)" strokeWidth="0.5" />
+          stroke="var(--border-light)" strokeWidth="0.5" />
       ))}
       <polygon points={values.map((v, i) => getPoint(i, v).join(",")).join(" ")}
         fill={color + "22"} stroke={color} strokeWidth="1.5" />
@@ -252,7 +252,7 @@ const RadarChart = ({ data, color, size = 160 }) => {
         const [px, py] = getPoint(i, 115);
         return (
           <text key={i} x={px} y={py} textAnchor="middle" dominantBaseline="middle"
-            fill="#0b363d" fontSize="7" fontFamily="inherit" style={{ textTransform: "capitalize" }}>
+            fill="var(--text-secondary)" fontSize="7" fontFamily="var(--font-body)" style={{ textTransform: "capitalize" }}>
             {label}
           </text>
         );
@@ -262,30 +262,50 @@ const RadarChart = ({ data, color, size = 160 }) => {
 };
 
 // ─── Icons ───
-const IconLeaf = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M17 8C8 10 5.9 16.17 3.82 21.34l1.89.66.95-2.3c.48.17.98.3 1.34.3C19 20 22 3 22 3c-1 2-8 2.25-13 3.25S2 11.5 2 13.5s1.75 3.75 1.75 3.75"/></svg>;
 const IconFlask = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M9 3h6M12 3v7l-5 8.5a2 2 0 001.7 3h6.6a2 2 0 001.7-3L12 10V3"/></svg>;
 const IconDownload = () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>;
 const IconHeart = () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>;
 const IconHeartFilled = () => <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>;
-const IconChevron = () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M6 9l6 6 6-6"/></svg>;
-const IconMenu = () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>;
 const IconX = () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 6L6 18M6 6l12 12"/></svg>;
 const IconBell = () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 01-3.46 0"/></svg>;
 const IconLock = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>;
 const IconGlobe = () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>;
+const IconMenu = () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>;
+const IconSun = () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>;
+const IconMoon = () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>;
+
+// Bottom nav icons (slightly larger for touch)
+const IconHome = () => <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>;
+const IconBottle = () => <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M10 2h4M12 2v4M8 6h8l1 4v10a2 2 0 01-2 2H9a2 2 0 01-2-2V10l1-4z"/></svg>;
+const IconGlass = () => <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M8 2h8l-1 10a4 4 0 01-3 3.87V20h3v2H9v-2h3v-4.13A4 4 0 019 12L8 2z"/></svg>;
+const IconLeafNav = () => <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M17 8C8 10 5.9 16.17 3.82 21.34l1.89.66.95-2.3c.48.17.98.3 1.34.3C19 20 22 3 22 3c-1 2-8 2.25-13 3.25S2 11.5 2 13.5s1.75 3.75 1.75 3.75"/></svg>;
+const IconBriefcase = () => <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>;
 
 // ─── Botanical decoration ───
-const BotanicalDeco = ({ style }) => (
-  <svg viewBox="0 0 120 200" style={{ position: "absolute", opacity: 0.06, ...style }} fill="#0b363d">
+const BotanicalDeco = ({ className, style }) => (
+  <svg viewBox="0 0 120 200" className={className} style={{ position: "absolute", opacity: 0.05, ...style }} fill="var(--text-primary)">
     <path d="M60 200 C60 200 60 100 60 80 C60 60 30 40 20 20 C15 10 25 0 35 5 C45 10 55 30 60 50 C65 30 75 10 85 5 C95 0 105 10 100 20 C90 40 60 60 60 80Z"/>
   </svg>
 );
+
+// ─── Sustainability icons (SVG instead of emojis) ───
+const SustainIcon = ({ type }) => {
+  const icons = {
+    bcorp: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="12" cy="12" r="10"/><path d="M8 12h4a2 2 0 100-4H8v8h4.5a2.5 2.5 0 100-5H8"/></svg>,
+    organic: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M17 8C8 10 5.9 16.17 3.82 21.34l1.89.66.95-2.3c.48.17.98.3 1.34.3C19 20 22 3 22 3c-1 2-8 2.25-13 3.25S2 11.5 2 13.5s1.75 3.75 1.75 3.75"/></svg>,
+    oldest: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-4h6v4M9 10h.01M15 10h.01M9 14h.01M15 14h.01"/></svg>,
+    bottle: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0zM9 12l2 2 4-4"/></svg>,
+    local: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>,
+  };
+  return icons[type] || null;
+};
 
 // ═══════════════════════════════════════════
 // MAIN APP COMPONENT
 // ═══════════════════════════════════════════
 export default function ArduennaWebapp() {
   const [lang, setLang] = useState("fr");
+  const [theme, setTheme] = useState("light");
   const [ageVerified, setAgeVerified] = useState(false);
   const [ageDenied, setAgeDenied] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -296,21 +316,60 @@ export default function ArduennaWebapp() {
   const [seasonFilter, setSeasonFilter] = useState("all");
   const [savedCocktails, setSavedCocktails] = useState([]);
   const [teaserNotifs, setTeaserNotifs] = useState({});
-  const [scrollY, setScrollY] = useState(0);
+  const [scrolled, setScrolled] = useState(false);
 
   const t = translations[lang];
   const sectionRefs = useRef({});
 
+  // Theme
   useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY || 0);
-    const container = document.querySelector("[data-app-scroll]");
-    if (container) container.addEventListener("scroll", handleScroll);
-    else window.addEventListener("scroll", handleScroll);
-    return () => {
-      if (container) container.removeEventListener("scroll", handleScroll);
-      else window.removeEventListener("scroll", handleScroll);
-    };
+    document.documentElement.setAttribute("data-theme", theme);
+  }, [theme]);
+
+  // Scroll detection for nav glass effect
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // Scroll reveal via IntersectionObserver
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("reveal--visible");
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: "0px 0px -40px 0px" }
+    );
+
+    const elements = document.querySelectorAll(".reveal");
+    elements.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, [ageVerified]);
+
+  // Track active section for bottom nav
+  useEffect(() => {
+    if (!ageVerified) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && entry.intersectionRatio > 0.3) {
+            setActiveSection(entry.target.id || "hero");
+          }
+        });
+      },
+      { threshold: 0.3 }
+    );
+
+    Object.values(sectionRefs.current).forEach((el) => {
+      if (el) observer.observe(el);
+    });
+    return () => observer.disconnect();
+  }, [ageVerified]);
 
   const scrollTo = useCallback((id) => {
     setMenuOpen(false);
@@ -322,34 +381,35 @@ export default function ArduennaWebapp() {
     setSavedCocktails((prev) => prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]);
   };
 
+  const toggleTheme = () => {
+    setTheme((prev) => prev === "light" ? "dark" : "light");
+  };
+
   const filteredCocktails = cocktailsData.filter((c) => {
     if (cocktailFilter !== "all" && c.product !== cocktailFilter) return false;
     if (seasonFilter !== "all" && c.season !== seasonFilter) return false;
     return true;
   });
 
+  const navSections = ["story", "products", "cocktails", "toolbox", "sustainability"];
+  const bottomNavItems = [
+    { id: "hero", label: lang === "fr" ? "Accueil" : "Home", Icon: IconHome },
+    { id: "products", label: t.nav.products, Icon: IconBottle },
+    { id: "cocktails", label: "Cocktails", Icon: IconGlass },
+    { id: "sustainability", label: lang === "fr" ? "Durable" : "Green", Icon: IconLeafNav },
+    { id: "toolbox", label: "Pro", Icon: IconBriefcase },
+  ];
+
   // ─── AGE GATE ───
   if (!ageVerified) {
     return (
-      <div style={{
-        minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center",
-        background: "#fef8ec", fontFamily: "'Cormorant Garamond', 'Georgia', serif",
-        color: "#0b363d", padding: 24,
-      }}>
-        <div style={{
-          background: "#ffffff", borderRadius: 16, padding: "56px 40px", maxWidth: 440,
-          width: "100%", textAlign: "center", border: "1px solid rgba(11,54,61,0.08)",
-          boxShadow: "0 8px 40px rgba(11,54,61,0.06)",
-        }}>
-          <div style={{ fontSize: 14, letterSpacing: 4, marginBottom: 24, color: "#0b363d", opacity: 0.5, textTransform: "uppercase" }}>
-            ARDUENNA
-          </div>
-          <h2 style={{ fontSize: 28, fontWeight: 400, marginBottom: 8, fontStyle: "italic" }}>{t.ageGate.title}</h2>
-          <p style={{ fontSize: 15, lineHeight: 1.7, marginBottom: 32, color: "rgba(11,54,61,0.7)", fontFamily: "'DM Sans', sans-serif" }}>
-            {t.ageGate.question}
-          </p>
-          {ageDenied && <p style={{ color: "#c2744a", fontSize: 14, marginBottom: 16, fontFamily: "'DM Sans', sans-serif" }}>{t.ageGate.denied}</p>}
-          <div style={{ display: "flex", gap: 12, justifyContent: "center" }}>
+      <div className="age-gate">
+        <div className="age-gate__card">
+          <div className="age-gate__brand">ARDUENNA</div>
+          <h2 className="age-gate__title">{t.ageGate.title}</h2>
+          <p className="age-gate__question">{t.ageGate.question}</p>
+          {ageDenied && <p className="age-gate__denied">{t.ageGate.denied}</p>}
+          <div className="age-gate__actions">
             <button onClick={() => setAgeVerified(true)} className="btn-primary">
               {t.ageGate.yes}
             </button>
@@ -364,129 +424,38 @@ export default function ArduennaWebapp() {
 
   // ─── MAIN APP ───
   return (
-    <div style={{ background: "#fef8ec", color: "#0b363d", fontFamily: "'Cormorant Garamond', 'Georgia', serif", minHeight: "100vh" }}>
-      <style>{`
-        /* fonts loaded in index.css */
-        
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #fef8ec; }
-        ::-webkit-scrollbar-thumb { background: #0b363d; border-radius: 4px; opacity: 0.3; }
-        
-        .section-label {
-          font-family: 'DM Sans', sans-serif; font-size: 11px; letter-spacing: 3px;
-          text-transform: uppercase; color: rgba(11,54,61,0.4); margin-bottom: 12px;
-        }
-        .section-title {
-          font-size: 36px; font-weight: 400; font-style: italic; margin-bottom: 16px;
-          line-height: 1.2; color: #0b363d;
-        }
-        
-        .btn-primary {
-          padding: 14px 32px; background: #0b363d; border: none;
-          color: #fef8ec; border-radius: 6px; font-size: 13px; cursor: pointer;
-          font-family: 'DM Sans', sans-serif; letter-spacing: 1px; text-transform: uppercase;
-          transition: all 0.3s;
-        }
-        .btn-primary:hover { background: #0a2e34; transform: translateY(-1px); box-shadow: 0 4px 16px rgba(11,54,61,0.2); }
-        
-        .btn-ghost {
-          padding: 14px 24px; background: transparent;
-          border: 1px solid rgba(11,54,61,0.2); color: #0b363d;
-          border-radius: 6px; font-size: 13px; cursor: pointer;
-          font-family: 'DM Sans', sans-serif; letter-spacing: 1px; text-transform: uppercase;
-          transition: all 0.3s;
-        }
-        .btn-ghost:hover { border-color: #0b363d; background: rgba(11,54,61,0.03); }
-        
-        .card {
-          background: #ffffff; border: 1px solid rgba(11,54,61,0.06);
-          border-radius: 12px; padding: 28px; transition: all 0.3s;
-          box-shadow: 0 2px 12px rgba(11,54,61,0.03);
-        }
-        .card:hover { border-color: rgba(11,54,61,0.12); box-shadow: 0 6px 24px rgba(11,54,61,0.06); transform: translateY(-2px); }
-        
-        .nav-link {
-          color: rgba(11,54,61,0.6); text-decoration: none; font-size: 11px;
-          letter-spacing: 2px; cursor: pointer; transition: color 0.3s;
-          padding: 8px 0; text-transform: uppercase; font-family: 'DM Sans', sans-serif;
-        }
-        .nav-link:hover { color: #0b363d; }
-        
-        .filter-btn {
-          padding: 6px 16px; border-radius: 20px; border: 1px solid rgba(11,54,61,0.12);
-          background: transparent; color: rgba(11,54,61,0.5); font-size: 12px;
-          cursor: pointer; transition: all 0.3s; font-family: 'DM Sans', sans-serif;
-        }
-        .filter-btn:hover { border-color: #0b363d; color: #0b363d; }
-        .filter-btn.active { background: #0b363d; border-color: #0b363d; color: #fef8ec; }
-        
-        .overlay {
-          position: fixed; inset: 0; background: rgba(11,54,61,0.3);
-          backdrop-filter: blur(12px); z-index: 100;
-          display: flex; align-items: center; justify-content: center; padding: 20px;
-        }
-        .modal {
-          background: #ffffff; border: 1px solid rgba(11,54,61,0.08);
-          border-radius: 16px; max-width: 520px; width: 100%; max-height: 85vh;
-          overflow-y: auto; padding: 36px; box-shadow: 0 20px 60px rgba(11,54,61,0.15);
-        }
-        .modal-label {
-          background: rgba(11,54,61,0.05); border: 1px solid rgba(11,54,61,0.08);
-          border-radius: 8px; padding: 16px; margin-bottom: 12px;
-        }
-        .divider {
-          height: 1px; margin: 32px 0;
-          background: linear-gradient(90deg, transparent, rgba(11,54,61,0.12), transparent);
-        }
-        
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
-        .fade-in { animation: fadeIn 0.6s ease both; }
-        
-        @media (max-width: 768px) {
-          .section-title { font-size: 28px; }
-          .modal { padding: 24px; margin: 12px; }
-        }
-      `}</style>
+    <div className="app-shell">
 
-      {/* ═══ NAVIGATION ═══ */}
-      <nav style={{
-        position: "fixed", top: 0, left: 0, right: 0, zIndex: 50,
-        background: scrollY > 50 ? "rgba(254,248,236,0.95)" : "transparent",
-        backdropFilter: scrollY > 50 ? "blur(20px)" : "none",
-        borderBottom: scrollY > 50 ? "1px solid rgba(11,54,61,0.06)" : "none",
-        transition: "all 0.4s ease", padding: "0 24px",
-      }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between", height: 64 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
-            <img
-              src="/Arduennagin_logo_vert_.webp"
-              alt="Arduenna"
-              style={{ height: 20, cursor: "pointer" }}
-              onClick={() => scrollTo("hero")}
-            />
-          </div>
+      {/* ═══ TOP NAVIGATION ═══ */}
+      <nav className={`top-nav ${scrolled ? "top-nav--scrolled" : ""}`}>
+        <div className="top-nav__inner">
+          <img
+            src="/Arduennagin_logo_vert_.webp"
+            alt="Arduenna"
+            className="top-nav__logo"
+            onClick={() => scrollTo("hero")}
+          />
 
-          {/* Desktop nav */}
-          <div style={{ display: "flex", alignItems: "center", gap: 24 }} className="desktop-nav">
-            {["story", "products", "cocktails", "toolbox", "sustainability"].map((sec) => (
-              <span key={sec} className="nav-link" onClick={() => scrollTo(sec)}>
+          <div className="top-nav__links">
+            {navSections.map((sec) => (
+              <button
+                key={sec}
+                className={`top-nav__link ${activeSection === sec ? "top-nav__link--active" : ""}`}
+                onClick={() => scrollTo(sec)}
+              >
                 {t.nav[sec]}
-              </span>
+              </button>
             ))}
           </div>
 
-          <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-            <button onClick={() => setLang(lang === "fr" ? "en" : "fr")} style={{
-              display: "flex", alignItems: "center", gap: 4, background: "rgba(11,54,61,0.04)",
-              border: "1px solid rgba(11,54,61,0.1)", borderRadius: 6, padding: "5px 12px",
-              color: "#0b363d", fontSize: 12, cursor: "pointer", fontFamily: "'DM Sans', sans-serif",
-              letterSpacing: 1,
-            }}>
+          <div className="top-nav__actions">
+            <button onClick={toggleTheme} className="theme-toggle" aria-label="Toggle theme">
+              {theme === "light" ? <IconMoon /> : <IconSun />}
+            </button>
+            <button onClick={() => setLang(lang === "fr" ? "en" : "fr")} className="lang-toggle">
               <IconGlobe /> {lang.toUpperCase()}
             </button>
-            <button onClick={() => setMenuOpen(!menuOpen)} style={{
-              background: "none", border: "none", color: "#0b363d", cursor: "pointer", display: "flex",
-            }}>
+            <button onClick={() => setMenuOpen(!menuOpen)} className="menu-toggle" aria-label="Menu">
               {menuOpen ? <IconX /> : <IconMenu />}
             </button>
           </div>
@@ -495,149 +464,128 @@ export default function ArduennaWebapp() {
 
       {/* Mobile menu */}
       {menuOpen && (
-        <div style={{
-          position: "fixed", inset: 0, zIndex: 45, background: "rgba(254,248,236,0.98)",
-          backdropFilter: "blur(30px)", display: "flex", flexDirection: "column",
-          alignItems: "center", justifyContent: "center", gap: 28,
-        }}>
-          {["story", "products", "cocktails", "toolbox", "sustainability"].map((sec) => (
-            <span key={sec} onClick={() => scrollTo(sec)} style={{
-              fontSize: 24, fontStyle: "italic", color: "#0b363d", cursor: "pointer",
-              letterSpacing: 2,
-            }}>
+        <div className="mobile-menu">
+          {navSections.map((sec) => (
+            <button key={sec} className="mobile-menu__link" onClick={() => scrollTo(sec)}>
               {t.nav[sec]}
-            </span>
+            </button>
           ))}
         </div>
       )}
 
+      {/* ═══ BOTTOM NAVIGATION (mobile) ═══ */}
+      <div className="bottom-nav">
+        {bottomNavItems.map(({ id, label, Icon }) => (
+          <button
+            key={id}
+            className={`bottom-nav__item ${activeSection === id ? "bottom-nav__item--active" : ""}`}
+            onClick={() => scrollTo(id)}
+          >
+            <span className="bottom-nav__icon"><Icon /></span>
+            {label}
+          </button>
+        ))}
+      </div>
+
       {/* ═══ HERO ═══ */}
-      <section ref={(el) => (sectionRefs.current.hero = el)} style={{
-        minHeight: "85vh", display: "flex", flexDirection: "column",
-        alignItems: "center", justifyContent: "center", textAlign: "center",
-        padding: "120px 24px 80px", position: "relative", overflow: "hidden",
-      }}>
+      <section id="hero" ref={(el) => (sectionRefs.current.hero = el)} className="hero">
         <BotanicalDeco style={{ top: "10%", left: "-5%", width: 200, transform: "rotate(-15deg)" }} />
         <BotanicalDeco style={{ top: "15%", right: "-3%", width: 160, transform: "rotate(20deg) scaleX(-1)" }} />
 
         <div style={{ position: "relative", zIndex: 1 }}>
-          <div className="section-label" style={{ marginBottom: 32, letterSpacing: 5 }}>
-            LIVRAISON GRATUITE EN BELGIQUE À PARTIR DE 50€
+          <div className="hero__banner">
+            {lang === "fr" ? "LIVRAISON GRATUITE EN BELGIQUE À PARTIR DE 50€" : "FREE DELIVERY IN BELGIUM FROM 50€"}
           </div>
 
-          <h1 style={{ fontSize: "clamp(48px, 8vw, 80px)", fontWeight: 300, lineHeight: 1.05, marginBottom: 24 }}>
+          <h1 className="hero__heading">
             <span style={{ display: "block" }}>{t.hero.tagline}</span>
-            <span style={{ display: "block", fontStyle: "italic", color: "#0b363d" }}>
+            <span style={{ display: "block", fontStyle: "italic" }}>
               — <em>{t.hero.tagline2}</em> —
             </span>
           </h1>
 
-          <p style={{
-            fontFamily: "'DM Sans', sans-serif", fontSize: 16, color: "rgba(11,54,61,0.55)",
-            maxWidth: 420, margin: "0 auto 40px", lineHeight: 1.7, letterSpacing: 0.5,
-          }}>
-            {t.hero.subtitle}
-          </p>
+          <p className="hero__subtitle">{t.hero.subtitle}</p>
 
-          <button className="btn-primary" onClick={() => scrollTo("products")} style={{ fontSize: 13, padding: "16px 40px" }}>
+          <button className="btn-primary" onClick={() => scrollTo("products")} style={{ padding: "16px 40px" }}>
             {t.hero.cta}
           </button>
 
           <img
             src="/Arduenna_Bouteille_50CL-V2.avif"
             alt="Arduenna Gin"
-            style={{ marginTop: 48, width: 180, height: "auto", filter: "drop-shadow(0 20px 40px rgba(11,54,61,0.12))" }}
+            className="hero__bottle"
           />
         </div>
       </section>
 
       {/* ═══ STORY ═══ */}
-      <section ref={(el) => (sectionRefs.current.story = el)} style={{
-        padding: "80px 24px", maxWidth: 900, margin: "0 auto", position: "relative",
-      }}>
+      <section id="story" ref={(el) => (sectionRefs.current.story = el)} className="section">
         <div className="divider" />
-        <div style={{ textAlign: "center", marginBottom: 48 }}>
-          <div className="section-label">{t.story.sectionLabel}</div>
+        <div className="section-header reveal">
+          <div className="section-overline">{t.story.sectionLabel}</div>
           <h2 className="section-title">{t.story.title}</h2>
         </div>
 
-        <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 15, lineHeight: 1.85, color: "rgba(11,54,61,0.7)", textAlign: "center", maxWidth: 680, margin: "0 auto 56px" }}>
-          <p style={{ marginBottom: 20 }}>{t.story.p1}</p>
-          <p style={{ marginBottom: 20 }}>{t.story.p2}</p>
+        <div className="body-text reveal" style={{ textAlign: "center", maxWidth: "var(--max-width-text)", margin: "0 auto var(--space-14)" }}>
+          <p style={{ marginBottom: "var(--space-5)" }}>{t.story.p1}</p>
+          <p style={{ marginBottom: "var(--space-5)" }}>{t.story.p2}</p>
           <p>{t.story.p3}</p>
         </div>
 
-        {/* Botanicals */}
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 24 }}>
+        <div className="grid-3">
           {[
             { name: t.story.botanical1, latin: t.story.botanical1Latin, desc: t.story.botanical1Desc, img: "/Mirabelle.svg" },
             { name: t.story.botanical2, latin: t.story.botanical2Latin, desc: t.story.botanical2Desc, img: "/Sapin.svg" },
-            { name: t.story.botanical3, latin: t.story.botanical3Latin, desc: t.story.botanical3Desc, img: "/Sureau.png" },
-          ].map((b) => (
-            <div key={b.name} className="card" style={{ textAlign: "center", padding: 32 }}>
-              <img src={b.img} alt={b.name} style={{ width: 80, height: 80, objectFit: "contain", marginBottom: 12 }} />
-              <h4 style={{ fontSize: 20, fontWeight: 400, fontStyle: "italic", marginBottom: 4 }}>{b.name}</h4>
-              <div style={{ fontSize: 12, fontStyle: "italic", color: "rgba(11,54,61,0.35)", marginBottom: 10, fontFamily: "'DM Sans', sans-serif" }}>
-                {b.latin}
-              </div>
-              <p style={{ fontSize: 13, color: "rgba(11,54,61,0.6)", fontFamily: "'DM Sans', sans-serif" }}>{b.desc}</p>
+            { name: t.story.botanical3, latin: t.story.botanical3Latin, desc: t.story.botanical3Desc, img: "/Sureau.avif" },
+          ].map((b, i) => (
+            <div key={b.name} className={`card botanical-card reveal reveal--delay-${i + 1}`}>
+              <img src={b.img} alt={b.name} className="botanical-card__img" />
+              <h4 className="botanical-card__name">{b.name}</h4>
+              <div className="botanical-card__latin">{b.latin}</div>
+              <p className="botanical-card__desc">{b.desc}</p>
             </div>
           ))}
         </div>
       </section>
 
       {/* ═══ AWARDS ═══ */}
-      <section style={{ padding: "60px 24px 80px", maxWidth: 900, margin: "0 auto" }}>
+      <section className="section">
         <div className="divider" />
-        <div style={{ textAlign: "center", marginBottom: 40 }}>
-          <div className="section-label">{t.awards.sectionLabel}</div>
+        <div className="section-header reveal">
+          <div className="section-overline">{t.awards.sectionLabel}</div>
           <h2 className="section-title">{t.awards.title}</h2>
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: 16 }}>
+        <div className="grid-3 reveal">
           {awardsData.map((a, i) => (
-            <div key={i} className="card" style={{ textAlign: "center", padding: 24 }}>
-              <div style={{ fontSize: 12, color: "rgba(11,54,61,0.35)", fontFamily: "'DM Sans', sans-serif", marginBottom: 6 }}>{a.year}</div>
-              <div style={{ fontSize: 15, fontWeight: 500, fontStyle: "italic", marginBottom: 4 }}>{a.title}</div>
-              <div style={{ fontSize: 12, color: "#c2744a", fontFamily: "'DM Sans', sans-serif", fontWeight: 500, letterSpacing: 1 }}>{a.detail}</div>
+            <div key={i} className="card card--flat award-card">
+              <div className="award-card__year">{a.year}</div>
+              <div className="award-card__title">{a.title}</div>
+              <div className="award-card__detail">{a.detail}</div>
             </div>
           ))}
         </div>
       </section>
 
       {/* ═══ PRODUCTS ═══ */}
-      <section ref={(el) => (sectionRefs.current.products = el)} style={{
-        padding: "60px 24px 80px", maxWidth: 1000, margin: "0 auto",
-      }}>
+      <section id="products" ref={(el) => (sectionRefs.current.products = el)} className="section section--wide">
         <div className="divider" />
-        <div style={{ textAlign: "center", marginBottom: 48 }}>
-          <div className="section-label">{t.products.sectionLabel}</div>
+        <div className="section-header reveal">
+          <div className="section-overline">{t.products.sectionLabel}</div>
           <h2 className="section-title">{t.products.title}</h2>
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 24 }}>
+        <div className="grid-2 reveal">
           {productsData.map((p) => (
-            <div key={p.id} className="card" style={{ cursor: "pointer", padding: 32, textAlign: "center" }}
-              onClick={() => setSelectedProduct(p)}>
-              <img src={p.img} alt={lang === "fr" ? p.nameFr : p.nameEn} style={{ width: 120, height: 160, objectFit: "contain", marginBottom: 16 }} />
-              <h3 style={{ fontSize: 22, fontWeight: 400, fontStyle: "italic", marginBottom: 8 }}>
-                {lang === "fr" ? p.nameFr : p.nameEn}
-              </h3>
-              <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: "rgba(11,54,61,0.5)", marginBottom: 16 }}>
-                {p.volume} · {p.abv}
-              </div>
-              <div style={{
-                fontFamily: "'DM Sans', sans-serif", fontSize: 22, fontWeight: 500, color: "#0b363d",
-                marginBottom: 16,
-              }}>
-                {p.price}
-              </div>
-              <div style={{ maxWidth: 140, margin: "0 auto" }}>
+            <div key={p.id} className="card card--interactive product-card" onClick={() => setSelectedProduct(p)}>
+              <img src={p.img} alt={lang === "fr" ? p.nameFr : p.nameEn} className="product-card__img" />
+              <h3 className="product-card__name">{lang === "fr" ? p.nameFr : p.nameEn}</h3>
+              <div className="product-card__meta">{p.volume} · {p.abv}</div>
+              <div className="product-card__price">{p.price}</div>
+              <div className="product-card__radar">
                 <RadarChart data={p.profile} color={p.color} size={140} />
               </div>
-              <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: "rgba(11,54,61,0.5)", marginTop: 16, lineHeight: 1.6 }}>
-                {lang === "fr" ? p.descFr : p.descEn}
-              </p>
+              <p className="product-card__desc">{lang === "fr" ? p.descFr : p.descEn}</p>
             </div>
           ))}
         </div>
@@ -647,46 +595,46 @@ export default function ArduennaWebapp() {
       {selectedProduct && (
         <div className="overlay" onClick={() => setSelectedProduct(null)}>
           <div className="modal" onClick={(e) => e.stopPropagation()}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 24 }}>
+            <div className="modal__header">
               <div>
-                <img src={selectedProduct.img} alt={lang === "fr" ? selectedProduct.nameFr : selectedProduct.nameEn} style={{ width: 80, height: 110, objectFit: "contain", marginBottom: 8 }} />
-                <h3 style={{ fontSize: 26, fontWeight: 400, fontStyle: "italic" }}>
+                <img
+                  src={selectedProduct.img}
+                  alt={lang === "fr" ? selectedProduct.nameFr : selectedProduct.nameEn}
+                  style={{ width: 80, height: 110, objectFit: "contain", marginBottom: "var(--space-2)" }}
+                />
+                <h3 style={{ fontFamily: "var(--font-display)", fontSize: "var(--text-2xl)", fontWeight: 400, fontStyle: "italic", color: "var(--text-primary)" }}>
                   {lang === "fr" ? selectedProduct.nameFr : selectedProduct.nameEn}
                 </h3>
-                <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: "rgba(11,54,61,0.5)", marginTop: 4 }}>
+                <div style={{ fontFamily: "var(--font-body)", fontSize: "var(--text-sm)", color: "var(--text-tertiary)", marginTop: "var(--space-1)" }}>
                   {selectedProduct.volume} · {selectedProduct.abv} · {selectedProduct.price}
                 </div>
               </div>
-              <button onClick={() => setSelectedProduct(null)} style={{ background: "none", border: "none", cursor: "pointer", color: "#0b363d" }}><IconX /></button>
+              <button className="modal__close" onClick={() => setSelectedProduct(null)}><IconX /></button>
             </div>
 
-            <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 14, lineHeight: 1.7, color: "rgba(11,54,61,0.7)", marginBottom: 24 }}>
+            <p className="body-text" style={{ marginBottom: "var(--space-6)" }}>
               {lang === "fr" ? selectedProduct.descFr : selectedProduct.descEn}
             </p>
 
-            <div className="modal-label">
-              <div style={{ fontSize: 13, fontWeight: 500, marginBottom: 12, fontFamily: "'DM Sans', sans-serif" }}>{t.products.profile}</div>
+            <div className="modal__block">
+              <div className="modal__block-title">{t.products.profile}</div>
               <div style={{ maxWidth: 180, margin: "0 auto" }}>
                 <RadarChart data={selectedProduct.profile} color={selectedProduct.color} size={180} />
               </div>
             </div>
 
-            <div className="modal-label">
-              <div style={{ fontSize: 13, fontWeight: 500, marginBottom: 8, fontFamily: "'DM Sans', sans-serif" }}>{t.products.pairings}</div>
-              <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: "rgba(11,54,61,0.6)", lineHeight: 1.8 }}>
+            <div className="modal__block">
+              <div className="modal__block-title">{t.products.pairings}</div>
+              <div className="body-text" style={{ fontSize: "var(--text-sm)" }}>
                 {(lang === "fr" ? selectedProduct.pairingsFr : selectedProduct.pairingsEn).join(" · ")}
               </div>
             </div>
 
-            <div className="modal-label">
-              <div style={{ fontSize: 13, fontWeight: 500, marginBottom: 8, fontFamily: "'DM Sans', sans-serif" }}>{t.products.certifications}</div>
-              <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+            <div className="modal__block">
+              <div className="modal__block-title">{t.products.certifications}</div>
+              <div style={{ display: "flex", gap: "var(--space-2)", flexWrap: "wrap" }}>
                 {selectedProduct.certs.map((c) => (
-                  <span key={c} style={{
-                    fontSize: 11, padding: "4px 12px", borderRadius: 20,
-                    background: "rgba(11,54,61,0.05)", border: "1px solid rgba(11,54,61,0.08)",
-                    fontFamily: "'DM Sans', sans-serif", color: "rgba(11,54,61,0.6)",
-                  }}>{c}</span>
+                  <span key={c} className="cert-tag">{c}</span>
                 ))}
               </div>
             </div>
@@ -695,61 +643,55 @@ export default function ArduennaWebapp() {
       )}
 
       {/* ═══ COCKTAIL LAB ═══ */}
-      <section ref={(el) => (sectionRefs.current.cocktails = el)} style={{
-        padding: "60px 24px 80px", maxWidth: 1000, margin: "0 auto",
-      }}>
+      <section id="cocktails" ref={(el) => (sectionRefs.current.cocktails = el)} className="section section--wide">
         <div className="divider" />
-        <div style={{ textAlign: "center", marginBottom: 32 }}>
-          <div className="section-label">{t.cocktails.sectionLabel}</div>
+        <div className="section-header reveal">
+          <div className="section-overline">{t.cocktails.sectionLabel}</div>
           <h2 className="section-title">{t.cocktails.title}</h2>
-          <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 14, color: "rgba(11,54,61,0.5)", maxWidth: 480, margin: "0 auto" }}>
-            {t.cocktails.subtitle}
-          </p>
+          <p className="section-subtitle">{t.cocktails.subtitle}</p>
         </div>
 
         {/* Filters */}
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 8, justifyContent: "center", marginBottom: 32 }}>
+        <div className="filter-bar reveal">
           {["all", "gin", "noalcohol", "aperitivo"].map((f) => (
-            <button key={f} className={`filter-btn ${cocktailFilter === f ? "active" : ""}`}
-              onClick={() => setCocktailFilter(f)}>
+            <button
+              key={f}
+              className={`filter-chip ${cocktailFilter === f ? "filter-chip--active" : ""}`}
+              onClick={() => setCocktailFilter(f)}
+            >
               {f === "all" ? t.cocktails.all : productsData.find((p) => p.id === f)?.[lang === "fr" ? "nameFr" : "nameEn"] || f}
             </button>
           ))}
-          <span style={{ width: 1, height: 24, background: "rgba(11,54,61,0.1)", margin: "0 4px" }} />
+          <span className="filter-separator" />
           {["all", "allYear", "summer", "winter", "spring", "autumn"].map((s) => (
-            <button key={s} className={`filter-btn ${seasonFilter === s ? "active" : ""}`}
-              onClick={() => setSeasonFilter(s)}>
+            <button
+              key={s}
+              className={`filter-chip ${seasonFilter === s ? "filter-chip--active" : ""}`}
+              onClick={() => setSeasonFilter(s)}
+            >
               {s === "all" ? t.cocktails.all : t.cocktails[s]}
             </button>
           ))}
         </div>
 
         {/* Cocktail grid */}
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))", gap: 20 }}>
+        <div className="grid-2 reveal">
           {filteredCocktails.map((c) => (
-            <div key={c.id} className="card" style={{ cursor: "pointer", padding: 24 }}
-              onClick={() => setSelectedCocktail(c)}>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 12 }}>
-                <h4 style={{ fontSize: 18, fontWeight: 400, fontStyle: "italic", flex: 1 }}>
-                  {lang === "fr" ? c.nameFr : c.nameEn}
-                </h4>
-                <button onClick={(e) => { e.stopPropagation(); toggleSaved(c.id); }}
-                  style={{ background: "none", border: "none", cursor: "pointer", color: savedCocktails.includes(c.id) ? "#c2744a" : "rgba(11,54,61,0.25)", transition: "color 0.3s" }}>
+            <div key={c.id} className="card card--interactive cocktail-card" onClick={() => setSelectedCocktail(c)}>
+              <div className="cocktail-card__header">
+                <h4 className="cocktail-card__name">{lang === "fr" ? c.nameFr : c.nameEn}</h4>
+                <button
+                  className={`cocktail-card__save ${savedCocktails.includes(c.id) ? "cocktail-card__save--active" : ""}`}
+                  onClick={(e) => { e.stopPropagation(); toggleSaved(c.id); }}
+                >
                   {savedCocktails.includes(c.id) ? <IconHeartFilled /> : <IconHeart />}
                 </button>
               </div>
-              <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, display: "flex", gap: 8, flexWrap: "wrap" }}>
-                <span style={{
-                  padding: "3px 10px", borderRadius: 12,
-                  background: "rgba(11,54,61,0.04)", color: "rgba(11,54,61,0.5)",
-                }}>
+              <div className="cocktail-card__tags">
+                <span className="tag">
                   {productsData.find((p) => p.id === c.product)?.[lang === "fr" ? "nameFr" : "nameEn"]}
                 </span>
-                <span style={{
-                  padding: "3px 10px", borderRadius: 12,
-                  background: c.difficulty === "easy" ? "rgba(58,122,107,0.08)" : c.difficulty === "medium" ? "rgba(194,116,74,0.08)" : "rgba(11,54,61,0.08)",
-                  color: c.difficulty === "easy" ? "#3a7a6b" : c.difficulty === "medium" ? "#c2744a" : "#0b363d",
-                }}>
+                <span className={`tag ${c.difficulty === "easy" ? "tag--sage" : c.difficulty === "medium" ? "tag--copper" : "tag--teal"}`}>
                   {t.cocktails[c.difficulty]}
                 </span>
               </div>
@@ -762,43 +704,46 @@ export default function ArduennaWebapp() {
       {selectedCocktail && (
         <div className="overlay" onClick={() => setSelectedCocktail(null)}>
           <div className="modal" onClick={(e) => e.stopPropagation()}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 24 }}>
-              <h3 style={{ fontSize: 24, fontWeight: 400, fontStyle: "italic" }}>
+            <div className="modal__header">
+              <h3 style={{ fontFamily: "var(--font-display)", fontSize: "var(--text-xl)", fontWeight: 400, fontStyle: "italic", color: "var(--text-primary)" }}>
                 {lang === "fr" ? selectedCocktail.nameFr : selectedCocktail.nameEn}
               </h3>
-              <button onClick={() => setSelectedCocktail(null)} style={{ background: "none", border: "none", cursor: "pointer", color: "#0b363d" }}><IconX /></button>
+              <button className="modal__close" onClick={() => setSelectedCocktail(null)}><IconX /></button>
             </div>
 
-            <div className="modal-label">
-              <div style={{ fontSize: 13, fontWeight: 500, marginBottom: 10, fontFamily: "'DM Sans', sans-serif" }}>
+            <div className="modal__block">
+              <div className="modal__block-title" style={{ display: "flex", alignItems: "center", gap: "var(--space-2)" }}>
                 <IconFlask /> {t.cocktails.ingredients}
               </div>
               {(lang === "fr" ? selectedCocktail.ingredientsFr : selectedCocktail.ingredientsEn).map((ing, i) => (
-                <div key={i} style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: "rgba(11,54,61,0.7)", padding: "4px 0", borderBottom: i < (lang === "fr" ? selectedCocktail.ingredientsFr : selectedCocktail.ingredientsEn).length - 1 ? "1px solid rgba(11,54,61,0.04)" : "none" }}>
+                <div key={i} className="body-text" style={{
+                  fontSize: "var(--text-sm)", padding: "var(--space-1) 0",
+                  borderBottom: i < (lang === "fr" ? selectedCocktail.ingredientsFr : selectedCocktail.ingredientsEn).length - 1 ? "1px solid var(--border-light)" : "none",
+                }}>
                   {ing}
                 </div>
               ))}
             </div>
 
-            <div className="modal-label">
-              <div style={{ fontSize: 13, fontWeight: 500, marginBottom: 10, fontFamily: "'DM Sans', sans-serif" }}>
-                {t.cocktails.steps}
-              </div>
+            <div className="modal__block">
+              <div className="modal__block-title">{t.cocktails.steps}</div>
               {(lang === "fr" ? selectedCocktail.stepsFr : selectedCocktail.stepsEn).map((step, i) => (
-                <div key={i} style={{ display: "flex", gap: 12, padding: "6px 0", fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: "rgba(11,54,61,0.7)" }}>
-                  <span style={{ color: "#0b363d", fontWeight: 500, minWidth: 20 }}>{i + 1}.</span>
+                <div key={i} className="body-text" style={{
+                  display: "flex", gap: "var(--space-3)", padding: "var(--space-1) 0", fontSize: "var(--text-sm)",
+                }}>
+                  <span style={{ color: "var(--text-primary)", fontWeight: 500, minWidth: 20, fontFamily: "var(--font-body)" }}>{i + 1}.</span>
                   {step}
                 </div>
               ))}
             </div>
 
-            <div style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 16, fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: "rgba(11,54,61,0.5)" }}>
-              <span style={{ fontWeight: 500, color: "#0b363d" }}>{t.cocktails.garnish}:</span>
-              {lang === "fr" ? selectedCocktail.garnishFr : selectedCocktail.garnishEn}
+            <div style={{ display: "flex", alignItems: "center", gap: "var(--space-2)", marginTop: "var(--space-4)" }} className="body-text">
+              <span style={{ fontWeight: 500, color: "var(--text-primary)", fontSize: "var(--text-sm)" }}>{t.cocktails.garnish}:</span>
+              <span style={{ fontSize: "var(--text-sm)" }}>{lang === "fr" ? selectedCocktail.garnishFr : selectedCocktail.garnishEn}</span>
             </div>
 
-            <div style={{ marginTop: 20 }}>
-              <button onClick={() => toggleSaved(selectedCocktail.id)} className="btn-ghost" style={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
+            <div style={{ marginTop: "var(--space-5)" }}>
+              <button onClick={() => toggleSaved(selectedCocktail.id)} className="btn-ghost btn-full" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "var(--space-2)" }}>
                 {savedCocktails.includes(selectedCocktail.id) ? <IconHeartFilled /> : <IconHeart />}
                 {savedCocktails.includes(selectedCocktail.id) ? t.cocktails.saved : t.cocktails.save}
               </button>
@@ -808,102 +753,87 @@ export default function ArduennaWebapp() {
       )}
 
       {/* ═══ PRO TOOLBOX ═══ */}
-      <section ref={(el) => (sectionRefs.current.toolbox = el)} style={{
-        padding: "60px 24px 80px", maxWidth: 900, margin: "0 auto",
-      }}>
+      <section id="toolbox" ref={(el) => (sectionRefs.current.toolbox = el)} className="section">
         <div className="divider" />
-        <div style={{ textAlign: "center", marginBottom: 40 }}>
-          <div className="section-label">{t.toolbox.sectionLabel}</div>
+        <div className="section-header reveal">
+          <div className="section-overline">{t.toolbox.sectionLabel}</div>
           <h2 className="section-title">{t.toolbox.title}</h2>
-          <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 14, color: "rgba(11,54,61,0.5)", maxWidth: 480, margin: "0 auto" }}>
-            {t.toolbox.subtitle}
-          </p>
+          <p className="section-subtitle">{t.toolbox.subtitle}</p>
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 20 }}>
+        <div className="grid-4 reveal">
           {[
             { title: t.toolbox.logos, desc: t.toolbox.logosDesc, ready: true },
             { title: t.toolbox.photos, desc: t.toolbox.photosDesc, ready: true },
             { title: t.toolbox.sheets, desc: t.toolbox.sheetsDesc, ready: true },
             { title: t.toolbox.salesKit, desc: t.toolbox.salesKitDesc, ready: false },
           ].map((item, i) => (
-            <div key={i} className="card" style={{ padding: 24 }}>
-              <div style={{ width: 40, height: 40, borderRadius: 10, background: "rgba(11,54,61,0.04)", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 16, color: "#0b363d" }}>
-                <IconDownload />
-              </div>
-              <h4 style={{ fontSize: 16, fontWeight: 400, fontStyle: "italic", marginBottom: 8 }}>{item.title}</h4>
-              <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, color: "rgba(11,54,61,0.5)", lineHeight: 1.6, marginBottom: 16 }}>{item.desc}</p>
-              <button className={item.ready ? "btn-primary" : "btn-ghost"} style={{ fontSize: 11, padding: "8px 20px", width: "100%" }}>
+            <div key={i} className="card toolbox-card">
+              <div className="toolbox-card__icon"><IconDownload /></div>
+              <h4 className="toolbox-card__title">{item.title}</h4>
+              <p className="toolbox-card__desc">{item.desc}</p>
+              <button className={`${item.ready ? "btn-primary" : "btn-ghost"} btn-sm btn-full`}>
                 {item.ready ? t.toolbox.download : t.toolbox.comingSoon}
               </button>
             </div>
           ))}
         </div>
 
-        <p style={{ textAlign: "center", fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: "rgba(11,54,61,0.4)", marginTop: 24 }}>
+        <p className="caption reveal" style={{ textAlign: "center", marginTop: "var(--space-6)" }}>
           {t.toolbox.contact}
         </p>
       </section>
 
       {/* ═══ SUSTAINABILITY ═══ */}
-      <section ref={(el) => (sectionRefs.current.sustainability = el)} style={{
-        padding: "60px 24px 80px", maxWidth: 900, margin: "0 auto",
-      }}>
+      <section id="sustainability" ref={(el) => (sectionRefs.current.sustainability = el)} className="section">
         <div className="divider" />
-        <div style={{ textAlign: "center", marginBottom: 40 }}>
-          <div className="section-label">{t.sustainability.sectionLabel}</div>
+        <div className="section-header reveal">
+          <div className="section-overline">{t.sustainability.sectionLabel}</div>
           <h2 className="section-title">{t.sustainability.title}</h2>
-          <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 14, color: "rgba(11,54,61,0.5)", maxWidth: 480, margin: "0 auto" }}>
-            {t.sustainability.subtitle}
-          </p>
+          <p className="section-subtitle">{t.sustainability.subtitle}</p>
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 20 }}>
+        <div className="grid-3 reveal">
           {[
-            { icon: "🅱️", title: t.sustainability.bcorp, desc: t.sustainability.bcorpDesc },
-            { icon: "🌱", title: t.sustainability.organic, desc: t.sustainability.organicDesc },
-            { icon: "🏛️", title: t.sustainability.oldest, desc: t.sustainability.oldestDesc },
-            { icon: "♻️", title: t.sustainability.bottle, desc: t.sustainability.bottleDesc },
-            { icon: "🤝", title: t.sustainability.local, desc: t.sustainability.localDesc },
+            { icon: "bcorp", title: t.sustainability.bcorp, desc: t.sustainability.bcorpDesc },
+            { icon: "organic", title: t.sustainability.organic, desc: t.sustainability.organicDesc },
+            { icon: "oldest", title: t.sustainability.oldest, desc: t.sustainability.oldestDesc },
+            { icon: "bottle", title: t.sustainability.bottle, desc: t.sustainability.bottleDesc },
+            { icon: "local", title: t.sustainability.local, desc: t.sustainability.localDesc },
           ].map((item, i) => (
-            <div key={i} className="card" style={{ padding: 28 }}>
-              <div style={{ fontSize: 28, marginBottom: 12 }}>{item.icon}</div>
-              <h4 style={{ fontSize: 17, fontWeight: 400, fontStyle: "italic", marginBottom: 8 }}>{item.title}</h4>
-              <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: "rgba(11,54,61,0.6)", lineHeight: 1.7 }}>{item.desc}</p>
+            <div key={i} className="card sustain-card">
+              <div className="sustain-card__icon"><SustainIcon type={item.icon} /></div>
+              <h4 className="sustain-card__title">{item.title}</h4>
+              <p className="sustain-card__desc">{item.desc}</p>
             </div>
           ))}
         </div>
       </section>
 
       {/* ═══ PHASE 2 TEASERS ═══ */}
-      <section style={{ padding: "60px 24px 80px", maxWidth: 900, margin: "0 auto" }}>
+      <section className="section">
         <div className="divider" />
-        <div style={{ textAlign: "center", marginBottom: 40 }}>
-          <div className="section-label">{t.teasers.sectionLabel}</div>
+        <div className="section-header reveal">
+          <div className="section-overline">{t.teasers.sectionLabel}</div>
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 20 }}>
+        <div className="grid-4 reveal">
           {[
             { key: "academy", title: t.teasers.academyTitle, desc: t.teasers.academyDesc },
             { key: "finder", title: t.teasers.finderTitle, desc: t.teasers.finderDesc },
             { key: "cellar", title: t.teasers.cellarTitle, desc: t.teasers.cellarDesc },
             { key: "events", title: t.teasers.eventsTitle, desc: t.teasers.eventsDesc },
           ].map((item) => (
-            <div key={item.key} className="card" style={{ padding: 24, opacity: 0.7, position: "relative" }}>
-              <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12, color: "rgba(11,54,61,0.35)" }}>
-                <IconLock />
-              </div>
-              <h4 style={{ fontSize: 16, fontWeight: 400, fontStyle: "italic", marginBottom: 8 }}>{item.title}</h4>
-              <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, color: "rgba(11,54,61,0.5)", lineHeight: 1.6, marginBottom: 16 }}>
-                {item.desc}
-              </p>
+            <div key={item.key} className="card teaser-card">
+              <div className="teaser-card__lock"><IconLock /></div>
+              <h4 className="teaser-card__title">{item.title}</h4>
+              <p className="teaser-card__desc">{item.desc}</p>
               <button
-                className={teaserNotifs[item.key] ? "btn-ghost" : "btn-primary"}
-                style={{ fontSize: 11, padding: "8px 20px", width: "100%" }}
+                className={`${teaserNotifs[item.key] ? "btn-ghost" : "btn-primary"} btn-sm btn-full`}
                 onClick={() => setTeaserNotifs((prev) => ({ ...prev, [item.key]: true }))}
               >
                 {teaserNotifs[item.key] ? t.teasers.notified : (
-                  <span style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }}>
+                  <span style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "var(--space-2)" }}>
                     <IconBell /> {t.teasers.notifyMe}
                   </span>
                 )}
@@ -914,24 +844,21 @@ export default function ArduennaWebapp() {
       </section>
 
       {/* ═══ FOOTER ═══ */}
-      <footer style={{
-        padding: "48px 24px 32px", maxWidth: 900, margin: "0 auto",
-        borderTop: "1px solid rgba(11,54,61,0.06)",
-      }}>
-        <div style={{ textAlign: "center", marginBottom: 32 }}>
-          <div style={{ fontSize: 20, letterSpacing: 5, fontWeight: 500, marginBottom: 8 }}>ARDUENNA</div>
-          <div style={{ fontStyle: "italic", fontSize: 16, color: "rgba(11,54,61,0.5)" }}>{t.footer.tagline}</div>
+      <footer className="footer">
+        <div className="footer__brand">
+          <div className="footer__brand-name">ARDUENNA</div>
+          <div className="footer__tagline">{t.footer.tagline}</div>
         </div>
 
-        <div style={{ display: "flex", justifyContent: "center", gap: 24, marginBottom: 32, flexWrap: "wrap" }}>
-          <a href="https://arduenna-gin.com" target="_blank" rel="noopener noreferrer" className="nav-link">{t.footer.shop}</a>
-          <span className="nav-link">{t.footer.legal}</span>
-          <span className="nav-link">{t.footer.contact}</span>
+        <div className="footer__links">
+          <a href="https://arduenna-gin.com" target="_blank" rel="noopener noreferrer" className="footer__link">{t.footer.shop}</a>
+          <span className="footer__link">{t.footer.legal}</span>
+          <span className="footer__link">{t.footer.contact}</span>
         </div>
 
-        <div style={{ textAlign: "center", fontFamily: "'DM Sans', sans-serif" }}>
-          <p style={{ fontSize: 11, color: "rgba(11,54,61,0.35)", marginBottom: 8 }}>{t.footer.copyright}</p>
-          <p style={{ fontSize: 11, color: "rgba(11,54,61,0.3)", fontStyle: "italic" }}>{t.footer.drink}</p>
+        <div className="footer__legal">
+          <p className="footer__copyright">{t.footer.copyright}</p>
+          <p className="footer__warning">{t.footer.drink}</p>
         </div>
       </footer>
     </div>
