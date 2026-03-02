@@ -1342,6 +1342,179 @@ a {
   }
 }
 
+/* ─── Heart Pulse Animation ─── */
+@keyframes heartPulse {
+  0% { transform: scale(1); }
+  25% { transform: scale(1.3); }
+  50% { transform: scale(0.95); }
+  75% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+
+.heart-pulse {
+  animation: heartPulse 400ms var(--ease-out);
+}
+
+/* ─── Action Bar (sticky in cocktail modal) ─── */
+.action-bar {
+  display: flex;
+  gap: var(--space-2);
+  margin-top: var(--space-6);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--border-light);
+}
+
+.action-bar__btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: var(--space-3) var(--space-2);
+  background: none;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  color: var(--text-tertiary);
+  font-family: var(--font-body);
+  font-size: 10px;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all var(--duration-fast);
+  min-height: 48px;
+}
+
+.action-bar__btn:hover {
+  border-color: var(--border-medium);
+  color: var(--text-primary);
+  background: var(--bg-subtle);
+}
+
+.action-bar__btn--active {
+  border-color: var(--accent-secondary);
+  color: var(--accent-secondary);
+  background: rgba(194, 116, 74, 0.05);
+}
+
+.action-bar__btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* ─── Toast Notification ─── */
+.toast {
+  position: fixed;
+  bottom: 100px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--accent-primary);
+  color: var(--text-on-dark);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  padding: var(--space-3) var(--space-6);
+  border-radius: var(--radius-full);
+  box-shadow: var(--shadow-lg);
+  z-index: 200;
+  animation: toastIn 300ms var(--ease-out) forwards;
+  pointer-events: none;
+}
+
+[data-theme="dark"] .toast {
+  background: var(--color-cream);
+  color: var(--color-teal);
+}
+
+@keyframes toastIn {
+  from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+  to { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+/* ─── Season Badge on Cards ─── */
+.cocktail-card__season {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  margin-top: var(--space-2);
+  font-family: var(--font-body);
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+/* ─── Cocktail Accroche (narrative hook) ─── */
+.cocktail-card__accroche {
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  font-style: italic;
+  color: var(--text-muted);
+  margin-top: var(--space-2);
+  line-height: var(--leading-snug);
+}
+
+.modal__accroche {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-style: italic;
+  color: var(--text-tertiary);
+  margin-bottom: var(--space-6);
+  line-height: var(--leading-snug);
+}
+
+/* ─── Filter Count ─── */
+.filter-count {
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  text-align: center;
+  margin-top: calc(-1 * var(--space-4));
+  margin-bottom: var(--space-6);
+}
+
+/* ─── Product Perfect Serve ─── */
+.product-card__serve {
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  color: var(--accent-secondary);
+  margin-top: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  background: rgba(194, 116, 74, 0.06);
+  border-radius: var(--radius-sm);
+  text-align: center;
+  letter-spacing: var(--tracking-wide);
+}
+
+.product-card__serve strong {
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+/* ─── Focus & Accessibility ─── */
+*:focus-visible {
+  outline: 2px solid var(--accent-secondary);
+  outline-offset: 2px;
+}
+
+button:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Ensure minimum touch targets */
+.cocktail-card__save,
+.action-bar__btn,
+.bottom-nav__item,
+.filter-chip,
+.theme-toggle,
+.lang-toggle,
+.menu-toggle {
+  min-width: 44px;
+  min-height: 44px;
+}
+
+.cocktail-card__save {
+  padding: var(--space-3);
+  margin: calc(-1 * var(--space-3));
+}
+
 /* ─── Utilities ─── */
 .text-center { text-align: center; }
 .text-body { font-family: var(--font-body); }

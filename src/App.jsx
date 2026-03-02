@@ -14,6 +14,7 @@ const translations = {
       tagline2: "of nature",
       subtitle: "Gin bio premium des Ardennes belges",
       cta: "Découvrir",
+      banner: "LIVRAISON GRATUITE EN BELGIQUE À PARTIR DE 50€",
     },
     story: {
       sectionLabel: "Notre histoire",
@@ -30,15 +31,19 @@ const translations = {
       sectionLabel: "Nos produits", title: "La gamme Arduenna",
       downloadPdf: "Télécharger la fiche", profile: "Profil aromatique",
       pairings: "Accords suggérés", certifications: "Certifications",
+      perfectServe: "Perfect Serve",
     },
     cocktails: {
       sectionLabel: "Cocktail Lab", title: "L'art du cocktail Arduenna",
       subtitle: "Découvrez nos recettes signature et trouvez l'inspiration pour vos créations.",
       all: "Tous", difficulty: "Difficulté", easy: "Facile", medium: "Moyen", advanced: "Avancé",
       ingredients: "Ingrédients", steps: "Préparation", garnish: "Garniture",
-      saved: "Sauvegardé !", save: "Sauvegarder",
+      saved: "Sauvegardé", save: "Favori",
+      share: "Partager", download: "Fiche",
+      shareCopied: "Lien copié !",
       filterByProduct: "Par produit", filterBySeason: "Par saison",
       summer: "Été", winter: "Hiver", allYear: "Toute l'année", spring: "Printemps", autumn: "Automne",
+      results: "cocktails",
     },
     toolbox: {
       sectionLabel: "Espace Pro", title: "Toolbox Partenaires",
@@ -77,7 +82,7 @@ const translations = {
   },
   en: {
     nav: { story: "Story", products: "Products", cocktails: "Cocktail Lab", toolbox: "Pro Toolbox", sustainability: "Sustainability", club: "Club" },
-    hero: { tagline: "Original taste", tagline2: "of nature", subtitle: "Premium organic gin from the Belgian Ardennes", cta: "Discover" },
+    hero: { tagline: "Original taste", tagline2: "of nature", subtitle: "Premium organic gin from the Belgian Ardennes", cta: "Discover", banner: "FREE DELIVERY IN BELGIUM FROM €50" },
     story: {
       sectionLabel: "Our story", title: "Born from the passion of two Ardennais",
       p1: "Arduenna was born from the desire of Martin and François, passionate about the nature of the Ardennes and epicureans at heart, to offer you original and convivial moments.",
@@ -88,8 +93,8 @@ const translations = {
       botanical3: "Elderflower", botanical3Latin: "Sambucus", botanical3Desc: "Enchanting sweetness",
     },
     awards: { sectionLabel: "Awards", title: "Internationally recognized" },
-    products: { sectionLabel: "Our products", title: "The Arduenna range", downloadPdf: "Download spec sheet", profile: "Aromatic profile", pairings: "Suggested pairings", certifications: "Certifications" },
-    cocktails: { sectionLabel: "Cocktail Lab", title: "The art of Arduenna cocktails", subtitle: "Discover our signature recipes and find inspiration for your creations.", all: "All", difficulty: "Difficulty", easy: "Easy", medium: "Medium", advanced: "Advanced", ingredients: "Ingredients", steps: "Method", garnish: "Garnish", saved: "Saved!", save: "Save", filterByProduct: "By product", filterBySeason: "By season", summer: "Summer", winter: "Winter", allYear: "All year", spring: "Spring", autumn: "Autumn" },
+    products: { sectionLabel: "Our products", title: "The Arduenna range", downloadPdf: "Download spec sheet", profile: "Aromatic profile", pairings: "Suggested pairings", certifications: "Certifications", perfectServe: "Perfect Serve" },
+    cocktails: { sectionLabel: "Cocktail Lab", title: "The art of Arduenna cocktails", subtitle: "Discover our signature recipes and find inspiration for your creations.", all: "All", difficulty: "Difficulty", easy: "Easy", medium: "Medium", advanced: "Advanced", ingredients: "Ingredients", steps: "Method", garnish: "Garnish", saved: "Saved", save: "Favourite", share: "Share", download: "Card", shareCopied: "Link copied!", filterByProduct: "By product", filterBySeason: "By season", summer: "Summer", winter: "Winter", allYear: "All year", spring: "Spring", autumn: "Autumn", results: "cocktails" },
     toolbox: { sectionLabel: "Pro Toolbox", title: "Partner Toolbox", subtitle: "All the tools you need to promote Arduenna in your establishment.", logos: "Logos & Branding", logosDesc: "Logos in various formats (SVG, PNG, PDF) for your materials", photos: "HD Product Photos", photosDesc: "High-resolution visuals for your menus and social media", sheets: "Technical Sheets", sheetsDesc: "Detailed specifications for each product", salesKit: "Sales Kit", salesKitDesc: "Sales pitch and positioning for your commercial teams", download: "Download", comingSoon: "Coming soon", contact: "Need a specific format? Contact us" },
     sustainability: { sectionLabel: "Sustainability", title: "An ode to nature", subtitle: "At Arduenna, our commitment to nature is reflected at every stage.", bcorp: "B Corp Certified", bcorpDesc: "Global label recognizing companies combining economic performance, social impact and environmental respect.", organic: "100% Organic", organicDesc: "All our ingredients are certified organic, for a pure and authentic gin.", oldest: "Oldest distillery", oldestDesc: "Produced by Belgium's oldest distillery, guaranteeing ancestral know-how.", bottle: "1L eco-designed bottle", bottleDesc: "20% glass weight reduction. Bottles recycled into terrazzo.", local: "European partners", localDesc: "Collaboration only with partners sharing our sustainable values." },
     teasers: { sectionLabel: "Coming soon", academyTitle: "Arduenna Academy", academyDesc: "Certified training for bartenders. Interactive modules, quizzes and official 'Arduenna Certified Bartender' certification.", finderTitle: "Bar Finder", finderDesc: "Geolocated interactive map to find bars and restaurants serving Arduenna near you.", cellarTitle: "My Cellar", cellarDesc: "Manage your Arduenna collection, rate your favorite cocktails and receive personalized suggestions.", eventsTitle: "Events", eventsDesc: "Masterclasses, tastings and exclusive meetings with the founders.", notifyMe: "Notify me", notified: "Notified ✓" },
@@ -98,7 +103,10 @@ const translations = {
   },
 };
 
-// ─── Product Data ───
+// Season display helpers
+const seasonEmojis = { allYear: "🍸", summer: "☀️", winter: "❄️", spring: "🌸", autumn: "🍂" };
+
+// ─── Product Data (with Perfect Serve) ───
 const productsData = [
   {
     id: "gin", nameFr: "Arduenna Gin", nameEn: "Arduenna Gin",
@@ -111,6 +119,8 @@ const productsData = [
     pairingsEn: ["Premium tonic", "Fresh citrus", "Seafood", "Aged cheeses"],
     certs: ["Bio EU", "B Corp", "Distillerie historique"],
     img: "/Thumbnail-Arduenna-gin-aspect-ratio-1072-1372.avif",
+    perfectServeFr: "5 cl Gin + Fever-Tree Indian Tonic + romarin & pamplemousse rose",
+    perfectServeEn: "5 cl Gin + Fever-Tree Indian Tonic + rosemary & pink grapefruit",
   },
   {
     id: "noalcohol", nameFr: "Arduenna No Alcohol", nameEn: "Arduenna No Alcohol",
@@ -123,6 +133,8 @@ const productsData = [
     pairingsEn: ["Light tonic", "Fresh herbs", "Fruity desserts", "Aperitif"],
     certs: ["Bio EU", "B Corp", "Sans alcool"],
     img: "/arduenna_no_alcohol_site-aspect-ratio-1072-1372.webp",
+    perfectServeFr: "5 cl No Alcohol + tonic premium + concombre & poivre rose",
+    perfectServeEn: "5 cl No Alcohol + premium tonic + cucumber & pink pepper",
   },
   {
     id: "aperitivo", nameFr: "694 Aperitivo", nameEn: "694 Aperitivo",
@@ -135,12 +147,15 @@ const productsData = [
     pairingsEn: ["Prosecco", "Soda", "Olives & charcuterie", "Italian cuisine"],
     certs: ["Bio EU", "B Corp"],
     img: "/Thumbnail-Arduenna-694-aspect-ratio-1072-1372-1.avif",
+    perfectServeFr: "6 cl 694 + Prosecco + eau pétillante + orange & olive",
+    perfectServeEn: "6 cl 694 + Prosecco + sparkling water + orange & olive",
   },
 ];
 
-// ─── Cocktail Data ───
+// ─── Cocktail Data (with narrative hooks) ───
 const cocktailsData = [
   { id: 1, nameFr: "Arduenna G&T Signature", nameEn: "Arduenna Signature G&T", product: "gin", difficulty: "easy", season: "allYear",
+    accrocheFr: "Le classique réinventé par la forêt d'Arduenna.", accrocheEn: "The classic, reimagined by the Arduenna forest.",
     ingredientsFr: ["5 cl Arduenna Gin", "15 cl tonic premium", "1 brin de romarin", "1 tranche de pamplemousse rose", "Glaçons"],
     ingredientsEn: ["5 cl Arduenna Gin", "15 cl premium tonic", "1 sprig of rosemary", "1 slice pink grapefruit", "Ice cubes"],
     stepsFr: ["Remplir un verre ballon de glaçons", "Verser l'Arduenna Gin", "Ajouter le tonic délicatement le long du verre", "Remuer doucement une fois", "Garnir de romarin et pamplemousse"],
@@ -148,6 +163,7 @@ const cocktailsData = [
     garnishFr: "Romarin & pamplemousse rose", garnishEn: "Rosemary & pink grapefruit",
   },
   { id: 2, nameFr: "Forest Negroni", nameEn: "Forest Negroni", product: "gin", difficulty: "medium", season: "allYear",
+    accrocheFr: "L'amertume noble des sous-bois ardennais.", accrocheEn: "The noble bitterness of the Ardennes undergrowth.",
     ingredientsFr: ["3 cl Arduenna Gin", "3 cl Vermouth rouge", "3 cl Campari", "Zeste d'orange", "Glaçons"],
     ingredientsEn: ["3 cl Arduenna Gin", "3 cl Red Vermouth", "3 cl Campari", "Orange zest", "Ice cubes"],
     stepsFr: ["Remplir un verre old-fashioned de glaçons", "Verser tous les ingrédients", "Remuer pendant 20 secondes", "Exprimer le zeste d'orange au-dessus du verre"],
@@ -155,6 +171,7 @@ const cocktailsData = [
     garnishFr: "Zeste d'orange", garnishEn: "Orange zest",
   },
   { id: 3, nameFr: "Ardenne Sour", nameEn: "Ardenne Sour", product: "gin", difficulty: "medium", season: "allYear",
+    accrocheFr: "La douceur du sureau rencontre l'acidité vive du citron.", accrocheEn: "Elderflower sweetness meets the bright bite of citrus.",
     ingredientsFr: ["5 cl Arduenna Gin", "3 cl jus de citron frais", "2 cl sirop de sureau", "1 blanc d'œuf", "2 dashes Angostura bitters"],
     ingredientsEn: ["5 cl Arduenna Gin", "3 cl fresh lemon juice", "2 cl elderflower syrup", "1 egg white", "2 dashes Angostura bitters"],
     stepsFr: ["Dry shake (sans glace) tous les ingrédients 15 sec", "Ajouter les glaçons et shaker à nouveau", "Filtrer dans un verre coupé", "Décorer de bitters sur la mousse"],
@@ -162,6 +179,7 @@ const cocktailsData = [
     garnishFr: "Angostura bitters sur mousse", garnishEn: "Angostura bitters on foam",
   },
   { id: 4, nameFr: "Mirabelle Fizz", nameEn: "Mirabelle Fizz", product: "gin", difficulty: "easy", season: "summer",
+    accrocheFr: "Un éclat doré d'été, capturé dans un verre.", accrocheEn: "A golden burst of summer, captured in a glass.",
     ingredientsFr: ["4 cl Arduenna Gin", "2 cl liqueur de mirabelle", "2 cl jus de citron", "Eau pétillante", "Feuilles de menthe"],
     ingredientsEn: ["4 cl Arduenna Gin", "2 cl mirabelle liqueur", "2 cl lemon juice", "Sparkling water", "Mint leaves"],
     stepsFr: ["Shaker le gin, la liqueur et le citron avec des glaçons", "Filtrer dans un verre highball rempli de glace", "Compléter avec l'eau pétillante", "Garnir de menthe"],
@@ -169,6 +187,7 @@ const cocktailsData = [
     garnishFr: "Menthe fraîche", garnishEn: "Fresh mint",
   },
   { id: 5, nameFr: "694 Spritz", nameEn: "694 Spritz", product: "aperitivo", difficulty: "easy", season: "summer",
+    accrocheFr: "La dolce vita, version Ardennes.", accrocheEn: "La dolce vita, Ardennes edition.",
     ingredientsFr: ["6 cl 694 Aperitivo", "9 cl Prosecco", "3 cl eau pétillante", "1 tranche d'orange", "Olive verte"],
     ingredientsEn: ["6 cl 694 Aperitivo", "9 cl Prosecco", "3 cl sparkling water", "1 orange slice", "Green olive"],
     stepsFr: ["Remplir un verre à vin de glaçons", "Verser le 694 Aperitivo", "Ajouter le Prosecco", "Compléter avec l'eau pétillante", "Garnir avec l'orange et l'olive"],
@@ -176,6 +195,7 @@ const cocktailsData = [
     garnishFr: "Orange & olive verte", garnishEn: "Orange & green olive",
   },
   { id: 6, nameFr: "Winter Warmer", nameEn: "Winter Warmer", product: "gin", difficulty: "medium", season: "winter",
+    accrocheFr: "Quand la forêt rencontre le foyer, un soir de gel.", accrocheEn: "When the forest meets the fireside, on a frosty night.",
     ingredientsFr: ["5 cl Arduenna Gin", "2 cl miel de fleurs", "3 cl jus de pomme chaud", "1 bâton de cannelle", "2 clous de girofle", "1 tranche de pomme"],
     ingredientsEn: ["5 cl Arduenna Gin", "2 cl flower honey", "3 cl hot apple juice", "1 cinnamon stick", "2 cloves", "1 apple slice"],
     stepsFr: ["Chauffer le jus de pomme avec la cannelle et les clous de girofle", "Ajouter le miel et mélanger", "Verser dans un verre résistant à la chaleur", "Ajouter l'Arduenna Gin", "Garnir avec la tranche de pomme"],
@@ -183,6 +203,7 @@ const cocktailsData = [
     garnishFr: "Pomme & cannelle", garnishEn: "Apple & cinnamon",
   },
   { id: 7, nameFr: "Elderflower Collins", nameEn: "Elderflower Collins", product: "gin", difficulty: "easy", season: "spring",
+    accrocheFr: "Le printemps en Ardenne distillé en un long drink.", accrocheEn: "Ardennes springtime, distilled into a long drink.",
     ingredientsFr: ["5 cl Arduenna Gin", "3 cl jus de citron", "2 cl sirop de sureau", "Eau pétillante", "Fleur de sureau (si disponible)"],
     ingredientsEn: ["5 cl Arduenna Gin", "3 cl lemon juice", "2 cl elderflower syrup", "Sparkling water", "Elderflower (if available)"],
     stepsFr: ["Shaker le gin, citron et sirop avec des glaçons", "Filtrer dans un verre collins rempli de glace", "Compléter avec l'eau pétillante", "Garnir de fleur de sureau"],
@@ -190,6 +211,7 @@ const cocktailsData = [
     garnishFr: "Fleur de sureau", garnishEn: "Elderflower",
   },
   { id: 8, nameFr: "Ardenne Mule", nameEn: "Ardenne Mule", product: "gin", difficulty: "easy", season: "allYear",
+    accrocheFr: "Le kick du gingembre apprivoisé par la forêt.", accrocheEn: "Ginger's kick, tamed by the forest.",
     ingredientsFr: ["5 cl Arduenna Gin", "2 cl jus de citron vert", "12 cl ginger beer", "Feuilles de menthe", "Tranche de citron vert"],
     ingredientsEn: ["5 cl Arduenna Gin", "2 cl lime juice", "12 cl ginger beer", "Mint leaves", "Lime slice"],
     stepsFr: ["Presser le citron vert dans un mug en cuivre", "Ajouter les glaçons", "Verser l'Arduenna Gin", "Compléter avec le ginger beer", "Garnir de menthe et citron vert"],
@@ -197,6 +219,7 @@ const cocktailsData = [
     garnishFr: "Menthe & citron vert", garnishEn: "Mint & lime",
   },
   { id: 9, nameFr: "694 Negroni Twist", nameEn: "694 Negroni Twist", product: "aperitivo", difficulty: "medium", season: "autumn",
+    accrocheFr: "L'automne ardennais dans un verre old-fashioned.", accrocheEn: "Ardennes autumn in an old-fashioned glass.",
     ingredientsFr: ["3 cl 694 Aperitivo", "3 cl Arduenna Gin", "3 cl Vermouth rouge", "Zeste d'orange"],
     ingredientsEn: ["3 cl 694 Aperitivo", "3 cl Arduenna Gin", "3 cl Red Vermouth", "Orange zest"],
     stepsFr: ["Remplir un verre old-fashioned de glaçons", "Verser tous les ingrédients", "Remuer 30 secondes", "Exprimer et déposer le zeste d'orange"],
@@ -204,6 +227,7 @@ const cocktailsData = [
     garnishFr: "Zeste d'orange", garnishEn: "Orange zest",
   },
   { id: 10, nameFr: "No Alcohol Tonic", nameEn: "No Alcohol Tonic", product: "noalcohol", difficulty: "easy", season: "allYear",
+    accrocheFr: "Toute la magie d'Arduenna, la légèreté en plus.", accrocheEn: "All the magic of Arduenna, with added lightness.",
     ingredientsFr: ["5 cl Arduenna No Alcohol", "15 cl tonic premium", "Rondelles de concombre", "Poivre rose"],
     ingredientsEn: ["5 cl Arduenna No Alcohol", "15 cl premium tonic", "Cucumber slices", "Pink pepper"],
     stepsFr: ["Remplir un verre ballon de glaçons", "Verser l'Arduenna No Alcohol", "Ajouter le tonic délicatement", "Garnir de concombre et poivre rose"],
@@ -233,7 +257,7 @@ const RadarChart = ({ data, color, size = 160 }) => {
     return [cx + Math.cos(angle) * dist, cy + Math.sin(angle) * dist];
   };
   return (
-    <svg viewBox={`0 0 ${size} ${size}`} style={{ width: "100%", maxWidth: size }}>
+    <svg viewBox={`0 0 ${size} ${size}`} style={{ width: "100%", maxWidth: size }} role="img" aria-label="Aromatic profile radar chart">
       {[25, 50, 75, 100].map((level) => (
         <polygon key={level} points={labels.map((_, i) => getPoint(i, level).join(",")).join(" ")}
           fill="none" stroke="var(--border-medium)" strokeWidth="0.5" />
@@ -264,8 +288,9 @@ const RadarChart = ({ data, color, size = 160 }) => {
 // ─── Icons ───
 const IconFlask = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M9 3h6M12 3v7l-5 8.5a2 2 0 001.7 3h6.6a2 2 0 001.7-3L12 10V3"/></svg>;
 const IconDownload = () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>;
-const IconHeart = () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>;
-const IconHeartFilled = () => <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>;
+const IconHeart = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>;
+const IconHeartFilled = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>;
+const IconShare = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98"/></svg>;
 const IconX = () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 6L6 18M6 6l12 12"/></svg>;
 const IconBell = () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 01-3.46 0"/></svg>;
 const IconLock = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>;
@@ -274,21 +299,20 @@ const IconMenu = () => <svg width="24" height="24" viewBox="0 0 24 24" fill="non
 const IconSun = () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>;
 const IconMoon = () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>;
 
-// Bottom nav icons (slightly larger for touch)
+// Bottom nav icons (44px touch target)
 const IconHome = () => <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>;
-const IconBottle = () => <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M10 2h4M12 2v4M8 6h8l1 4v10a2 2 0 01-2 2H9a2 2 0 01-2-2V10l1-4z"/></svg>;
 const IconGlass = () => <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M8 2h8l-1 10a4 4 0 01-3 3.87V20h3v2H9v-2h3v-4.13A4 4 0 019 12L8 2z"/></svg>;
 const IconLeafNav = () => <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M17 8C8 10 5.9 16.17 3.82 21.34l1.89.66.95-2.3c.48.17.98.3 1.34.3C19 20 22 3 22 3c-1 2-8 2.25-13 3.25S2 11.5 2 13.5s1.75 3.75 1.75 3.75"/></svg>;
 const IconBriefcase = () => <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>;
 
 // ─── Botanical decoration ───
-const BotanicalDeco = ({ className, style }) => (
-  <svg viewBox="0 0 120 200" className={className} style={{ position: "absolute", opacity: 0.05, ...style }} fill="var(--text-primary)">
+const BotanicalDeco = ({ style }) => (
+  <svg viewBox="0 0 120 200" style={{ position: "absolute", opacity: 0.05, ...style }} fill="var(--text-primary)" aria-hidden="true">
     <path d="M60 200 C60 200 60 100 60 80 C60 60 30 40 20 20 C15 10 25 0 35 5 C45 10 55 30 60 50 C65 30 75 10 85 5 C95 0 105 10 100 20 C90 40 60 60 60 80Z"/>
   </svg>
 );
 
-// ─── Sustainability icons (SVG instead of emojis) ───
+// ─── Sustainability icons ───
 const SustainIcon = ({ type }) => {
   const icons = {
     bcorp: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="12" cy="12" r="10"/><path d="M8 12h4a2 2 0 100-4H8v8h4.5a2.5 2.5 0 100-5H8"/></svg>,
@@ -317,6 +341,8 @@ export default function ArduennaWebapp() {
   const [savedCocktails, setSavedCocktails] = useState([]);
   const [teaserNotifs, setTeaserNotifs] = useState({});
   const [scrolled, setScrolled] = useState(false);
+  const [toast, setToast] = useState(null);
+  const [heartPulse, setHeartPulse] = useState(null);
 
   const t = translations[lang];
   const sectionRefs = useRef({});
@@ -345,7 +371,6 @@ export default function ArduennaWebapp() {
       },
       { threshold: 0.1, rootMargin: "0px 0px -40px 0px" }
     );
-
     const elements = document.querySelectorAll(".reveal");
     elements.forEach((el) => observer.observe(el));
     return () => observer.disconnect();
@@ -364,12 +389,19 @@ export default function ArduennaWebapp() {
       },
       { threshold: 0.3 }
     );
-
     Object.values(sectionRefs.current).forEach((el) => {
       if (el) observer.observe(el);
     });
     return () => observer.disconnect();
   }, [ageVerified]);
+
+  // Auto-dismiss toast
+  useEffect(() => {
+    if (toast) {
+      const timer = setTimeout(() => setToast(null), 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [toast]);
 
   const scrollTo = useCallback((id) => {
     setMenuOpen(false);
@@ -378,11 +410,125 @@ export default function ArduennaWebapp() {
   }, []);
 
   const toggleSaved = (id) => {
-    setSavedCocktails((prev) => prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]);
+    const wasSaved = savedCocktails.includes(id);
+    setSavedCocktails((prev) => wasSaved ? prev.filter((x) => x !== id) : [...prev, id]);
+    if (!wasSaved) {
+      setHeartPulse(id);
+      setTimeout(() => setHeartPulse(null), 400);
+    }
   };
 
   const toggleTheme = () => {
     setTheme((prev) => prev === "light" ? "dark" : "light");
+  };
+
+  // Web Share API (benchmark: Roku-inspired)
+  const shareCocktail = async (cocktail) => {
+    const name = lang === "fr" ? cocktail.nameFr : cocktail.nameEn;
+    const shareData = {
+      title: `${name} — Arduenna`,
+      text: lang === "fr"
+        ? `Découvrez la recette ${name} avec Arduenna 🍸`
+        : `Discover the ${name} recipe with Arduenna 🍸`,
+      url: window.location.href,
+    };
+    try {
+      if (navigator.share) {
+        await navigator.share(shareData);
+      } else {
+        await navigator.clipboard.writeText(`${shareData.text}\n${shareData.url}`);
+        setToast(t.cocktails.shareCopied);
+      }
+    } catch (e) {
+      // User cancelled share dialog — ignore
+    }
+  };
+
+  // Download recipe card as PNG (benchmark: Diageo BA-inspired)
+  const downloadRecipeCard = (cocktail) => {
+    const name = lang === "fr" ? cocktail.nameFr : cocktail.nameEn;
+    const ingredients = lang === "fr" ? cocktail.ingredientsFr : cocktail.ingredientsEn;
+    const steps = lang === "fr" ? cocktail.stepsFr : cocktail.stepsEn;
+    const garnish = lang === "fr" ? cocktail.garnishFr : cocktail.garnishEn;
+    const accroche = lang === "fr" ? cocktail.accrocheFr : cocktail.accrocheEn;
+
+    const canvas = document.createElement("canvas");
+    const dpr = 2;
+    canvas.width = 700 * dpr;
+    canvas.height = 950 * dpr;
+    const ctx = canvas.getContext("2d");
+    ctx.scale(dpr, dpr);
+
+    // Background
+    ctx.fillStyle = "#fef8ec";
+    ctx.fillRect(0, 0, 700, 950);
+
+    // Header bar
+    ctx.fillStyle = "#0b363d";
+    ctx.fillRect(0, 0, 700, 120);
+    ctx.fillStyle = "#fef8ec";
+    ctx.font = "600 11px 'DM Sans', sans-serif";
+    ctx.letterSpacing = "3px";
+    ctx.fillText("ARDUENNA", 40, 50);
+    ctx.font = "italic 28px 'Cormorant Garamond', Georgia, serif";
+    ctx.fillText(name, 40, 90);
+
+    // Accroche
+    ctx.fillStyle = "rgba(11,54,61,0.5)";
+    ctx.font = "italic 15px 'Cormorant Garamond', Georgia, serif";
+    ctx.fillText(accroche, 40, 160);
+
+    // Divider
+    ctx.strokeStyle = "rgba(11,54,61,0.12)";
+    ctx.beginPath();
+    ctx.moveTo(40, 185);
+    ctx.lineTo(660, 185);
+    ctx.stroke();
+
+    // Ingredients
+    ctx.fillStyle = "#0b363d";
+    ctx.font = "500 13px 'DM Sans', sans-serif";
+    ctx.fillText((lang === "fr" ? "INGRÉDIENTS" : "INGREDIENTS"), 40, 215);
+    ctx.font = "400 14px 'DM Sans', sans-serif";
+    ctx.fillStyle = "rgba(11,54,61,0.7)";
+    ingredients.forEach((ing, i) => {
+      ctx.fillText(`• ${ing}`, 40, 245 + i * 26);
+    });
+
+    const stepsY = 260 + ingredients.length * 26;
+
+    // Steps
+    ctx.fillStyle = "#0b363d";
+    ctx.font = "500 13px 'DM Sans', sans-serif";
+    ctx.fillText((lang === "fr" ? "PRÉPARATION" : "METHOD"), 40, stepsY);
+    ctx.font = "400 14px 'DM Sans', sans-serif";
+    ctx.fillStyle = "rgba(11,54,61,0.7)";
+    steps.forEach((step, i) => {
+      ctx.fillText(`${i + 1}. ${step}`, 40, stepsY + 30 + i * 26);
+    });
+
+    const garnishY = stepsY + 45 + steps.length * 26;
+
+    // Garnish
+    ctx.fillStyle = "#0b363d";
+    ctx.font = "500 13px 'DM Sans', sans-serif";
+    ctx.fillText((lang === "fr" ? "GARNITURE" : "GARNISH"), 40, garnishY);
+    ctx.font = "400 14px 'DM Sans', sans-serif";
+    ctx.fillStyle = "rgba(11,54,61,0.7)";
+    ctx.fillText(garnish, 40, garnishY + 24);
+
+    // Footer
+    ctx.fillStyle = "rgba(11,54,61,0.25)";
+    ctx.font = "400 11px 'DM Sans', sans-serif";
+    ctx.fillText("arduenna-gin.com", 40, 920);
+    ctx.fillStyle = "#c2744a";
+    ctx.fillText("BIO EU · B CORP", 560, 920);
+
+    // Download
+    const link = document.createElement("a");
+    link.download = `${name.toLowerCase().replace(/\s+/g, "-")}-arduenna.png`;
+    link.href = canvas.toDataURL("image/png");
+    link.click();
   };
 
   const filteredCocktails = cocktailsData.filter((c) => {
@@ -392,9 +538,10 @@ export default function ArduennaWebapp() {
   });
 
   const navSections = ["story", "products", "cocktails", "toolbox", "sustainability"];
+
+  // Bottom nav: 4 items max (benchmark rule)
   const bottomNavItems = [
     { id: "hero", label: lang === "fr" ? "Accueil" : "Home", Icon: IconHome },
-    { id: "products", label: t.nav.products, Icon: IconBottle },
     { id: "cocktails", label: "Cocktails", Icon: IconGlass },
     { id: "sustainability", label: lang === "fr" ? "Durable" : "Green", Icon: IconLeafNav },
     { id: "toolbox", label: "Pro", Icon: IconBriefcase },
@@ -403,12 +550,12 @@ export default function ArduennaWebapp() {
   // ─── AGE GATE ───
   if (!ageVerified) {
     return (
-      <div className="age-gate">
+      <div className="age-gate" role="dialog" aria-label="Age verification">
         <div className="age-gate__card">
           <div className="age-gate__brand">ARDUENNA</div>
           <h2 className="age-gate__title">{t.ageGate.title}</h2>
           <p className="age-gate__question">{t.ageGate.question}</p>
-          {ageDenied && <p className="age-gate__denied">{t.ageGate.denied}</p>}
+          {ageDenied && <p className="age-gate__denied" role="alert">{t.ageGate.denied}</p>}
           <div className="age-gate__actions">
             <button onClick={() => setAgeVerified(true)} className="btn-primary">
               {t.ageGate.yes}
@@ -426,14 +573,20 @@ export default function ArduennaWebapp() {
   return (
     <div className="app-shell">
 
+      {/* Toast notification */}
+      {toast && <div className="toast" role="status" aria-live="polite">{toast}</div>}
+
       {/* ═══ TOP NAVIGATION ═══ */}
-      <nav className={`top-nav ${scrolled ? "top-nav--scrolled" : ""}`}>
+      <nav className={`top-nav ${scrolled ? "top-nav--scrolled" : ""}`} role="navigation" aria-label="Main navigation">
         <div className="top-nav__inner">
           <img
             src="/Arduennagin_logo_vert_.webp"
-            alt="Arduenna"
+            alt="Arduenna — Retour à l'accueil"
             className="top-nav__logo"
             onClick={() => scrollTo("hero")}
+            role="button"
+            tabIndex={0}
+            onKeyDown={(e) => e.key === "Enter" && scrollTo("hero")}
           />
 
           <div className="top-nav__links">
@@ -442,6 +595,7 @@ export default function ArduennaWebapp() {
                 key={sec}
                 className={`top-nav__link ${activeSection === sec ? "top-nav__link--active" : ""}`}
                 onClick={() => scrollTo(sec)}
+                aria-current={activeSection === sec ? "true" : undefined}
               >
                 {t.nav[sec]}
               </button>
@@ -449,13 +603,13 @@ export default function ArduennaWebapp() {
           </div>
 
           <div className="top-nav__actions">
-            <button onClick={toggleTheme} className="theme-toggle" aria-label="Toggle theme">
+            <button onClick={toggleTheme} className="theme-toggle" aria-label={theme === "light" ? "Switch to dark mode" : "Switch to light mode"}>
               {theme === "light" ? <IconMoon /> : <IconSun />}
             </button>
-            <button onClick={() => setLang(lang === "fr" ? "en" : "fr")} className="lang-toggle">
+            <button onClick={() => setLang(lang === "fr" ? "en" : "fr")} className="lang-toggle" aria-label={`Switch to ${lang === "fr" ? "English" : "French"}`}>
               <IconGlobe /> {lang.toUpperCase()}
             </button>
-            <button onClick={() => setMenuOpen(!menuOpen)} className="menu-toggle" aria-label="Menu">
+            <button onClick={() => setMenuOpen(!menuOpen)} className="menu-toggle" aria-label={menuOpen ? "Close menu" : "Open menu"} aria-expanded={menuOpen}>
               {menuOpen ? <IconX /> : <IconMenu />}
             </button>
           </div>
@@ -464,7 +618,7 @@ export default function ArduennaWebapp() {
 
       {/* Mobile menu */}
       {menuOpen && (
-        <div className="mobile-menu">
+        <div className="mobile-menu" role="dialog" aria-label="Navigation menu">
           {navSections.map((sec) => (
             <button key={sec} className="mobile-menu__link" onClick={() => scrollTo(sec)}>
               {t.nav[sec]}
@@ -473,19 +627,21 @@ export default function ArduennaWebapp() {
         </div>
       )}
 
-      {/* ═══ BOTTOM NAVIGATION (mobile) ═══ */}
-      <div className="bottom-nav">
+      {/* ═══ BOTTOM NAVIGATION (mobile, 4 items) ═══ */}
+      <nav className="bottom-nav" role="navigation" aria-label="Quick navigation">
         {bottomNavItems.map(({ id, label, Icon }) => (
           <button
             key={id}
             className={`bottom-nav__item ${activeSection === id ? "bottom-nav__item--active" : ""}`}
             onClick={() => scrollTo(id)}
+            aria-label={label}
+            aria-current={activeSection === id ? "true" : undefined}
           >
-            <span className="bottom-nav__icon"><Icon /></span>
+            <span className="bottom-nav__icon" aria-hidden="true"><Icon /></span>
             {label}
           </button>
         ))}
-      </div>
+      </nav>
 
       {/* ═══ HERO ═══ */}
       <section id="hero" ref={(el) => (sectionRefs.current.hero = el)} className="hero">
@@ -493,9 +649,7 @@ export default function ArduennaWebapp() {
         <BotanicalDeco style={{ top: "15%", right: "-3%", width: 160, transform: "rotate(20deg) scaleX(-1)" }} />
 
         <div style={{ position: "relative", zIndex: 1 }}>
-          <div className="hero__banner">
-            {lang === "fr" ? "LIVRAISON GRATUITE EN BELGIQUE À PARTIR DE 50€" : "FREE DELIVERY IN BELGIUM FROM 50€"}
-          </div>
+          <div className="hero__banner">{t.hero.banner}</div>
 
           <h1 className="hero__heading">
             <span style={{ display: "block" }}>{t.hero.tagline}</span>
@@ -512,7 +666,7 @@ export default function ArduennaWebapp() {
 
           <img
             src="/Arduenna_Bouteille_50CL-V2.avif"
-            alt="Arduenna Gin"
+            alt="Arduenna Gin bottle"
             className="hero__bottle"
           />
         </div>
@@ -567,7 +721,7 @@ export default function ArduennaWebapp() {
         </div>
       </section>
 
-      {/* ═══ PRODUCTS ═══ */}
+      {/* ═══ PRODUCTS (with Perfect Serve) ═══ */}
       <section id="products" ref={(el) => (sectionRefs.current.products = el)} className="section section--wide">
         <div className="divider" />
         <div className="section-header reveal">
@@ -577,13 +731,16 @@ export default function ArduennaWebapp() {
 
         <div className="grid-2 reveal">
           {productsData.map((p) => (
-            <div key={p.id} className="card card--interactive product-card" onClick={() => setSelectedProduct(p)}>
+            <div key={p.id} className="card card--interactive product-card" onClick={() => setSelectedProduct(p)} role="button" tabIndex={0} onKeyDown={(e) => e.key === "Enter" && setSelectedProduct(p)}>
               <img src={p.img} alt={lang === "fr" ? p.nameFr : p.nameEn} className="product-card__img" />
               <h3 className="product-card__name">{lang === "fr" ? p.nameFr : p.nameEn}</h3>
               <div className="product-card__meta">{p.volume} · {p.abv}</div>
               <div className="product-card__price">{p.price}</div>
               <div className="product-card__radar">
                 <RadarChart data={p.profile} color={p.color} size={140} />
+              </div>
+              <div className="product-card__serve">
+                <strong>{t.products.perfectServe}</strong> — {lang === "fr" ? p.perfectServeFr : p.perfectServeEn}
               </div>
               <p className="product-card__desc">{lang === "fr" ? p.descFr : p.descEn}</p>
             </div>
@@ -593,7 +750,7 @@ export default function ArduennaWebapp() {
 
       {/* Product Modal */}
       {selectedProduct && (
-        <div className="overlay" onClick={() => setSelectedProduct(null)}>
+        <div className="overlay" onClick={() => setSelectedProduct(null)} role="dialog" aria-label={lang === "fr" ? selectedProduct.nameFr : selectedProduct.nameEn}>
           <div className="modal" onClick={(e) => e.stopPropagation()}>
             <div className="modal__header">
               <div>
@@ -609,12 +766,19 @@ export default function ArduennaWebapp() {
                   {selectedProduct.volume} · {selectedProduct.abv} · {selectedProduct.price}
                 </div>
               </div>
-              <button className="modal__close" onClick={() => setSelectedProduct(null)}><IconX /></button>
+              <button className="modal__close" onClick={() => setSelectedProduct(null)} aria-label="Close"><IconX /></button>
             </div>
 
             <p className="body-text" style={{ marginBottom: "var(--space-6)" }}>
               {lang === "fr" ? selectedProduct.descFr : selectedProduct.descEn}
             </p>
+
+            <div className="modal__block">
+              <div className="modal__block-title">{t.products.perfectServe}</div>
+              <div className="body-text" style={{ fontSize: "var(--text-sm)", color: "var(--accent-secondary)" }}>
+                {lang === "fr" ? selectedProduct.perfectServeFr : selectedProduct.perfectServeEn}
+              </div>
+            </div>
 
             <div className="modal__block">
               <div className="modal__block-title">{t.products.profile}</div>
@@ -658,31 +822,40 @@ export default function ArduennaWebapp() {
               key={f}
               className={`filter-chip ${cocktailFilter === f ? "filter-chip--active" : ""}`}
               onClick={() => setCocktailFilter(f)}
+              aria-pressed={cocktailFilter === f}
             >
               {f === "all" ? t.cocktails.all : productsData.find((p) => p.id === f)?.[lang === "fr" ? "nameFr" : "nameEn"] || f}
             </button>
           ))}
-          <span className="filter-separator" />
+          <span className="filter-separator" aria-hidden="true" />
           {["all", "allYear", "summer", "winter", "spring", "autumn"].map((s) => (
             <button
               key={s}
               className={`filter-chip ${seasonFilter === s ? "filter-chip--active" : ""}`}
               onClick={() => setSeasonFilter(s)}
+              aria-pressed={seasonFilter === s}
             >
               {s === "all" ? t.cocktails.all : t.cocktails[s]}
             </button>
           ))}
         </div>
 
+        {/* Filter result count */}
+        <div className="filter-count reveal" aria-live="polite">
+          {filteredCocktails.length} {t.cocktails.results}
+        </div>
+
         {/* Cocktail grid */}
         <div className="grid-2 reveal">
           {filteredCocktails.map((c) => (
-            <div key={c.id} className="card card--interactive cocktail-card" onClick={() => setSelectedCocktail(c)}>
+            <div key={c.id} className="card card--interactive cocktail-card" onClick={() => setSelectedCocktail(c)} role="button" tabIndex={0} onKeyDown={(e) => e.key === "Enter" && setSelectedCocktail(c)}>
               <div className="cocktail-card__header">
                 <h4 className="cocktail-card__name">{lang === "fr" ? c.nameFr : c.nameEn}</h4>
                 <button
-                  className={`cocktail-card__save ${savedCocktails.includes(c.id) ? "cocktail-card__save--active" : ""}`}
+                  className={`cocktail-card__save ${savedCocktails.includes(c.id) ? "cocktail-card__save--active" : ""} ${heartPulse === c.id ? "heart-pulse" : ""}`}
                   onClick={(e) => { e.stopPropagation(); toggleSaved(c.id); }}
+                  aria-label={savedCocktails.includes(c.id) ? "Remove from favourites" : "Add to favourites"}
+                  aria-pressed={savedCocktails.includes(c.id)}
                 >
                   {savedCocktails.includes(c.id) ? <IconHeartFilled /> : <IconHeart />}
                 </button>
@@ -694,22 +867,37 @@ export default function ArduennaWebapp() {
                 <span className={`tag ${c.difficulty === "easy" ? "tag--sage" : c.difficulty === "medium" ? "tag--copper" : "tag--teal"}`}>
                   {t.cocktails[c.difficulty]}
                 </span>
+                <span className="tag">{seasonEmojis[c.season]} {t.cocktails[c.season] || t.cocktails.allYear}</span>
               </div>
+              <div className="cocktail-card__accroche">{lang === "fr" ? c.accrocheFr : c.accrocheEn}</div>
             </div>
           ))}
         </div>
       </section>
 
-      {/* Cocktail Modal */}
+      {/* Cocktail Modal (with action bar: Favori + Partager + PDF) */}
       {selectedCocktail && (
-        <div className="overlay" onClick={() => setSelectedCocktail(null)}>
+        <div className="overlay" onClick={() => setSelectedCocktail(null)} role="dialog" aria-label={lang === "fr" ? selectedCocktail.nameFr : selectedCocktail.nameEn}>
           <div className="modal" onClick={(e) => e.stopPropagation()}>
             <div className="modal__header">
-              <h3 style={{ fontFamily: "var(--font-display)", fontSize: "var(--text-xl)", fontWeight: 400, fontStyle: "italic", color: "var(--text-primary)" }}>
-                {lang === "fr" ? selectedCocktail.nameFr : selectedCocktail.nameEn}
-              </h3>
-              <button className="modal__close" onClick={() => setSelectedCocktail(null)}><IconX /></button>
+              <div>
+                <h3 style={{ fontFamily: "var(--font-display)", fontSize: "var(--text-2xl)", fontWeight: 400, fontStyle: "italic", color: "var(--text-primary)" }}>
+                  {lang === "fr" ? selectedCocktail.nameFr : selectedCocktail.nameEn}
+                </h3>
+                <div style={{ display: "flex", gap: "var(--space-2)", marginTop: "var(--space-2)" }}>
+                  <span className={`tag ${selectedCocktail.difficulty === "easy" ? "tag--sage" : selectedCocktail.difficulty === "medium" ? "tag--copper" : "tag--teal"}`}>
+                    {t.cocktails[selectedCocktail.difficulty]}
+                  </span>
+                  <span className="tag">{seasonEmojis[selectedCocktail.season]} {t.cocktails[selectedCocktail.season] || t.cocktails.allYear}</span>
+                </div>
+              </div>
+              <button className="modal__close" onClick={() => setSelectedCocktail(null)} aria-label="Close"><IconX /></button>
             </div>
+
+            {/* Narrative hook (benchmark: what NO competitor does) */}
+            <p className="modal__accroche">
+              {lang === "fr" ? selectedCocktail.accrocheFr : selectedCocktail.accrocheEn}
+            </p>
 
             <div className="modal__block">
               <div className="modal__block-title" style={{ display: "flex", alignItems: "center", gap: "var(--space-2)" }}>
@@ -742,10 +930,31 @@ export default function ArduennaWebapp() {
               <span style={{ fontSize: "var(--text-sm)" }}>{lang === "fr" ? selectedCocktail.garnishFr : selectedCocktail.garnishEn}</span>
             </div>
 
-            <div style={{ marginTop: "var(--space-5)" }}>
-              <button onClick={() => toggleSaved(selectedCocktail.id)} className="btn-ghost btn-full" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "var(--space-2)" }}>
+            {/* Sticky action bar (benchmark: Diageo BA-inspired) */}
+            <div className="action-bar">
+              <button
+                className={`action-bar__btn ${savedCocktails.includes(selectedCocktail.id) ? "action-bar__btn--active" : ""} ${heartPulse === selectedCocktail.id ? "heart-pulse" : ""}`}
+                onClick={() => toggleSaved(selectedCocktail.id)}
+                aria-label={savedCocktails.includes(selectedCocktail.id) ? "Remove from favourites" : "Add to favourites"}
+              >
                 {savedCocktails.includes(selectedCocktail.id) ? <IconHeartFilled /> : <IconHeart />}
                 {savedCocktails.includes(selectedCocktail.id) ? t.cocktails.saved : t.cocktails.save}
+              </button>
+              <button
+                className="action-bar__btn"
+                onClick={() => shareCocktail(selectedCocktail)}
+                aria-label="Share recipe"
+              >
+                <IconShare />
+                {t.cocktails.share}
+              </button>
+              <button
+                className="action-bar__btn"
+                onClick={() => downloadRecipeCard(selectedCocktail)}
+                aria-label="Download recipe card"
+              >
+                <IconDownload />
+                {t.cocktails.download}
               </button>
             </div>
           </div>
@@ -769,7 +978,7 @@ export default function ArduennaWebapp() {
             { title: t.toolbox.salesKit, desc: t.toolbox.salesKitDesc, ready: false },
           ].map((item, i) => (
             <div key={i} className="card toolbox-card">
-              <div className="toolbox-card__icon"><IconDownload /></div>
+              <div className="toolbox-card__icon" aria-hidden="true"><IconDownload /></div>
               <h4 className="toolbox-card__title">{item.title}</h4>
               <p className="toolbox-card__desc">{item.desc}</p>
               <button className={`${item.ready ? "btn-primary" : "btn-ghost"} btn-sm btn-full`}>
@@ -802,7 +1011,7 @@ export default function ArduennaWebapp() {
             { icon: "local", title: t.sustainability.local, desc: t.sustainability.localDesc },
           ].map((item, i) => (
             <div key={i} className="card sustain-card">
-              <div className="sustain-card__icon"><SustainIcon type={item.icon} /></div>
+              <div className="sustain-card__icon" aria-hidden="true"><SustainIcon type={item.icon} /></div>
               <h4 className="sustain-card__title">{item.title}</h4>
               <p className="sustain-card__desc">{item.desc}</p>
             </div>
@@ -825,7 +1034,7 @@ export default function ArduennaWebapp() {
             { key: "events", title: t.teasers.eventsTitle, desc: t.teasers.eventsDesc },
           ].map((item) => (
             <div key={item.key} className="card teaser-card">
-              <div className="teaser-card__lock"><IconLock /></div>
+              <div className="teaser-card__lock" aria-hidden="true"><IconLock /></div>
               <h4 className="teaser-card__title">{item.title}</h4>
               <p className="teaser-card__desc">{item.desc}</p>
               <button
