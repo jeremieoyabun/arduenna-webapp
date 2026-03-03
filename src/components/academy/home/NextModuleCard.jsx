@@ -29,6 +29,7 @@ export const NextModuleCard = ({ module, parcoursId, percent, onStart }) => {
       style={{
         position: "relative",
         overflow: "hidden",
+        isolation: "isolate",
         borderLeft: `3px solid ${meta.color}`,
         paddingLeft: 20,
         cursor: "pointer",
@@ -45,15 +46,16 @@ export const NextModuleCard = ({ module, parcoursId, percent, onStart }) => {
       onTouchStart={e => { e.currentTarget.style.opacity = "0.72"; }}
       onTouchEnd={e => { e.currentTarget.style.opacity = "1"; }}
     >
-      {/* Background botanical image — z-index 0, behind text content */}
+      {/* Background botanical image — behind text content */}
       {meta.bg && (
         <div style={{
           position: "absolute",
           left: 0, top: 0, bottom: 0,
-          width: "75%",
-          zIndex: 0,
-          WebkitMaskImage: "linear-gradient(to right, black 0%, black 40%, transparent 85%)",
-          maskImage: "linear-gradient(to right, black 0%, black 40%, transparent 85%)",
+          width: "80%",
+          zIndex: -1,
+          opacity: 0.35,
+          WebkitMaskImage: "linear-gradient(to right, black 0%, black 25%, transparent 100%)",
+          maskImage: "linear-gradient(to right, black 0%, black 25%, transparent 100%)",
           pointerEvents: "none",
           overflow: "hidden",
         }}>
@@ -67,7 +69,6 @@ export const NextModuleCard = ({ module, parcoursId, percent, onStart }) => {
               height: "160%",
               width: "auto",
               display: "block",
-              opacity: 0.38,
             }}
           />
         </div>

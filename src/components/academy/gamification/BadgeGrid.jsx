@@ -25,7 +25,7 @@ export const BadgeGrid = ({ earnedBadges = [] }) => {
               opacity: earned ? 1 : 0.45,
               transition: "all 0.2s ease-out",
             }}>
-              {earned ? <BadgeGlyph id={badge.id} size={34} /> : <PadlockSVG size={48} />}
+              {earned ? <BadgeGlyph id={badge.id} size={34} /> : <PadlockSVG size={38} />}
             </div>
             <span style={{
               fontFamily: "'DM Sans', sans-serif",
