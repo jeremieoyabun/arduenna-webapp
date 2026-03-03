@@ -16,16 +16,16 @@ export const NextModuleCard = ({ module, parcoursId, percent, onStart }) => {
   const meta   = PARCOURS_META[parcoursId] || PARCOURS_META.cocktail;
   const btnLabel = percent > 0 ? "Continuer" : "Commencer";
 
-  const handleHoverIn  = e => { e.currentTarget.style.transform = "scale(1.015)"; e.currentTarget.style.background = "#0f2e38"; };
-  const handleHoverOut = e => { e.currentTarget.style.transform = "scale(1)";     e.currentTarget.style.background = "#0d2832"; };
+  const handleHoverIn  = e => { e.currentTarget.style.transform = "scale(1.01)"; e.currentTarget.style.opacity = "0.88"; };
+  const handleHoverOut = e => { e.currentTarget.style.transform = "scale(1)";    e.currentTarget.style.opacity = "1"; };
 
   return (
     <div
       onClick={onStart}
       style={{
-        background: "#0d2832",
-        borderRadius: 14,
-        border: "1px solid rgba(254,248,236,0.05)",
+        background: "var(--surface)",
+        borderRadius: 8,
+        border: "1px solid var(--border-subtle)",
         borderLeft: `2px solid ${meta.color}`,
         padding: "20px 20px 18px",
         marginBottom: 10,
@@ -46,7 +46,7 @@ export const NextModuleCard = ({ module, parcoursId, percent, onStart }) => {
         <span style={{
           fontFamily: "'DM Sans', sans-serif",
           fontSize: 10, fontWeight: 600,
-          color: "rgba(254,248,236,0.38)",
+          color: "var(--text-3)",
           textTransform: "uppercase", letterSpacing: "2.5px",
         }}>
           {meta.label}
@@ -57,7 +57,7 @@ export const NextModuleCard = ({ module, parcoursId, percent, onStart }) => {
       <div style={{
         fontFamily: "'Cormorant Garamond', Georgia, serif",
         fontSize: 24, fontWeight: 600, fontStyle: "italic",
-        color: "#fef8ec", lineHeight: 1.2, marginBottom: 6,
+        color: "var(--text-1)", lineHeight: 1.2, marginBottom: 6,
       }}>
         {module.titleFr}
       </div>
@@ -65,7 +65,7 @@ export const NextModuleCard = ({ module, parcoursId, percent, onStart }) => {
       {/* Meta */}
       <div style={{
         fontFamily: "'DM Sans', sans-serif",
-        fontSize: 12, color: "rgba(254,248,236,0.35)",
+        fontSize: 12, color: "var(--text-4)",
         marginBottom: percent > 0 ? 16 : 18,
       }}>
         {module.lessonCount} activités · {module.duration}
@@ -76,7 +76,7 @@ export const NextModuleCard = ({ module, parcoursId, percent, onStart }) => {
         <div style={{ marginBottom: 16 }}>
           <div style={{
             height: 3, borderRadius: 999,
-            background: "rgba(254,248,236,0.07)", overflow: "hidden",
+            background: "var(--border-subtle)", overflow: "hidden",
           }}>
             <div style={{
               height: "100%", borderRadius: 999,
@@ -87,7 +87,7 @@ export const NextModuleCard = ({ module, parcoursId, percent, onStart }) => {
           </div>
           <div style={{
             fontFamily: "'DM Sans', sans-serif",
-            fontSize: 10, color: "rgba(254,248,236,0.28)",
+            fontSize: 10, color: "var(--text-4)",
             marginTop: 5,
           }}>
             {percent}% complété

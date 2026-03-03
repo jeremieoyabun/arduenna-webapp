@@ -10,14 +10,11 @@ const ROLE_LABELS = {
   caviste: "Caviste / Distributeur",
 };
 
-// ── Design tokens ──────────────────────────────────────────────────────────────
-const SURFACE  = "#0d2832";
-const BORDER   = "1px solid rgba(254,248,236,0.05)";
-const R        = 14;   // border-radius
-const LABEL_S  = {
+// ── Micro-typography token ──────────────────────────────────────────────────
+const CAP = {
   fontFamily: "'DM Sans', sans-serif",
   fontSize: 10, fontWeight: 600,
-  color: "rgba(254,248,236,0.3)",
+  color: "var(--text-3)",
   textTransform: "uppercase", letterSpacing: "2.5px",
 };
 
@@ -26,7 +23,7 @@ export const HomeDashboard = ({
   getModulePercent, isLocked, isCompleted, getParcoursCompletedCount,
   progressLoading, onOpenModule, onSwitchTab,
 }) => {
-  // ── Next module ─────────────────────────────────────────────────────────────
+  // ── Next module ─────────────────────────────────────────────────────────
   const eligibleParcours = parcoursData.filter(p =>
     p.targetRoles === "all" || (Array.isArray(p.targetRoles) && p.targetRoles.includes(role))
   );
@@ -46,7 +43,7 @@ export const HomeDashboard = ({
     if (nextModule) break;
   }
 
-  // ── Parcours progress ───────────────────────────────────────────────────────
+  // ── Parcours progress ───────────────────────────────────────────────────
   const parcoursProgress = eligibleParcours.map(p => {
     const total = modulesData.filter(m => m.parcoursId === p.id).length;
     const done = getParcoursCompletedCount(p.id);
@@ -63,47 +60,43 @@ export const HomeDashboard = ({
   const dayCapitalized = dayOfWeek.charAt(0).toUpperCase() + dayOfWeek.slice(1);
 
   return (
-    <div style={{ padding: "0 18px" }}>
+    <div style={{ padding: "0 20px" }}>
 
-      {/* ── HERO — typographic, editorial, no card ───────────────────────── */}
-      <div style={{ paddingTop: 36, paddingBottom: 30 }}>
-
-        <div style={{
-          fontFamily: "'DM Sans', sans-serif",
-          fontSize: 11, fontWeight: 600,
-          color: "rgba(254,248,236,0.3)",
-          textTransform: "uppercase", letterSpacing: "3px",
-          marginBottom: 16,
-        }}>
-          {dayCapitalized}
-        </div>
+      {/* ── HERO — editorial, typographic ──────────────────────────────────── */}
+      <div style={{
+        paddingTop: 40,
+        paddingBottom: 32,
+        background: "radial-gradient(ellipse 90% 120px at 35% -5%, rgba(74,155,138,0.06) 0%, transparent 100%)",
+      }}>
+        <div style={{ ...CAP, marginBottom: 18 }}>{dayCapitalized}</div>
 
         <h1 style={{
           fontFamily: "'Cormorant Garamond', Georgia, serif",
-          fontSize: 46, fontWeight: 600, fontStyle: "italic",
-          color: "#fef8ec", margin: 0, lineHeight: 1.02,
+          fontSize: 50, fontWeight: 600, fontStyle: "italic",
+          color: "var(--text-1)", margin: 0, lineHeight: 1,
+          letterSpacing: "-0.5px",
         }}>
           {firstName}
         </h1>
 
         <div style={{
           fontFamily: "'DM Sans', sans-serif",
-          fontSize: 12, color: "rgba(254,248,236,0.38)",
-          marginTop: 8, letterSpacing: "0.2px",
+          fontSize: 12, color: "var(--text-3)",
+          marginTop: 9, letterSpacing: "0.2px",
         }}>
           {ROLE_LABELS[role] || "Apprenant"} · Arduenna Academy
         </div>
 
-        {/* Copper separator + progress context */}
+        {/* Copper hairline + progress context */}
         <div style={{ display: "flex", alignItems: "center", gap: 14, marginTop: 26 }}>
           <div style={{
-            height: 1, width: 48,
-            background: "rgba(194,116,74,0.55)",
+            height: 1, width: 40,
+            background: "rgba(194,116,74,0.40)",
             flexShrink: 0,
           }} />
           <div style={{
             fontFamily: "'DM Sans', sans-serif",
-            fontSize: 11, color: "rgba(254,248,236,0.36)",
+            fontSize: 11, color: "var(--text-3)",
             letterSpacing: "0.2px",
           }}>
             {completedModules > 0
@@ -113,53 +106,60 @@ export const HomeDashboard = ({
         </div>
       </div>
 
-      {/* ── KPI CARDS — clean surface, contextual helper text ────────────── */}
-      <div style={{ display: "flex", gap: 10, marginBottom: 22 }}>
-
+      {/* ── KPI STRIP — no cards, single hairline divider only ──────────────── */}
+      <div style={{
+        display: "flex",
+        paddingBottom: 28,
+        marginBottom: 24,
+        borderBottom: "1px solid var(--border-subtle)",
+      }}>
         {/* Streak */}
-        <div style={{
-          flex: 1, padding: "18px 16px",
-          background: SURFACE, borderRadius: R, border: BORDER,
-        }}>
-          <div style={{ ...LABEL_S, marginBottom: 10 }}>Streak</div>
+        <div style={{ flex: 1 }}>
+          <div style={{ ...CAP, marginBottom: 10 }}>Streak</div>
           <div style={{
             fontFamily: "'DM Sans', sans-serif",
-            fontSize: 40, fontWeight: 800, lineHeight: 1,
-            color: streak >= 4 ? "#D4A574" : "rgba(254,248,236,0.5)",
+            fontSize: 46, fontWeight: 800, lineHeight: 1,
+            color: streak >= 4 ? "#D4A574" : "var(--text-3)",
+            letterSpacing: "-1.5px",
           }}>
             {streak}
           </div>
           <div style={{
             fontFamily: "'DM Sans', sans-serif",
-            fontSize: 11, color: "rgba(254,248,236,0.28)",
-            marginTop: 8, lineHeight: 1.4,
+            fontSize: 11, color: "var(--text-4)",
+            marginTop: 7, lineHeight: 1.4,
           }}>
             {streak === 0 ? "Commencez aujourd'hui"
               : streak === 1 ? "Bon début !"
-              : `${streak} jours consécutifs`}
+              : `${streak} jours`}
           </div>
         </div>
 
-        {/* XP */}
+        {/* Vertical hairline */}
         <div style={{
-          flex: 1, padding: "18px 16px",
-          background: SURFACE, borderRadius: R, border: BORDER,
-        }}>
-          <div style={{ ...LABEL_S, marginBottom: 10 }}>XP</div>
+          width: 1,
+          background: "var(--border-subtle)",
+          margin: "4px 28px 0",
+          alignSelf: "stretch",
+        }} />
+
+        {/* XP */}
+        <div style={{ flex: 1 }}>
+          <div style={{ ...CAP, marginBottom: 10 }}>XP</div>
           <div style={{
             fontFamily: "'DM Sans', sans-serif",
-            fontSize: 40, fontWeight: 800, lineHeight: 1,
-            color: "#fef8ec",
+            fontSize: 46, fontWeight: 800, lineHeight: 1,
+            color: "var(--text-1)",
+            letterSpacing: "-1.5px",
           }}>
             {xp}
           </div>
           <div style={{
             fontFamily: "'DM Sans', sans-serif",
-            fontSize: 11, color: "rgba(254,248,236,0.28)",
-            marginTop: 8, lineHeight: 1.4,
+            fontSize: 11, color: "var(--text-4)",
+            marginTop: 7, lineHeight: 1.4,
           }}>
-            {xp === 0 ? "Complétez un module"
-              : `${xp} points accumulés`}
+            {xp === 0 ? "Complétez un module" : "points accumulés"}
           </div>
         </div>
       </div>
@@ -173,12 +173,18 @@ export const HomeDashboard = ({
           onStart={() => onOpenModule(nextParcoursId, nextModule.id)}
         />
       ) : (
-        <div style={{ background: SURFACE, borderRadius: R, border: BORDER, padding: "20px", marginBottom: 10 }}>
-          <div style={{ ...LABEL_S, marginBottom: 10 }}>Prochain module</div>
+        <div style={{
+          background: "var(--surface)",
+          borderRadius: 8,
+          border: "1px solid var(--border-subtle)",
+          padding: "20px",
+          marginBottom: 10,
+        }}>
+          <div style={{ ...CAP, marginBottom: 10 }}>Prochain module</div>
           <div style={{
             fontFamily: "'Cormorant Garamond', Georgia, serif",
             fontSize: 18, fontStyle: "italic",
-            color: "rgba(254,248,236,0.45)",
+            color: "var(--text-3)",
           }}>
             {progressLoading ? "Chargement…" : "Tous vos parcours sont complétés 🎉"}
           </div>
@@ -187,30 +193,36 @@ export const HomeDashboard = ({
 
       {/* ── PARCOURS PROGRESS ───────────────────────────────────────────────── */}
       {parcoursProgress.some(p => p.done > 0) && (
-        <div style={{ background: SURFACE, borderRadius: R, border: BORDER, padding: "20px", marginBottom: 10 }}>
-          <div style={{ ...LABEL_S, marginBottom: 22 }}>Ma progression</div>
+        <div style={{
+          background: "var(--surface)",
+          borderRadius: 8,
+          border: "1px solid var(--border-subtle)",
+          padding: "20px",
+          marginBottom: 10,
+        }}>
+          <div style={{ ...CAP, marginBottom: 22 }}>Ma progression</div>
           {parcoursProgress.map(({ id, titleFr, done, total, percent, started, color }) => (
-            <div key={id} style={{ marginBottom: 18 }}>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 8 }}>
+            <div key={id} style={{ marginBottom: 20 }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 9 }}>
                 <span style={{
                   fontFamily: "'DM Sans', sans-serif", fontSize: 13,
-                  color: started ? "rgba(254,248,236,0.8)" : "rgba(254,248,236,0.2)",
+                  color: started ? "var(--text-2)" : "var(--text-4)",
                   fontWeight: started ? 500 : 400,
                 }}>
                   {titleFr}
                 </span>
                 <span style={{
                   fontFamily: "'DM Sans', sans-serif", fontSize: 11, fontWeight: 600,
-                  color: percent === 100 ? color : "rgba(254,248,236,0.25)",
+                  color: percent === 100 ? color : "var(--text-4)",
                 }}>
                   {done}/{total}
                 </span>
               </div>
-              <div style={{ height: 3, borderRadius: 999, background: "rgba(254,248,236,0.07)", overflow: "hidden" }}>
+              <div style={{ height: 2, borderRadius: 999, background: "var(--border-subtle)", overflow: "hidden" }}>
                 <div style={{
                   height: "100%", borderRadius: 999,
                   width: `${percent}%`,
-                  background: percent === 100 ? color : "rgba(194,116,74,0.65)",
+                  background: percent === 100 ? color : "rgba(194,116,74,0.55)",
                   transition: "width 0.5s ease-out",
                 }} />
               </div>
