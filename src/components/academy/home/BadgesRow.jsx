@@ -69,7 +69,7 @@ const CAP = {
   textTransform: "uppercase", letterSpacing: "2.5px",
 };
 
-export const BadgesRow = ({ earnedBadgeIds = [], onViewAll }) => {
+export const BadgesRow = ({ earnedBadgeIds = [], onViewAll, newBadgeId }) => {
   const displayed = badgesData.slice(0, 6);
 
   return (
@@ -113,7 +113,9 @@ export const BadgesRow = ({ earnedBadgeIds = [], onViewAll }) => {
                   : "1.5px solid var(--border-subtle)",
                 color: earned ? "#c2744a" : "var(--text-4)",
                 boxShadow: earned ? "0 0 12px rgba(194,116,74,0.15)" : "none",
-                animation: earned ? "badge-pop 0.4s ease-out" : "none",
+                animation: badge.id === newBadgeId
+                  ? "badge-unlock 0.55s cubic-bezier(0.34,1.56,0.64,1) both"
+                  : earned ? "badge-pop 0.4s ease-out" : "none",
                 transition: "box-shadow 0.3s ease",
                 flexShrink: 0,
               }}>

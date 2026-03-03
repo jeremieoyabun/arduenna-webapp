@@ -4,12 +4,6 @@ import { getLeaderboard } from "../../../lib/gamificationService";
 
 const MEDAL = ["#D4A574", "#A0A0A0", "#C28B6A"];
 
-const ROLE_LABELS = {
-  bartender: "Bartender",
-  commercial: "Commercial",
-  caviste: "Caviste",
-};
-
 const LEVELS = [
   { level: 1, xpStart: 0,    xpNeeded: 300 },
   { level: 2, xpStart: 300,  xpNeeded: 400 },
@@ -163,15 +157,6 @@ export const MiniLeaderboard = ({ onViewAll }) => {
                         Niv {lvl.level}
                       </span>
                     </div>
-                    {/* Role label */}
-                    {entry.role && ROLE_LABELS[entry.role] && (
-                      <div style={{
-                        fontFamily: "'DM Sans', sans-serif", fontSize: 10,
-                        color: "var(--text-4)", marginBottom: 4,
-                      }}>
-                        {ROLE_LABELS[entry.role]}
-                      </div>
-                    )}
                     {/* Mini XP bar within level */}
                     <div style={{ height: 2, borderRadius: 999, background: "var(--border-subtle)", overflow: "hidden" }}>
                       <div style={{
@@ -182,17 +167,16 @@ export const MiniLeaderboard = ({ onViewAll }) => {
                     </div>
                   </div>
 
-                  {/* Badge dots + XP total */}
+                  {/* Badge count + XP total */}
                   <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 4, flexShrink: 0 }}>
-                    <div style={{ display: "flex", gap: 3 }}>
-                      {Array.from({ length: 3 }, (_, j) => (
-                        <div key={j} style={{
-                          width: 5, height: 5, borderRadius: "50%",
-                          background: j < badgeDots ? "#c2744a" : "var(--border-subtle)",
-                          opacity: j < badgeDots ? 1 : 0.4,
-                        }} />
-                      ))}
-                    </div>
+                    {badgeDots > 0 && (
+                      <div style={{
+                        fontFamily: "'DM Sans', sans-serif", fontSize: 10,
+                        color: "var(--text-4)",
+                      }}>
+                        {badgeDots} badge{badgeDots > 1 ? "s" : ""}
+                      </div>
+                    )}
                     <div style={{
                       fontFamily: "'DM Sans', sans-serif", fontSize: 11, fontWeight: 700,
                       color: "var(--text-2)",

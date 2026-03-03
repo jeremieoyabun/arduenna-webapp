@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { BadgesRow } from "./BadgesRow";
 import { NextModuleCard } from "./NextModuleCard";
 import { MiniLeaderboard } from "./MiniLeaderboard";
@@ -27,7 +27,45 @@ const LEVELS = [
   { level: 5, title: "Ambassadeur Arduenna", xpStart: 2200, xpNeeded: null },
 ];
 
-// ── Circular SVG progress ring — draws on mount, The Seasons level number ─────
+// ── Level emblems (inline SVG, 14×14) ─────────────────────────────────────────
+const LEVEL_EMBLEMS = {
+  1: ( // Seedling
+    <svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round">
+      <path d="M10 18V10M10 10C10 6 14 3 17 2c-1 3-2.5 5.5-7 8M10 10C10 6 6 3 3 2c1 3 2.5 5.5 7 8" />
+    </svg>
+  ),
+  2: ( // Herb bundle
+    <svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round">
+      <path d="M10 16V9" />
+      <path d="M7 7c-1-2 3-6 3-6s4 4 3 6" />
+      <path d="M6 11c-2-1-3-5-3-5s3.5 0 4 3" />
+      <path d="M14 11c2-1 3-5 3-5s-3.5 0-4 3" />
+      <line x1="7" y1="17" x2="13" y2="17" strokeWidth="1.4" />
+    </svg>
+  ),
+  3: ( // Alembic/flask
+    <svg width="13" height="14" viewBox="0 0 14 20" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M4 1h6M5 5l-4 8h12L9 5H5z" />
+      <circle cx="5" cy="13.5" r="0.9" fill="currentColor" stroke="none" />
+      <circle cx="9.5" cy="15" r="0.7" fill="currentColor" stroke="none" />
+    </svg>
+  ),
+  4: ( // Barrel end
+    <svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round">
+      <ellipse cx="10" cy="10" rx="8" ry="8" />
+      <path d="M2 10h16" />
+      <path d="M5 3.5C5 3.5 6 10 5 16.5" strokeOpacity="0.7" />
+      <path d="M15 3.5C15 3.5 14 10 15 16.5" strokeOpacity="0.7" />
+    </svg>
+  ),
+  5: ( // Crown crest
+    <svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M2 15l2-9 3.5 5L10 4l2.5 7L16 6l2 9H2z" />
+    </svg>
+  ),
+};
+
+// ── Circular SVG progress ring ────────────────────────────────────────────────
 const ProgressRing = ({ level, percent }) => {
   const [drawn, setDrawn] = useState(false);
   useEffect(() => {
@@ -53,7 +91,6 @@ const ProgressRing = ({ level, percent }) => {
         transform="rotate(-90 40 40)"
         style={{ transition: "stroke-dashoffset 0.9s cubic-bezier(0.4, 0, 0.2, 1)" }}
       />
-      {/* Level number — The Seasons display font */}
       <text
         x="40" y="46"
         textAnchor="middle" dominantBaseline="auto"
@@ -137,109 +174,116 @@ const LeafVein = ({ style }) => (
     <path d="M 48 52 Q 66 44 80 36" stroke="currentColor" strokeWidth="0.50" strokeLinecap="round" />
     <path d="M 66 42 Q 82 36 94 28" stroke="currentColor" strokeWidth="0.45" strokeLinecap="round" />
     <path d="M 84 32 Q 98 26 108 20" stroke="currentColor" strokeWidth="0.40" strokeLinecap="round" />
-    <path d="M 20 74 Q 42 70 56 60" stroke="currentColor" strokeWidth="0.55" strokeLinecap="round" />
-    <path d="M 37 65 Q 58 62 72 52" stroke="currentColor" strokeWidth="0.50" strokeLinecap="round" />
   </svg>
 );
 
-// ── Padlock for locked blocks ─────────────────────────────────────────────────
+// ── Padlock (heavier stroke) ──────────────────────────────────────────────────
 const PadlockSmall = () => (
   <svg width="10" height="11" viewBox="0 0 10 11" fill="none">
-    <rect x="0.6" y="4" width="8.8" height="6.4" rx="1.4" stroke="currentColor" strokeWidth="1.1" />
-    <path d="M2.5 4V3a2.5 2.5 0 015 0v1" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round" />
+    <rect x="0.6" y="4" width="8.8" height="6.4" rx="1.4" stroke="currentColor" strokeWidth="1.6" />
+    <path d="M2.5 4V3a2.5 2.5 0 015 0v1" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
   </svg>
 );
 
-// ── Locked content preview block ──────────────────────────────────────────────
-const LockedBlock = ({ svgIcon, title, teaser, unlockLabel }) => (
+// ── Upgrade pack card (UI-only, CTA link) ─────────────────────────────────────
+const UpgradePackCard = ({ title, features, lockLabel, ctaLabel, ctaHref, delay }) => (
   <div
     className="a-card"
     style={{
       marginBottom: 10, padding: "16px 18px",
-      opacity: 0.62,
-      borderStyle: "dashed",
       position: "relative",
+      animation: "fade-in-up 0.32s ease-out both",
+      animationDelay: delay,
     }}
   >
-    {/* Lock chip — top right */}
+    {/* Lock chip */}
     <div style={{
       position: "absolute", top: 12, right: 14,
       display: "flex", alignItems: "center", gap: 4,
-      background: "var(--elevated)",
-      border: "1px solid var(--border-subtle)",
-      borderRadius: 20,
-      padding: "3px 8px 3px 6px",
-      color: "var(--text-3)",
+      background: "rgba(194,116,74,0.10)",
+      border: "1px solid rgba(194,116,74,0.22)",
+      borderRadius: 20, padding: "3px 8px 3px 6px",
+      color: "#c2744a",
     }}>
       <PadlockSmall />
       <span style={{
         fontFamily: "'DM Sans', sans-serif",
-        fontSize: 9, fontWeight: 700,
-        letterSpacing: "0.8px",
+        fontSize: 9, fontWeight: 700, letterSpacing: "0.8px",
         textTransform: "uppercase",
       }}>
-        {unlockLabel}
+        {lockLabel}
       </span>
     </div>
 
-    <div style={{ display: "flex", gap: 14, alignItems: "flex-start", paddingRight: 88 }}>
-      {/* Icon */}
+    <div style={{ paddingRight: 90 }}>
       <div style={{
-        width: 38, height: 38, borderRadius: 8, flexShrink: 0,
-        background: "var(--elevated)",
-        border: "1px solid var(--border-subtle)",
-        display: "flex", alignItems: "center", justifyContent: "center",
-        color: "var(--text-4)",
+        fontFamily: "var(--font-seasons)",
+        fontSize: 15, fontWeight: 700,
+        color: "var(--text-1)", lineHeight: 1.2, marginBottom: 5,
       }}>
-        {svgIcon}
+        {title}
       </div>
-
-      <div>
-        <div style={{
-          fontFamily: "var(--font-seasons)",
-          fontSize: 15, fontWeight: 700,
-          color: "var(--text-2)", lineHeight: 1.2, marginBottom: 4,
-        }}>
-          {title}
-        </div>
-        <div style={{
+      <div style={{
+        fontFamily: "'DM Sans', sans-serif",
+        fontSize: 11, color: "var(--text-4)", lineHeight: 1.45, marginBottom: 10,
+      }}>
+        {features}
+      </div>
+      <a
+        href={ctaHref}
+        style={{
           fontFamily: "'DM Sans', sans-serif",
-          fontSize: 11, color: "var(--text-4)", lineHeight: 1.45,
-        }}>
-          {teaser}
-        </div>
-      </div>
+          fontSize: 11, fontWeight: 600, color: "#c2744a",
+          textDecoration: "none",
+          display: "inline-flex", alignItems: "center", gap: 4,
+        }}
+      >
+        {ctaLabel}
+        <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+          <polyline points="9 18 15 12 9 6" />
+        </svg>
+      </a>
     </div>
   </div>
 );
 
-// ── SVG icons for locked blocks ───────────────────────────────────────────────
-const SeasonIcon = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round">
-    <path d="M12 22V12M12 12C12 7 17 4 20 3c-1 4-3 7-8 9M12 12C12 7 7 4 4 3c1 4 3 7 8 9" />
-  </svg>
-);
-
-const AlchimisteIcon = () => (
-  <svg width="15" height="18" viewBox="0 0 14 20" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M4 1h6M5 5l-4 8h12L9 5H5zM7 13v6M4 19h6" />
-    <circle cx="4.5" cy="13.5" r="1" fill="currentColor" stroke="none" />
-    <circle cx="9" cy="15" r="0.8" fill="currentColor" stroke="none" />
-  </svg>
-);
-
-const MasteryIcon = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M12 3l8 6.5-8 11.5-8-11.5z" />
-    <line x1="4" y1="9.5" x2="20" y2="9.5" strokeOpacity="0.45" />
-  </svg>
-);
+// ── Card stagger helper ───────────────────────────────────────────────────────
+const staggerStyle = (i, mounted) => ({
+  animation: mounted ? "fade-in-up 0.32s ease-out both" : "none",
+  animationDelay: mounted ? `${i * 55}ms` : "0ms",
+});
 
 export const HomeDashboard = ({
   firstName, role, xp, streak, progress,
   getModulePercent, isLocked, isCompleted, getParcoursCompletedCount,
   progressLoading, onOpenModule, onSwitchTab,
 }) => {
+  // ── Card stagger mount ───────────────────────────────────────────────────
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    const t = setTimeout(() => setMounted(true), 50);
+    return () => clearTimeout(t);
+  }, []);
+
+  // ── Badge unlock detection ───────────────────────────────────────────────
+  const prevBadgeCountRef = useRef(null);
+  const [newBadgeId, setNewBadgeId] = useState(null);
+
+  const earnedBadgeIds = (progress?.badges || []).map(b =>
+    typeof b === "string" ? b : b.id
+  );
+
+  useEffect(() => {
+    const count = earnedBadgeIds.length;
+    if (prevBadgeCountRef.current !== null && count > prevBadgeCountRef.current) {
+      setNewBadgeId(earnedBadgeIds[earnedBadgeIds.length - 1]);
+      const t = setTimeout(() => setNewBadgeId(null), 650);
+      prevBadgeCountRef.current = count;
+      return () => clearTimeout(t);
+    }
+    prevBadgeCountRef.current = count;
+  }, [earnedBadgeIds]); // eslint-disable-line react-hooks/exhaustive-deps
+
   // ── Level computation ────────────────────────────────────────────────────
   const currentLevel = [...LEVELS].reverse().find(l => xp >= l.xpStart) || LEVELS[0];
   const xpInLevel = xp - currentLevel.xpStart;
@@ -248,11 +292,6 @@ export const HomeDashboard = ({
     : 100;
   const nextLevel = LEVELS.find(l => l.level === currentLevel.level + 1);
   const xpToNext = currentLevel.xpNeeded ? currentLevel.xpNeeded - xpInLevel : null;
-
-  // ── Badges ───────────────────────────────────────────────────────────────
-  const earnedBadgeIds = (progress?.badges || []).map(b =>
-    typeof b === "string" ? b : b.id
-  );
 
   // ── Next module ──────────────────────────────────────────────────────────
   const eligibleParcours = parcoursData.filter(p =>
@@ -326,24 +365,22 @@ export const HomeDashboard = ({
       <div style={{ padding: "12px 12px 0" }}>
 
         {/* ── PROGRESSION CARD ─────────────────────────────────────────────── */}
-        <div className="a-card" style={{
-          marginBottom: 10,
-          padding: "20px 20px",
-          background: "var(--module-tint)",
-          position: "relative",
-          overflow: "hidden",
-        }}>
+        <div
+          className="a-card"
+          style={{
+            marginBottom: 10, padding: "20px 20px",
+            background: "var(--module-tint)",
+            position: "relative", overflow: "hidden",
+            ...staggerStyle(0, mounted),
+          }}
+        >
           <LeafVein style={{ right: -6, bottom: -8, opacity: 0.055 }} />
 
-          {/* Ring left + info right */}
           <div style={{ display: "flex", alignItems: "center", gap: 20, position: "relative" }}>
-
-            {/* Ring with radial copper glow behind it */}
+            {/* Ring with copper glow */}
             <div style={{ position: "relative", flexShrink: 0, width: 80, height: 80 }}>
               <div style={{
-                position: "absolute",
-                inset: -14,
-                borderRadius: "50%",
+                position: "absolute", inset: -14, borderRadius: "50%",
                 background: "radial-gradient(circle, rgba(194,116,74,0.16) 30%, transparent 72%)",
                 pointerEvents: "none",
               }} />
@@ -351,9 +388,15 @@ export const HomeDashboard = ({
             </div>
 
             <div style={{ flex: 1, minWidth: 0 }}>
-              <div style={{ ...CAP, marginBottom: 4 }}>Niveau {currentLevel.level}</div>
+              {/* Level label + emblem */}
+              <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 4 }}>
+                <div style={{ ...CAP }}>Niveau {currentLevel.level}</div>
+                <span style={{ color: "#c2744a", opacity: 0.75, display: "flex", alignItems: "center" }}>
+                  {LEVEL_EMBLEMS[currentLevel.level]}
+                </span>
+              </div>
 
-              {/* Level title — The Seasons font */}
+              {/* Level title */}
               <div style={{
                 fontFamily: "var(--font-seasons)",
                 fontSize: 20, fontWeight: 700,
@@ -362,10 +405,9 @@ export const HomeDashboard = ({
                 {currentLevel.title}
               </div>
 
-              {/* XP bar */}
               <XPBar percent={levelPercent} />
 
-              {/* XP tension — quantified pull toward next level */}
+              {/* XP tension */}
               <div style={{ marginTop: 5, marginBottom: 10 }}>
                 {xpToNext !== null ? (
                   <span style={{
@@ -385,17 +427,14 @@ export const HomeDashboard = ({
                 )}
               </div>
 
-              {/* Hairline */}
               <div style={{ height: 1, background: "var(--border-subtle)", marginBottom: 8 }} />
 
-              {/* Next unlock */}
               {nextLevel ? (
                 <div>
                   <div style={{ ...CAP, marginBottom: 3 }}>Prochain niveau</div>
                   <div style={{
                     fontFamily: "'DM Sans', sans-serif",
-                    fontSize: 12, fontWeight: 500,
-                    color: "var(--text-3)",
+                    fontSize: 12, fontWeight: 500, color: "var(--text-3)",
                   }}>
                     {nextLevel.title}
                   </div>
@@ -432,7 +471,10 @@ export const HomeDashboard = ({
         </div>
 
         {/* ── NEXT MODULE ───────────────────────────────────────────────────── */}
-        <div className="a-card" style={{ marginBottom: 10, padding: "20px 20px" }}>
+        <div
+          className="a-card"
+          style={{ marginBottom: 10, padding: "20px 20px", ...staggerStyle(1, mounted) }}
+        >
           <div style={{ ...CAP, marginBottom: 18 }}>Prochain module</div>
           {nextModule ? (
             <NextModuleCard
@@ -444,8 +486,7 @@ export const HomeDashboard = ({
           ) : (
             <div style={{
               fontFamily: "'Cormorant Garamond', Georgia, serif",
-              fontSize: 19, fontStyle: "italic",
-              color: "var(--text-3)",
+              fontSize: 19, fontStyle: "italic", color: "var(--text-3)",
             }}>
               {progressLoading ? "Chargement…" : "Tous vos parcours sont complétés 🎉"}
             </div>
@@ -453,14 +494,20 @@ export const HomeDashboard = ({
         </div>
 
         {/* ── BADGES ───────────────────────────────────────────────────────── */}
-        <BadgesRow
-          earnedBadgeIds={earnedBadgeIds}
-          onViewAll={() => onSwitchTab("profil")}
-        />
+        <div style={staggerStyle(2, mounted)}>
+          <BadgesRow
+            earnedBadgeIds={earnedBadgeIds}
+            newBadgeId={newBadgeId}
+            onViewAll={() => onSwitchTab("profil")}
+          />
+        </div>
 
         {/* ── PARCOURS PROGRESS ────────────────────────────────────────────── */}
         {parcoursProgress.some(p => p.done > 0) && (
-          <div className="a-card" style={{ marginBottom: 10, padding: "18px 20px" }}>
+          <div
+            className="a-card"
+            style={{ marginBottom: 10, padding: "18px 20px", ...staggerStyle(3, mounted) }}
+          >
             <div style={{ ...CAP, marginBottom: 18 }}>Ma progression</div>
             {parcoursProgress.map(({ id, titleFr, done, total, percent, started, color }) => (
               <div key={id} style={{ marginBottom: 18 }}>
@@ -489,9 +536,7 @@ export const HomeDashboard = ({
                   }} />
                   {percent > 3 && percent < 100 && (
                     <div style={{
-                      position: "absolute",
-                      left: `${percent}%`,
-                      top: "50%",
+                      position: "absolute", left: `${percent}%`, top: "50%",
                       transform: "translate(-50%, -50%) rotate(45deg)",
                       width: 7, height: 7,
                       background: "rgba(194,116,74,0.65)",
@@ -506,34 +551,44 @@ export const HomeDashboard = ({
         )}
 
         {/* ── RECENT ACTIVITY ──────────────────────────────────────────────── */}
-        <RecentActivity progress={progress} onOpenModule={onOpenModule} />
+        <div style={staggerStyle(4, mounted)}>
+          <RecentActivity progress={progress} onOpenModule={onOpenModule} />
+        </div>
 
-        {/* ── LOCKED FUTURE CONTENT ────────────────────────────────────────── */}
-        <div style={{ ...CAP, marginBottom: 12, marginTop: 4, paddingLeft: 2 }}>À venir</div>
+        {/* ── UPGRADE PACKS ────────────────────────────────────────────────── */}
+        <div style={{ ...CAP, marginBottom: 12, marginTop: 4, paddingLeft: 2 }}>Aller plus loin</div>
 
-        <LockedBlock
-          svgIcon={<SeasonIcon />}
-          title="Défi Printemps Botanique"
-          teaser="5 défis exclusifs · Badges rares · Classement dédié"
-          unlockLabel="Bientôt"
+        <UpgradePackCard
+          title="Arduenna Pro"
+          features="Défis Saisonniers · Badges Rares · Classement Avancé"
+          lockLabel="Bientôt"
+          ctaLabel="En savoir plus"
+          ctaHref="mailto:academy@arduenna.com?subject=Arduenna%20Pro"
+          delay={`${5 * 55}ms`}
         />
 
-        <LockedBlock
-          svgIcon={<AlchimisteIcon />}
-          title="Badge Rare · L'Alchimiste"
-          teaser="Condition secrète — maîtrisez 3 parcours avec 85%+"
-          unlockLabel="Niveau 4"
+        <UpgradePackCard
+          title="Arduenna Prestige"
+          features="Parcours Expert · Certificats · Contenus Exclusifs"
+          lockLabel="Niveau 3"
+          ctaLabel="En savoir plus"
+          ctaHref="mailto:academy@arduenna.com?subject=Arduenna%20Prestige"
+          delay={`${6 * 55}ms`}
         />
 
-        <LockedBlock
-          svgIcon={<MasteryIcon />}
-          title="Parcours Maître Distillateur"
-          teaser="4 modules experts · Distillation avancée · Certificat exclusif"
-          unlockLabel="Niveau 3"
+        <UpgradePackCard
+          title="Arduenna B2B"
+          features="Dashboard Équipe · Classement Régional · Export CSV"
+          lockLabel="Sur devis"
+          ctaLabel="Contacter"
+          ctaHref="mailto:academy@arduenna.com?subject=Arduenna%20B2B"
+          delay={`${7 * 55}ms`}
         />
 
         {/* ── MINI LEADERBOARD ─────────────────────────────────────────────── */}
-        <MiniLeaderboard onViewAll={() => onSwitchTab("classement")} />
+        <div style={staggerStyle(8, mounted)}>
+          <MiniLeaderboard onViewAll={() => onSwitchTab("classement")} />
+        </div>
 
       </div>
     </div>

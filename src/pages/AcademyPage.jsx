@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Navigate, useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../components/auth/AuthProvider";
 import { useProgress } from "../hooks/useProgress";
@@ -97,6 +97,20 @@ export const AcademyPage = () => {
   const [activeTab, setActiveTab] = useState("accueil");
   // view: "tabs" | "parcours-detail" | "module-detail" | "lesson"
   const [view, setView] = useState("tabs");
+
+  // XP float animation
+  const prevXPRef = useRef(null);
+  const [xpGain, setXpGain] = useState(null);
+  useEffect(() => {
+    if (prevXPRef.current === null) { prevXPRef.current = xp; return; }
+    if (xp > prevXPRef.current) {
+      setXpGain(xp - prevXPRef.current);
+      const t = setTimeout(() => setXpGain(null), 700);
+      prevXPRef.current = xp;
+      return () => clearTimeout(t);
+    }
+    prevXPRef.current = xp;
+  }, [xp]); // eslint-disable-line react-hooks/exhaustive-deps
   const [selectedParcoursId, setSelectedParcoursId] = useState(null);
   const [selectedModuleId, setSelectedModuleId] = useState(null);
   const [showNotifPrompt, setShowNotifPrompt] = useState(false);
@@ -453,6 +467,7 @@ export const AcademyPage = () => {
         <NotificationPrompt onDone={() => setShowNotifPrompt(false)} />
       )}
       <AcademyHeader xp={xp} onLogout={handleLogout} />
+      {xpGain && <XPFloatIndicator amount={xpGain} />}
 
       {/* Tab content */}
       {activeTab === "accueil" && renderAccueil()}
@@ -597,6 +612,34 @@ const ThemeToggle = () => {
   );
 };
 
+// ── XP Diamond icon ───────────────────────────────────────────────────────────
+
+const XPDiamond = () => (
+  <svg width="10" height="10" viewBox="0 0 12 12" fill="#D4A574" aria-hidden="true">
+    <path d="M6 0l2 3.5h4L9 7.5l1.5 4.5L6 9.5l-4.5 2.5L3 7.5 0 3.5h4z" />
+  </svg>
+);
+
+// ── XP Float indicator ────────────────────────────────────────────────────────
+
+const XPFloatIndicator = ({ amount }) => {
+  if (!amount) return null;
+  return (
+    <div style={{
+      position: "fixed", top: 52, right: 20,
+      zIndex: 9998,
+      fontFamily: "'DM Sans', sans-serif",
+      fontSize: 14, fontWeight: 800,
+      color: "#c2744a",
+      animation: "xp-float 0.65s ease-out forwards",
+      pointerEvents: "none",
+      userSelect: "none",
+    }}>
+      +{amount} XP
+    </div>
+  );
+};
+
 // ── Shared header component ───────────────────────────────────────────────────
 
 const AcademyHeader = ({ xp, onLogout }) => (
@@ -636,7 +679,7 @@ const AcademyHeader = ({ xp, onLogout }) => (
           fontFamily: "'DM Sans', sans-serif", fontSize: 12, fontWeight: 700,
           letterSpacing: 0.3,
         }}>
-          ⭐ {xp}
+          <XPDiamond /> {xp}
         </div>
       )}
       {onLogout && (
