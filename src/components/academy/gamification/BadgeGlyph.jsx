@@ -50,18 +50,13 @@ export const BadgeGlyph = ({ id, size = 36 }) => {
   return FALLBACK[id] || <span style={{ fontSize: size - 4, lineHeight: 1 }}>✦</span>;
 };
 
-/** Inline SVG padlock — adapts to currentColor, always visible in dark + light mode */
+/** Better-Lock-Icon padlock */
 export const PadlockSVG = ({ size = 14 }) => (
-  <svg
-    width={size} height={size}
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <rect x="3" y="11" width="18" height="11" rx="2" />
-    <path d="M7 11V7a5 5 0 0110 0v4" />
-  </svg>
+  <img
+    src="/icons/Better-Lock-Icon.webp"
+    alt=""
+    width={size}
+    height={size}
+    style={{ objectFit: "contain", display: "block", opacity: 0.9 }}
+  />
 );
