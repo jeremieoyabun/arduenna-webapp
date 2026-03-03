@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../components/auth/AuthProvider";
+import { createUserProfile, getUserProfile } from "../lib/userService";
 
 const roleLabels = {
   bartender: "Bartender",
@@ -9,7 +10,7 @@ const roleLabels = {
 };
 
 export const LoginPage = () => {
-  const { login, loginWithGoogle, signup, setRole } = useAuth();
+  const { login, loginWithGoogle, signup, refreshProfile } = useAuth();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -22,11 +23,18 @@ export const LoginPage = () => {
     setError(null);
     try {
       if (isSignup) {
-        await signup(email, password);
+        const cred = await signup(email, password);
+        await createUserProfile(cred.user.uid, {
+          email,
+          firstName,
+          displayName: firstName,
+          role: selectedRole,
+        });
+        await refreshProfile();
       } else {
         await login(email, password);
+        await refreshProfile();
       }
-      setRole(selectedRole);
       navigate("/academy");
     } catch (err) {
       setError(err.message);
@@ -35,8 +43,18 @@ export const LoginPage = () => {
 
   const handleGoogle = async () => {
     try {
-      await loginWithGoogle();
-      setRole(selectedRole);
+      const cred = await loginWithGoogle();
+      // Create profile if first-time Google user
+      const existing = await getUserProfile(cred.user.uid);
+      if (!existing) {
+        await createUserProfile(cred.user.uid, {
+          email: cred.user.email,
+          firstName: cred.user.displayName?.split(" ")[0] || "",
+          displayName: cred.user.displayName || "",
+          role: selectedRole,
+        });
+      }
+      await refreshProfile();
       navigate("/academy");
     } catch (err) {
       setError(err.message);

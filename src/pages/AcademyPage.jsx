@@ -1,6 +1,13 @@
 import { useState } from "react";
 import { Navigate, useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../components/auth/AuthProvider";
+import { useProgress } from "../hooks/useProgress";
+import { ParcoursGrid } from "../components/academy/parcours/ParcoursGrid";
+import { ParcoursDetail } from "../components/academy/parcours/ParcoursDetail";
+import { ModuleDetail } from "../components/academy/parcours/ModuleDetail";
+import { modulesData } from "../data/academy/modules";
+
+// ── Tab bar ──────────────────────────────────────────────────────────────────
 
 const tabs = [
   { id: "accueil", label: "Accueil", icon: "home" },
@@ -9,322 +16,235 @@ const tabs = [
   { id: "profil", label: "Profil", icon: "user" },
 ];
 
-const parcours = [
-  {
-    title: "L'Univers Arduenna",
-    desc: "Histoire, terroir, botaniques",
-    modules: 4,
-    duration: "15 min",
-    icon: (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#c2744a" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <circle cx="12" cy="12" r="10" />
-        <path d="M16.24 7.76l-2.12 6.36-6.36 2.12 2.12-6.36z" />
+const TabIcon = ({ type, active }) => {
+  const color = active ? "#c2744a" : "rgba(11,54,61,0.35)";
+  const icons = {
+    home: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5">
+        <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+        <polyline points="9 22 9 12 15 12 15 22" />
       </svg>
     ),
-  },
-  {
-    title: "La Gamme",
-    desc: "Gin, No Alcohol, 694 Aperitivo",
-    modules: 4,
-    duration: "20 min",
-    icon: (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#c2744a" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M8 2h8l-2 7h4L10 22l2-9H8z" />
+    book: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5">
+        <path d="M4 19.5A2.5 2.5 0 016.5 17H20" /><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z" />
       </svg>
     ),
-  },
-  {
-    title: "Le Cocktail Lab",
-    desc: "Recettes, techniques, accords",
-    modules: 4,
-    duration: "20 min",
-    icon: (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#c2744a" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M8 22h8" />
-        <path d="M12 11v11" />
-        <path d="M5 3l7 8 7-8" />
+    trophy: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5">
+        <path d="M6 9H4.5a2.5 2.5 0 010-5H6" /><path d="M18 9h1.5a2.5 2.5 0 000-5H18" />
+        <path d="M4 22h16" /><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20 7 22" />
+        <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20 17 22" />
+        <path d="M18 2H6v7a6 6 0 0012 0V2z" />
       </svg>
     ),
-  },
-  {
-    title: "Vendre Arduenna",
-    desc: "Argumentaire, positionnement, conseil",
-    modules: 4,
-    duration: "15 min",
-    icon: (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#c2744a" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M20.42 4.58a5.4 5.4 0 00-7.65 0l-.77.78-.77-.78a5.4 5.4 0 00-7.65 7.65l.78.77L12 20.64l7.64-7.64.78-.77a5.4 5.4 0 000-7.65z" />
+    user: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5">
+        <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" /><circle cx="12" cy="7" r="4" />
       </svg>
     ),
-  },
-];
+  };
+  return icons[type] || null;
+};
 
-const roleLabels = {
+// ── Shared styles ─────────────────────────────────────────────────────────────
+
+const card = {
+  background: "#ffffff",
+  borderRadius: 12,
+  border: "1px solid rgba(11,54,61,0.08)",
+  boxShadow: "0 2px 12px rgba(11,54,61,0.03)",
+};
+
+const label = {
+  fontFamily: "'DM Sans', sans-serif",
+  fontSize: 11,
+  color: "rgba(11,54,61,0.45)",
+  textTransform: "uppercase",
+  letterSpacing: 1.5,
+};
+
+// ── Role labels ───────────────────────────────────────────────────────────────
+
+const ROLE_LABELS = {
   bartender: "Bartender",
   commercial: "Commercial",
   caviste: "Caviste / Distributeur",
 };
 
-const TabIcon = ({ type, active }) => {
-  const color = active ? "#c2744a" : "rgba(11,54,61,0.35)";
-  const icons = {
-    home: <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>,
-    book: <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>,
-    trophy: <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5"><path d="M6 9H4.5a2.5 2.5 0 010-5H6"/><path d="M18 9h1.5a2.5 2.5 0 000-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20 17 22"/><path d="M18 2H6v7a6 6 0 0012 0V2z"/></svg>,
-    user: <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>,
-  };
-  return icons[type] || null;
-};
-
-const LockIcon = () => (
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(11,54,61,0.3)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
-    <path d="M7 11V7a5 5 0 0110 0v4" />
-  </svg>
-);
+// ── Academy Page ──────────────────────────────────────────────────────────────
 
 export const AcademyPage = () => {
-  const { user, loading, role, logout } = useAuth();
+  const { user, profile, loading: authLoading, logout } = useAuth();
+  const progressHook = useProgress();
+  const { xp, streak, getModulePercent, isLocked, isCompleted, getNextModule, getParcoursCompletedCount, loading: progressLoading } = progressHook;
+
   const [activeTab, setActiveTab] = useState("accueil");
+  // view: "tabs" | "parcours-detail" | "module-detail" | "lesson"
+  const [view, setView] = useState("tabs");
+  const [selectedParcoursId, setSelectedParcoursId] = useState(null);
+  const [selectedModuleId, setSelectedModuleId] = useState(null);
+
   const navigate = useNavigate();
 
-  if (loading) {
+  if (authLoading) {
     return (
-      <div style={{
-        minHeight: "100vh", background: "#fef8ec",
-        display: "flex", alignItems: "center", justifyContent: "center",
-      }}>
-        <div style={{
-          fontFamily: "'Cormorant Garamond', Georgia, serif",
-          fontSize: 22, color: "#c2744a", fontStyle: "italic",
-        }}>
+      <div style={{ minHeight: "100vh", background: "#fef8ec", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <div style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 22, color: "#c2744a", fontStyle: "italic" }}>
           Chargement...
         </div>
       </div>
     );
   }
 
-  if (!user) {
-    return <Navigate to="/login" replace />;
-  }
+  if (!user) return <Navigate to="/login" replace />;
 
-  const handleLogout = async () => {
-    await logout();
-    navigate("/");
+  const handleLogout = async () => { await logout(); navigate("/"); };
+
+  const firstName = profile?.firstName || user.displayName || user.email?.split("@")[0] || "Apprenant";
+  const role = profile?.role;
+
+  // ── Navigation handlers ──────────────────────────────────────────────────
+
+  const openParcours = (parcoursId) => {
+    setSelectedParcoursId(parcoursId);
+    setView("parcours-detail");
   };
 
-  const displayName = user.displayName || user.email?.split("@")[0] || "Apprenant";
-
-  const cardStyle = {
-    background: "#ffffff",
-    borderRadius: 12,
-    padding: "20px",
-    border: "1px solid rgba(11,54,61,0.08)",
-    boxShadow: "0 2px 12px rgba(11,54,61,0.03)",
-    marginBottom: 16,
+  const openModule = (moduleId) => {
+    setSelectedModuleId(moduleId);
+    setView("module-detail");
   };
 
-  const renderAccueil = () => (
-    <div style={{ padding: "28px 20px" }}>
-      {/* Greeting */}
-      <h2 style={{
-        fontFamily: "'Cormorant Garamond', Georgia, serif",
-        fontSize: 26, fontWeight: 400, fontStyle: "italic",
-        color: "#0b363d", marginBottom: 24,
-      }}>
-        Bonjour {displayName} 👋
-      </h2>
+  const startLesson = () => {
+    // Mission 9 will wire this to LessonEngine
+    setView("lesson");
+  };
 
-      {/* Streak + XP row */}
-      <div style={{ display: "flex", gap: 12, marginBottom: 20 }}>
-        {/* Streak */}
-        <div style={{
-          ...cardStyle, flex: 1, marginBottom: 0,
-          display: "flex", alignItems: "center", gap: 10,
-          padding: "16px",
+  const goBack = () => {
+    if (view === "lesson") { setView("module-detail"); return; }
+    if (view === "module-detail") { setView("parcours-detail"); return; }
+    if (view === "parcours-detail") { setView("tabs"); return; }
+  };
+
+  const switchTab = (tabId) => {
+    setView("tabs");
+    setActiveTab(tabId);
+  };
+
+  // ── Accueil tab ──────────────────────────────────────────────────────────
+
+  const renderAccueil = () => {
+    const nextModule = getNextModule();
+    const p1modules = modulesData.filter(m => m.parcoursId === "univers");
+    const p1completed = getParcoursCompletedCount("univers");
+    const p1percent = Math.round((p1completed / p1modules.length) * 100);
+
+    return (
+      <div style={{ padding: "28px 20px" }}>
+        {/* Greeting */}
+        <h2 style={{
+          fontFamily: "'Cormorant Garamond', Georgia, serif",
+          fontSize: 26, fontWeight: 400, fontStyle: "italic",
+          color: "#0b363d", marginBottom: 24,
         }}>
-          <span style={{ fontSize: 22 }}>🔥</span>
-          <div>
-            <div style={{
-              fontFamily: "'DM Sans', sans-serif", fontSize: 18,
-              fontWeight: 600, color: "#0b363d",
-            }}>0 jours</div>
-            <div style={{
-              fontFamily: "'DM Sans', sans-serif", fontSize: 11,
-              color: "rgba(11,54,61,0.45)", textTransform: "uppercase",
-              letterSpacing: 1.5,
-            }}>Streak</div>
+          Bonjour {firstName} 👋
+        </h2>
+
+        {/* Streak + XP */}
+        <div style={{ display: "flex", gap: 12, marginBottom: 20 }}>
+          <div style={{ ...card, flex: 1, padding: "16px", display: "flex", alignItems: "center", gap: 10 }}>
+            <span style={{ fontSize: 22 }}>🔥</span>
+            <div>
+              <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 18, fontWeight: 600, color: "#0b363d" }}>
+                {streak} jour{streak !== 1 ? "s" : ""}
+              </div>
+              <div style={{ ...label }}>Streak</div>
+            </div>
+          </div>
+          <div style={{ ...card, flex: 1, padding: "16px", display: "flex", alignItems: "center", gap: 10 }}>
+            <span style={{ fontSize: 22 }}>⭐</span>
+            <div>
+              <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 18, fontWeight: 600, color: "#0b363d" }}>
+                {xp} XP
+              </div>
+              <div style={{ ...label }}>Total</div>
+            </div>
           </div>
         </div>
 
-        {/* XP */}
-        <div style={{
-          ...cardStyle, flex: 1, marginBottom: 0,
-          display: "flex", alignItems: "center", gap: 10,
-          padding: "16px",
-        }}>
-          <span style={{ fontSize: 22 }}>⭐</span>
-          <div>
-            <div style={{
-              fontFamily: "'DM Sans', sans-serif", fontSize: 18,
-              fontWeight: 600, color: "#0b363d",
-            }}>0 XP</div>
-            <div style={{
-              fontFamily: "'DM Sans', sans-serif", fontSize: 11,
-              color: "rgba(11,54,61,0.45)", textTransform: "uppercase",
-              letterSpacing: 1.5,
-            }}>Total</div>
+        {/* Prochain module */}
+        {nextModule ? (
+          <div
+            onClick={() => { openParcours("univers"); openModule(nextModule.id); }}
+            style={{ ...card, padding: "18px 20px", marginBottom: 16, cursor: "pointer" }}
+          >
+            <div style={{ ...label, marginBottom: 10 }}>Prochain module</div>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
+              <div>
+                <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 15, fontWeight: 600, color: "#0b363d", marginBottom: 3 }}>
+                  {nextModule.titleFr}
+                </div>
+                <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, color: "rgba(11,54,61,0.45)" }}>
+                  {nextModule.lessonCount} activités · {nextModule.duration}
+                </div>
+              </div>
+              <button style={{
+                padding: "10px 18px",
+                background: "#0b363d", color: "#fef8ec",
+                border: "none", borderRadius: 8,
+                fontFamily: "'DM Sans', sans-serif", fontSize: 13, fontWeight: 600,
+                cursor: "pointer", flexShrink: 0,
+              }}>
+                {getModulePercent("univers", nextModule.id) > 0 ? "Continuer" : "Commencer"}
+              </button>
+            </div>
           </div>
-        </div>
-      </div>
+        ) : (
+          <div style={{ ...card, padding: "18px 20px", marginBottom: 16, opacity: 0.6 }}>
+            <div style={{ ...label, marginBottom: 10 }}>Prochain module</div>
+            <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 14, color: "rgba(11,54,61,0.5)", fontStyle: "italic" }}>
+              {progressLoading ? "Chargement..." : "Tous les modules du Parcours 1 sont complétés 🎉"}
+            </div>
+          </div>
+        )}
 
-      {/* Prochain module — locked */}
-      <div style={{
-        ...cardStyle, position: "relative", overflow: "hidden",
-        opacity: 0.7,
-      }}>
-        <div style={{
-          fontFamily: "'DM Sans', sans-serif", fontSize: 11,
-          color: "rgba(11,54,61,0.45)", textTransform: "uppercase",
-          letterSpacing: 2, marginBottom: 12,
-        }}>
-          Prochain module
-        </div>
-        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+        {/* Parcours 1 progress */}
+        {p1completed > 0 && (
+          <div style={{ ...card, padding: "16px 20px", marginBottom: 16 }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
+              <div style={{ ...label }}>L'Univers Arduenna</div>
+              <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, color: "rgba(11,54,61,0.45)" }}>
+                {p1completed}/{p1modules.length}
+              </span>
+            </div>
+            <div style={{ height: 6, borderRadius: 999, background: "rgba(11,54,61,0.08)", overflow: "hidden" }}>
+              <div style={{
+                height: "100%", borderRadius: 999,
+                width: `${p1percent}%`,
+                background: p1percent === 100 ? "#c2744a" : "#0b363d",
+                transition: "width 0.4s ease-out",
+              }} />
+            </div>
+          </div>
+        )}
+
+        {/* Mini leaderboard placeholder */}
+        <div style={{ ...card, padding: "18px 20px" }}>
+          <div style={{ ...label, marginBottom: 16 }}>Top apprenants</div>
           <div style={{
-            width: 44, height: 44, borderRadius: 10,
-            background: "rgba(11,54,61,0.04)",
-            display: "flex", alignItems: "center", justifyContent: "center",
+            fontFamily: "'DM Sans', sans-serif", fontSize: 13,
+            color: "rgba(11,54,61,0.4)", textAlign: "center",
+            fontStyle: "italic", padding: "8px 0",
           }}>
-            <LockIcon />
-          </div>
-          <div>
-            <div style={{
-              fontFamily: "'DM Sans', sans-serif", fontSize: 15,
-              fontWeight: 500, color: "#0b363d",
-            }}>
-              L'Univers Arduenna
-            </div>
-            <div style={{
-              fontFamily: "'DM Sans', sans-serif", fontSize: 13,
-              color: "rgba(11,54,61,0.45)",
-            }}>
-              Complétez votre inscription pour commencer
-            </div>
+            Soyez le premier à compléter un module !
           </div>
         </div>
       </div>
+    );
+  };
 
-      {/* Mini leaderboard */}
-      <div style={cardStyle}>
-        <div style={{
-          fontFamily: "'DM Sans', sans-serif", fontSize: 11,
-          color: "rgba(11,54,61,0.45)", textTransform: "uppercase",
-          letterSpacing: 2, marginBottom: 16,
-        }}>
-          Top 3 apprenants
-        </div>
-        {[1, 2, 3].map((pos) => (
-          <div key={pos} style={{
-            display: "flex", alignItems: "center", gap: 12,
-            padding: "10px 0",
-            borderBottom: pos < 3 ? "1px solid rgba(11,54,61,0.06)" : "none",
-          }}>
-            <div style={{
-              width: 28, height: 28, borderRadius: 999,
-              background: pos === 1 ? "rgba(194,116,74,0.12)" : "rgba(11,54,61,0.04)",
-              display: "flex", alignItems: "center", justifyContent: "center",
-              fontFamily: "'DM Sans', sans-serif", fontSize: 12,
-              fontWeight: 600,
-              color: pos === 1 ? "#c2744a" : "rgba(11,54,61,0.3)",
-            }}>
-              {pos}
-            </div>
-            <div style={{
-              flex: 1, height: 10, borderRadius: 999,
-              background: "rgba(11,54,61,0.04)",
-            }} />
-            <div style={{
-              fontFamily: "'DM Sans', sans-serif", fontSize: 12,
-              color: "rgba(11,54,61,0.25)",
-            }}>
-              — XP
-            </div>
-          </div>
-        ))}
-        <div style={{
-          fontFamily: "'DM Sans', sans-serif", fontSize: 12,
-          color: "rgba(11,54,61,0.35)", textAlign: "center",
-          marginTop: 12, fontStyle: "italic",
-        }}>
-          Soyez le premier à compléter un module !
-        </div>
-      </div>
-    </div>
-  );
-
-  const renderParcours = () => (
-    <div style={{ padding: "28px 20px" }}>
-      <h2 style={{
-        fontFamily: "'Cormorant Garamond', Georgia, serif",
-        fontSize: 22, fontWeight: 400, fontStyle: "italic",
-        color: "#0b363d", marginBottom: 6,
-      }}>
-        Parcours d'apprentissage
-      </h2>
-      <p style={{
-        fontFamily: "'DM Sans', sans-serif", fontSize: 13,
-        color: "rgba(11,54,61,0.45)", marginBottom: 24,
-      }}>
-        Maîtrisez l'univers Arduenna étape par étape
-      </p>
-
-      {parcours.map((p, i) => (
-        <div key={i} style={{
-          ...cardStyle, display: "flex", alignItems: "center",
-          gap: 16, opacity: 0.65, cursor: "default",
-        }}>
-          <div style={{
-            width: 48, height: 48, borderRadius: 12,
-            background: "rgba(194,116,74,0.08)",
-            display: "flex", alignItems: "center", justifyContent: "center",
-            flexShrink: 0,
-          }}>
-            {p.icon}
-          </div>
-          <div style={{ flex: 1, minWidth: 0 }}>
-            <div style={{
-              fontFamily: "'DM Sans', sans-serif", fontSize: 15,
-              fontWeight: 500, color: "#0b363d", marginBottom: 3,
-            }}>
-              {p.title}
-            </div>
-            <div style={{
-              fontFamily: "'DM Sans', sans-serif", fontSize: 12,
-              color: "rgba(11,54,61,0.45)",
-            }}>
-              {p.desc}
-            </div>
-            <div style={{
-              fontFamily: "'DM Sans', sans-serif", fontSize: 11,
-              color: "rgba(11,54,61,0.35)", marginTop: 4,
-            }}>
-              {p.modules} modules • {p.duration}
-            </div>
-          </div>
-          <LockIcon />
-        </div>
-      ))}
-
-      <div style={{
-        fontFamily: "'DM Sans', sans-serif", fontSize: 13,
-        color: "rgba(11,54,61,0.4)", textAlign: "center",
-        marginTop: 8, fontStyle: "italic",
-      }}>
-        Contenu bientôt disponible
-      </div>
-    </div>
-  );
+  // ── Classement tab ───────────────────────────────────────────────────────
 
   const renderClassement = () => (
     <div style={{ padding: "28px 20px", textAlign: "center" }}>
@@ -335,253 +255,269 @@ export const AcademyPage = () => {
       }}>
         Classement
       </h2>
-      <p style={{
-        fontFamily: "'DM Sans', sans-serif", fontSize: 13,
-        color: "rgba(11,54,61,0.45)", marginBottom: 32,
-      }}>
+      <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: "rgba(11,54,61,0.45)", marginBottom: 32 }}>
         Comparez-vous aux autres apprenants
       </p>
 
-      {/* Stylized empty podium */}
-      <div style={{
-        display: "flex", alignItems: "flex-end", justifyContent: "center",
-        gap: 8, marginBottom: 32, height: 160,
-      }}>
-        {/* 2nd place */}
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-          <div style={{
-            width: 36, height: 36, borderRadius: 999,
-            background: "rgba(11,54,61,0.06)", marginBottom: 8,
-          }} />
-          <div style={{
-            width: 70, height: 90, borderRadius: "8px 8px 0 0",
-            background: "rgba(11,54,61,0.04)",
-            display: "flex", alignItems: "center", justifyContent: "center",
-            fontFamily: "'DM Sans', sans-serif", fontSize: 20,
-            fontWeight: 600, color: "rgba(11,54,61,0.15)",
-          }}>
-            2
+      {/* Empty podium */}
+      <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "center", gap: 8, marginBottom: 32, height: 160 }}>
+        {[
+          { pos: 2, h: 90, color: "rgba(11,54,61,0.04)", avatarSize: 36 },
+          { pos: 1, h: 120, color: "rgba(194,116,74,0.08)", avatarSize: 40 },
+          { pos: 3, h: 65, color: "rgba(11,54,61,0.03)", avatarSize: 32 },
+        ].map(({ pos, h, color, avatarSize }) => (
+          <div key={pos} style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+            <div style={{
+              width: avatarSize, height: avatarSize, borderRadius: 999,
+              background: pos === 1 ? "rgba(194,116,74,0.1)" : "rgba(11,54,61,0.06)",
+              marginBottom: 8,
+            }} />
+            <div style={{
+              width: 70, height: h, borderRadius: "8px 8px 0 0", background: color,
+              display: "flex", alignItems: "center", justifyContent: "center",
+              fontFamily: "'DM Sans', sans-serif", fontSize: 20, fontWeight: 600,
+              color: pos === 1 ? "rgba(194,116,74,0.3)" : "rgba(11,54,61,0.12)",
+            }}>
+              {pos}
+            </div>
           </div>
-        </div>
-
-        {/* 1st place */}
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-          <div style={{
-            width: 40, height: 40, borderRadius: 999,
-            background: "rgba(194,116,74,0.1)", marginBottom: 8,
-          }} />
-          <div style={{
-            width: 70, height: 120, borderRadius: "8px 8px 0 0",
-            background: "rgba(194,116,74,0.08)",
-            display: "flex", alignItems: "center", justifyContent: "center",
-            fontFamily: "'DM Sans', sans-serif", fontSize: 20,
-            fontWeight: 600, color: "rgba(194,116,74,0.3)",
-          }}>
-            1
-          </div>
-        </div>
-
-        {/* 3rd place */}
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-          <div style={{
-            width: 32, height: 32, borderRadius: 999,
-            background: "rgba(11,54,61,0.04)", marginBottom: 8,
-          }} />
-          <div style={{
-            width: 70, height: 65, borderRadius: "8px 8px 0 0",
-            background: "rgba(11,54,61,0.03)",
-            display: "flex", alignItems: "center", justifyContent: "center",
-            fontFamily: "'DM Sans', sans-serif", fontSize: 20,
-            fontWeight: 600, color: "rgba(11,54,61,0.12)",
-          }}>
-            3
-          </div>
-        </div>
+        ))}
       </div>
 
       <p style={{
         fontFamily: "'DM Sans', sans-serif", fontSize: 14,
-        color: "rgba(11,54,61,0.4)", fontStyle: "italic",
-        lineHeight: 1.6,
+        color: "rgba(11,54,61,0.4)", fontStyle: "italic", lineHeight: 1.6,
       }}>
         Le classement sera disponible dès que les premiers modules seront complétés.
-        <br />
-        Soyez le premier sur le podium !
+        <br />Soyez le premier sur le podium !
       </p>
     </div>
   );
 
-  const renderProfil = () => (
-    <div style={{ padding: "28px 20px" }}>
-      {/* Avatar + info */}
-      <div style={{ textAlign: "center", marginBottom: 28 }}>
-        <div style={{
-          width: 80, height: 80, borderRadius: 999,
-          background: "#c2744a", margin: "0 auto 16px",
-          display: "flex", alignItems: "center", justifyContent: "center",
-          color: "#fef8ec",
-          fontFamily: "'Cormorant Garamond', Georgia, serif",
-          fontSize: 32, fontWeight: 400, fontStyle: "italic",
-        }}>
-          {displayName[0].toUpperCase()}
-        </div>
+  // ── Profil tab ───────────────────────────────────────────────────────────
 
-        <h2 style={{
-          fontFamily: "'Cormorant Garamond', Georgia, serif",
-          fontSize: 22, fontWeight: 400, fontStyle: "italic",
-          color: "#0b363d", marginBottom: 6,
-        }}>
-          {displayName}
-        </h2>
+  const renderProfil = () => {
+    const p1completed = getParcoursCompletedCount("univers");
+    const p1total = modulesData.filter(m => m.parcoursId === "univers").length;
 
-        {role && (
+    return (
+      <div style={{ padding: "28px 20px" }}>
+        {/* Avatar */}
+        <div style={{ textAlign: "center", marginBottom: 28 }}>
           <div style={{
-            display: "inline-block",
-            padding: "4px 14px",
-            borderRadius: 999,
-            background: "rgba(194,116,74,0.1)",
-            fontFamily: "'DM Sans', sans-serif",
-            fontSize: 12, color: "#c2744a",
-            marginBottom: 4,
+            width: 80, height: 80, borderRadius: 999,
+            background: "#c2744a", margin: "0 auto 16px",
+            display: "flex", alignItems: "center", justifyContent: "center",
+            color: "#fef8ec",
+            fontFamily: "'Cormorant Garamond', Georgia, serif",
+            fontSize: 32, fontWeight: 400, fontStyle: "italic",
           }}>
-            {roleLabels[role] || role}
+            {firstName[0].toUpperCase()}
           </div>
-        )}
 
-        <div style={{
-          fontFamily: "'DM Sans', sans-serif", fontSize: 13,
-          color: "rgba(11,54,61,0.4)", marginTop: 6,
-        }}>
-          {user.email}
-        </div>
-      </div>
+          <h2 style={{
+            fontFamily: "'Cormorant Garamond', Georgia, serif",
+            fontSize: 22, fontWeight: 400, fontStyle: "italic",
+            color: "#0b363d", marginBottom: 6,
+          }}>
+            {firstName}
+          </h2>
 
-      {/* Mes Badges */}
-      <div style={cardStyle}>
-        <div style={{
-          fontFamily: "'DM Sans', sans-serif", fontSize: 11,
-          color: "rgba(11,54,61,0.45)", textTransform: "uppercase",
-          letterSpacing: 2, marginBottom: 16,
-        }}>
-          Mes Badges
-        </div>
-        <div style={{
-          display: "flex", gap: 12, justifyContent: "center",
-        }}>
-          {[1, 2, 3].map((n) => (
-            <div key={n} style={{
-              width: 52, height: 52, borderRadius: 999,
-              background: "rgba(11,54,61,0.04)",
-              border: "2px dashed rgba(11,54,61,0.1)",
-              display: "flex", alignItems: "center", justifyContent: "center",
+          {role && (
+            <div style={{
+              display: "inline-block",
+              padding: "4px 14px", borderRadius: 999,
+              background: "rgba(194,116,74,0.1)",
+              fontFamily: "'DM Sans', sans-serif", fontSize: 12, color: "#c2744a",
+              marginBottom: 4,
             }}>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(11,54,61,0.15)" strokeWidth="1.5">
-                <circle cx="12" cy="8" r="7" />
-                <path d="M8.21 13.89L7 23l5-3 5 3-1.21-9.12" />
-              </svg>
+              {ROLE_LABELS[role] || role}
+            </div>
+          )}
+
+          <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: "rgba(11,54,61,0.4)", marginTop: 6 }}>
+            {user.email}
+          </div>
+        </div>
+
+        {/* Stats */}
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 20 }}>
+          {[
+            { icon: "⭐", value: xp, label: "XP total" },
+            { icon: "🔥", value: `${streak}j`, label: "Streak" },
+            { icon: "📚", value: p1completed, label: "Modules faits" },
+            { icon: "🏅", value: "0", label: "Badges" },
+          ].map(({ icon, value, label: lbl }) => (
+            <div key={lbl} style={{ ...card, padding: "14px 16px", display: "flex", alignItems: "center", gap: 10 }}>
+              <span style={{ fontSize: 20 }}>{icon}</span>
+              <div>
+                <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 16, fontWeight: 600, color: "#0b363d" }}>
+                  {value}
+                </div>
+                <div style={{ ...label }}>{lbl}</div>
+              </div>
             </div>
           ))}
         </div>
-        <div style={{
-          fontFamily: "'DM Sans', sans-serif", fontSize: 12,
-          color: "rgba(11,54,61,0.35)", textAlign: "center",
-          marginTop: 12, fontStyle: "italic",
-        }}>
-          Complétez des modules pour débloquer vos badges
-        </div>
-      </div>
 
-      {/* Mes Certificats */}
-      <div style={cardStyle}>
-        <div style={{
-          fontFamily: "'DM Sans', sans-serif", fontSize: 11,
-          color: "rgba(11,54,61,0.45)", textTransform: "uppercase",
-          letterSpacing: 2, marginBottom: 16,
-        }}>
-          Mes Certificats
+        {/* Progression parcours */}
+        <div style={{ ...card, padding: "18px 20px", marginBottom: 16 }}>
+          <div style={{ ...label, marginBottom: 14 }}>Progression parcours</div>
+          {[
+            { name: "L'Univers Arduenna", completed: p1completed, total: p1total, active: true },
+            { name: "La Gamme", completed: 0, total: 4, active: false },
+            { name: "Le Cocktail Lab", completed: 0, total: 4, active: false },
+            { name: "Vendre Arduenna", completed: 0, total: 4, active: false },
+          ].map(({ name, completed: c, total: t, active }) => (
+            <div key={name} style={{ marginBottom: 14 }}>
+              <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 5 }}>
+                <span style={{
+                  fontFamily: "'DM Sans', sans-serif", fontSize: 13,
+                  color: active ? "#0b363d" : "rgba(11,54,61,0.35)",
+                }}>
+                  {name}
+                </span>
+                <span style={{
+                  fontFamily: "'DM Sans', sans-serif", fontSize: 12,
+                  color: "rgba(11,54,61,0.4)",
+                }}>
+                  {active ? `${c}/${t}` : "Bientôt"}
+                </span>
+              </div>
+              <div style={{ height: 5, borderRadius: 999, background: "rgba(11,54,61,0.06)", overflow: "hidden" }}>
+                <div style={{
+                  height: "100%", borderRadius: 999,
+                  width: active && t > 0 ? `${Math.round((c / t) * 100)}%` : "0%",
+                  background: "#0b363d",
+                  transition: "width 0.4s ease-out",
+                }} />
+              </div>
+            </div>
+          ))}
         </div>
-        <div style={{
-          padding: "20px",
-          border: "2px dashed rgba(11,54,61,0.08)",
-          borderRadius: 8,
-          textAlign: "center",
-        }}>
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(11,54,61,0.15)" strokeWidth="1.5" style={{ marginBottom: 8 }}>
-            <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
-            <path d="M14 2v6h6" />
-            <path d="M9 15h6" />
-            <path d="M9 11h6" />
-          </svg>
+
+        {/* Badges placeholder */}
+        <div style={{ ...card, padding: "18px 20px", marginBottom: 16 }}>
+          <div style={{ ...label, marginBottom: 14 }}>Mes Badges</div>
+          <div style={{ display: "flex", gap: 12, justifyContent: "center" }}>
+            {[1, 2, 3].map(n => (
+              <div key={n} style={{
+                width: 52, height: 52, borderRadius: 999,
+                background: "rgba(11,54,61,0.04)",
+                border: "2px dashed rgba(11,54,61,0.1)",
+                display: "flex", alignItems: "center", justifyContent: "center",
+              }}>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(11,54,61,0.15)" strokeWidth="1.5">
+                  <circle cx="12" cy="8" r="7" /><path d="M8.21 13.89L7 23l5-3 5 3-1.21-9.12" />
+                </svg>
+              </div>
+            ))}
+          </div>
           <div style={{
             fontFamily: "'DM Sans', sans-serif", fontSize: 12,
-            color: "rgba(11,54,61,0.35)", fontStyle: "italic",
+            color: "rgba(11,54,61,0.35)", textAlign: "center",
+            marginTop: 12, fontStyle: "italic",
           }}>
-            Terminez un parcours complet pour obtenir votre certificat
+            Complétez des modules pour débloquer vos badges
           </div>
         </div>
+
+        {/* Logout */}
+        <button
+          onClick={handleLogout}
+          style={{
+            width: "100%", padding: "14px 24px",
+            background: "transparent", color: "#c2744a",
+            border: "1px solid rgba(194,116,74,0.25)",
+            borderRadius: 8,
+            fontFamily: "'DM Sans', sans-serif", fontSize: 14, fontWeight: 500,
+            cursor: "pointer",
+          }}
+        >
+          Se déconnecter
+        </button>
       </div>
-
-      {/* Logout */}
-      <button
-        onClick={handleLogout}
-        style={{
-          width: "100%",
-          padding: "14px 24px",
-          background: "transparent",
-          color: "#c2744a",
-          border: "1px solid rgba(194,116,74,0.25)",
-          borderRadius: 8,
-          fontFamily: "'DM Sans', sans-serif",
-          fontSize: 14,
-          fontWeight: 500,
-          cursor: "pointer",
-          transition: "all 0.2s ease-out",
-          marginTop: 8,
-        }}
-      >
-        Se déconnecter
-      </button>
-    </div>
-  );
-
-  const renderTab = () => {
-    switch (activeTab) {
-      case "accueil": return renderAccueil();
-      case "parcours": return renderParcours();
-      case "classement": return renderClassement();
-      case "profil": return renderProfil();
-      default: return null;
-    }
+    );
   };
 
-  return (
-    <div style={{ minHeight: "100vh", background: "#fef8ec", paddingBottom: 80 }}>
-      {/* Header */}
-      <div style={{
-        padding: "14px 20px",
-        borderBottom: "1px solid rgba(11,54,61,0.08)",
-        display: "flex", alignItems: "center", justifyContent: "space-between",
-        background: "#ffffff",
-      }}>
-        <Link to="/" style={{ textDecoration: "none" }}>
+  // ── Render ───────────────────────────────────────────────────────────────
+
+  // Full-screen views (no bottom tab bar)
+  if (view === "parcours-detail") {
+    return (
+      <div style={{ minHeight: "100vh", background: "#fef8ec" }}>
+        <AcademyHeader />
+        <ParcoursDetail
+          parcoursId={selectedParcoursId}
+          onBack={goBack}
+          onSelectModule={(moduleId) => { setSelectedModuleId(moduleId); setView("module-detail"); }}
+          getModulePercent={(parcoursId, moduleId) => getModulePercent(parcoursId, moduleId)}
+          isLocked={(parcoursId, order) => isLocked(parcoursId, order)}
+          isCompleted={(parcoursId, moduleId) => isCompleted(parcoursId, moduleId)}
+        />
+      </div>
+    );
+  }
+
+  if (view === "module-detail") {
+    return (
+      <div style={{ minHeight: "100vh", background: "#fef8ec" }}>
+        <AcademyHeader />
+        <ModuleDetail
+          moduleId={selectedModuleId}
+          parcoursId={selectedParcoursId}
+          onBack={goBack}
+          onStart={startLesson}
+          getModulePercent={(parcoursId, moduleId) => getModulePercent(parcoursId, moduleId)}
+          isCompleted={(parcoursId, moduleId) => isCompleted(parcoursId, moduleId)}
+        />
+      </div>
+    );
+  }
+
+  if (view === "lesson") {
+    // Mission 9 placeholder
+    return (
+      <div style={{ minHeight: "100vh", background: "#fef8ec" }}>
+        <AcademyHeader />
+        <div style={{ padding: "40px 20px", textAlign: "center" }}>
           <div style={{
             fontFamily: "'Cormorant Garamond', Georgia, serif",
-            fontSize: 18, fontWeight: 600, letterSpacing: 4,
-            color: "#0b363d",
+            fontSize: 22, color: "#c2744a", fontStyle: "italic", marginBottom: 16,
           }}>
-            ARDUENNA
+            Moteur de leçons
           </div>
-        </Link>
-        <div style={{
-          fontFamily: "'Cormorant Garamond', Georgia, serif",
-          fontSize: 16, fontStyle: "italic", color: "#c2744a",
-        }}>
-          Academy
+          <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 14, color: "rgba(11,54,61,0.5)" }}>
+            Mission 9 — bientôt disponible
+          </p>
+          <button onClick={goBack} style={{
+            marginTop: 24, padding: "12px 24px",
+            background: "#0b363d", color: "#fef8ec",
+            border: "none", borderRadius: 8,
+            fontFamily: "'DM Sans', sans-serif", fontSize: 14, cursor: "pointer",
+          }}>
+            ← Retour
+          </button>
         </div>
       </div>
+    );
+  }
+
+  // Tabs view
+  return (
+    <div style={{ minHeight: "100vh", background: "#fef8ec", paddingBottom: 80 }}>
+      <AcademyHeader xp={xp} />
 
       {/* Tab content */}
-      {renderTab()}
+      {activeTab === "accueil" && renderAccueil()}
+      {activeTab === "parcours" && (
+        <ParcoursGrid
+          onSelectParcours={openParcours}
+          getParcoursCompletedCount={getParcoursCompletedCount}
+        />
+      )}
+      {activeTab === "classement" && renderClassement()}
+      {activeTab === "profil" && renderProfil()}
 
       {/* Bottom tab bar */}
       <nav style={{
@@ -593,7 +529,9 @@ export const AcademyPage = () => {
         zIndex: 1000,
       }}>
         {tabs.map((tab) => (
-          <button key={tab.id} onClick={() => setActiveTab(tab.id)}
+          <button
+            key={tab.id}
+            onClick={() => switchTab(tab.id)}
             style={{
               background: "none", border: "none", display: "flex",
               flexDirection: "column", alignItems: "center", gap: 2,
@@ -602,7 +540,8 @@ export const AcademyPage = () => {
               fontFamily: "'DM Sans', sans-serif", fontSize: 10,
               letterSpacing: "0.08em", cursor: "pointer",
               transition: "color 0.2s ease-out",
-            }}>
+            }}
+          >
             <TabIcon type={tab.icon} active={activeTab === tab.id} />
             {tab.label}
           </button>
@@ -611,3 +550,40 @@ export const AcademyPage = () => {
     </div>
   );
 };
+
+// ── Shared header component ───────────────────────────────────────────────────
+
+const AcademyHeader = ({ xp }) => (
+  <div style={{
+    padding: "14px 20px",
+    borderBottom: "1px solid rgba(11,54,61,0.08)",
+    display: "flex", alignItems: "center", justifyContent: "space-between",
+    background: "#ffffff",
+    position: "sticky", top: 0, zIndex: 100,
+  }}>
+    <Link to="/" style={{ textDecoration: "none" }}>
+      <div style={{
+        fontFamily: "'Cormorant Garamond', Georgia, serif",
+        fontSize: 18, fontWeight: 600, letterSpacing: 4, color: "#0b363d",
+      }}>
+        ARDUENNA
+      </div>
+    </Link>
+    <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+      {xp !== undefined && (
+        <div style={{
+          fontFamily: "'DM Sans', sans-serif", fontSize: 12,
+          color: "rgba(11,54,61,0.45)",
+        }}>
+          ⭐ {xp} XP
+        </div>
+      )}
+      <div style={{
+        fontFamily: "'Cormorant Garamond', Georgia, serif",
+        fontSize: 16, fontStyle: "italic", color: "#c2744a",
+      }}>
+        Academy
+      </div>
+    </div>
+  </div>
+);

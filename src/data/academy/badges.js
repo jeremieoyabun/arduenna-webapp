@@ -1,0 +1,86 @@
+/**
+ * 10 badges Arduenna Academy.
+ * condition: describes what triggers the badge (evaluated in gamificationService).
+ */
+export const badgesData = [
+  {
+    id: "first-lesson",
+    nameFr: "Première Leçon",
+    nameEn: "First Lesson",
+    descFr: "Vous avez complété votre première leçon !",
+    descEn: "You completed your first lesson!",
+    condition: "complete_1_lesson",
+  },
+  {
+    id: "master-botanist",
+    nameFr: "Maître Botaniste",
+    nameEn: "Master Botanist",
+    descFr: "Parcours « L'Univers Arduenna » terminé",
+    descEn: "Completed 'The Arduenna Universe' path",
+    condition: "complete_parcours_univers",
+  },
+  {
+    id: "cocktail-expert",
+    nameFr: "Expert Cocktails",
+    nameEn: "Cocktail Expert",
+    descFr: "Parcours « Le Cocktail Lab » terminé",
+    descEn: "Completed 'The Cocktail Lab' path",
+    condition: "complete_parcours_cocktail",
+  },
+  {
+    id: "speed-learner",
+    nameFr: "Apprenant Éclair",
+    nameEn: "Speed Learner",
+    descFr: "Module complété en moins de 5 minutes",
+    descEn: "Completed a module in under 5 minutes",
+    condition: "complete_module_under_5min",
+  },
+  {
+    id: "perfect-score",
+    nameFr: "Score Parfait",
+    nameEn: "Perfect Score",
+    descFr: "100% sur un module de quiz",
+    descEn: "100% on a quiz module",
+    condition: "perfect_module_score",
+  },
+  {
+    id: "streak-7",
+    nameFr: "Flamme Ardennaise",
+    nameEn: "Ardennes Flame",
+    descFr: "7 jours de streak consécutifs",
+    descEn: "7 consecutive streak days",
+    condition: "streak_7",
+  },
+  {
+    id: "streak-30",
+    nameFr: "Feu Sacré",
+    nameEn: "Sacred Fire",
+    descFr: "30 jours de streak consécutifs",
+    descEn: "30 consecutive streak days",
+    condition: "streak_30",
+  },
+  {
+    id: "all-parcours",
+    nameFr: "Ambassadeur Arduenna",
+    nameEn: "Arduenna Ambassador",
+    descFr: "Les 4 parcours terminés !",
+    descEn: "All 4 learning paths completed!",
+    condition: "complete_all_parcours",
+  },
+  {
+    id: "sales-champion",
+    nameFr: "Champion de la Vente",
+    nameEn: "Sales Champion",
+    descFr: "Parcours « Vendre Arduenna » terminé avec 90%+",
+    descEn: "Completed 'Selling Arduenna' with 90%+",
+    condition: "complete_parcours_vente_90",
+  },
+  {
+    id: "mixology-master",
+    nameFr: "Maître Mixologue",
+    nameEn: "Mixology Master",
+    descFr: "Challenge Mixologie avec un score parfait",
+    descEn: "Mixology Challenge with a perfect score",
+    condition: "perfect_cocktail4",
+  },
+];
