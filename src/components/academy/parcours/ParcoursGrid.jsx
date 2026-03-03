@@ -2,10 +2,10 @@ import { parcoursData } from "../../../data/academy/parcours";
 import { modulesData } from "../../../data/academy/modules";
 
 const PARCOURS_ICONS = {
-  univers: <img src="/icons/Univers-Arduenna.webp" alt="" width="42" height="42" style={{ objectFit: "contain", display: "block" }} />,
-  gamme: <img src="/icons/Vendre-Arduenna.svg" alt="" width="42" height="42" style={{ objectFit: "contain", display: "block" }} />,
-  cocktail: <img src="/icons/Cocktails-Lab.svg" alt="" width="42" height="42" style={{ objectFit: "contain", display: "block" }} />,
-  vente: <img src="/icons/Vendre-Arduenna.svg" alt="" width="42" height="42" style={{ objectFit: "contain", display: "block" }} />,
+  univers: <img src="/icons/Univers-Arduenna.webp" alt="" width="56" height="56" style={{ objectFit: "contain", display: "block" }} />,
+  gamme: <img src="/icons/La-gamme.svg" alt="" width="56" height="56" style={{ objectFit: "contain", display: "block" }} />,
+  cocktail: <img src="/icons/Cocktails-Lab.svg" alt="" width="56" height="56" style={{ objectFit: "contain", display: "block" }} />,
+  vente: <img src="/icons/Vendre-Arduenna.svg" alt="" width="56" height="56" style={{ objectFit: "contain", display: "block" }} />,
 };
 
 const LockIcon = () => (
@@ -64,7 +64,7 @@ export const ParcoursGrid = ({ onSelectParcours, getParcoursCompletedCount }) =>
           >
             {/* Icon */}
             <div style={{
-              width: 48, height: 48, borderRadius: 12, flexShrink: 0,
+              width: 60, height: 60, borderRadius: 14, flexShrink: 0,
               background: isPlayable ? "rgba(194,116,74,0.08)" : "rgba(11,54,61,0.04)",
               display: "flex", alignItems: "center", justifyContent: "center",
               color: isPlayable ? "#c2744a" : "rgba(11,54,61,0.25)",

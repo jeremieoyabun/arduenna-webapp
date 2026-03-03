@@ -298,8 +298,8 @@ export const AcademyPage = () => {
             { img: "/icons/Modules.svg", value: p1completed, lbl: "Modules faits" },
             { img: "/icons/Badges.svg", value: earnedBadges.length, lbl: "Badges" },
           ].map(({ img, value, lbl }) => (
-            <div key={lbl} style={{ ...card, padding: "14px 16px", display: "flex", alignItems: "center", gap: 10 }}>
-              <img src={img} alt="" width="22" height="22" style={{ objectFit: "contain", display: "block", flexShrink: 0 }} />
+            <div key={lbl} style={{ ...card, padding: "16px 18px", display: "flex", alignItems: "center", gap: 12 }}>
+              <img src={img} alt="" width="34" height="34" style={{ objectFit: "contain", display: "block", flexShrink: 0 }} />
               <div>
                 <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 18, fontWeight: 700, color: "var(--text-1)" }}>
                   {value}
