@@ -99,17 +99,13 @@ export const LoginPage = () => {
         border: "1px solid rgba(11,54,61,0.08)",
         boxShadow: "0 2px 12px rgba(11,54,61,0.03)",
       }}>
-        {/* Logo ARDUENNA */}
-        <div style={{
-          fontFamily: "'Cormorant Garamond', Georgia, serif",
-          fontSize: 22,
-          fontWeight: 600,
-          letterSpacing: 5,
-          textAlign: "center",
-          color: "#0b363d",
-          marginBottom: 4,
-        }}>
-          ARDUENNA
+        {/* Logo */}
+        <div style={{ textAlign: "center", marginBottom: "var(--space-6)" }}>
+          <img
+            src="/Arduennagin_logo_vert_.webp"
+            alt="Arduenna"
+            style={{ height: 80, width: "auto", display: "inline-block" }}
+          />
         </div>
 
         {/* Sous-titre Academy */}
