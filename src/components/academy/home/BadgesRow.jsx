@@ -1,7 +1,7 @@
 import { badgesData } from "../../../data/academy/badges";
 
 // ── Badge glyphs — illustrated assets where available, inline SVG fallback ────
-const Glyph = ({ id, size = 20 }) => {
+const Glyph = ({ id, size = 36 }) => {
   const ASSET = {
     "master-botanist": "/icons/master-botanist-badge-glyph.svg",
     "cocktail-expert": "/icons/cocktail-expert-badge-glyph.svg",
@@ -83,7 +83,7 @@ export const BadgesRow = ({ earnedBadgeIds = [], onViewAll, newBadgeId }) => {
       </div>
 
       {/* 6 badge slots */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(6, 1fr)", gap: 8 }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(6, 1fr)", gap: 6 }}>
         {displayed.map((badge) => {
           const earned = earnedBadgeIds.includes(badge.id);
           return (
@@ -94,7 +94,7 @@ export const BadgesRow = ({ earnedBadgeIds = [], onViewAll, newBadgeId }) => {
             >
               {/* Badge circle */}
               <div style={{
-                width: 44, height: 44, borderRadius: "50%",
+                width: 54, height: 54, borderRadius: "50%",
                 display: "flex", alignItems: "center", justifyContent: "center",
                 background: earned ? "rgba(194,116,74,0.10)" : "var(--elevated)",
                 border: earned
@@ -107,6 +107,7 @@ export const BadgesRow = ({ earnedBadgeIds = [], onViewAll, newBadgeId }) => {
                   : earned ? "badge-pop 0.4s ease-out" : "none",
                 transition: "box-shadow 0.3s ease",
                 flexShrink: 0,
+                overflow: "hidden",
               }}>
                 {earned ? <Glyph id={badge.id} /> : <PadlockIcon />}
               </div>
@@ -117,12 +118,12 @@ export const BadgesRow = ({ earnedBadgeIds = [], onViewAll, newBadgeId }) => {
                 fontSize: 9, fontWeight: 500, lineHeight: 1.3,
                 color: earned ? "#c2744a" : "var(--text-4)",
                 textAlign: "center",
-                maxWidth: 46, overflow: "hidden",
+                maxWidth: 54, overflow: "hidden",
                 display: "-webkit-box",
                 WebkitLineClamp: 2,
                 WebkitBoxOrient: "vertical",
               }}>
-                {earned ? badge.nameFr : "?"}
+                {badge.nameFr}
               </div>
             </div>
           );

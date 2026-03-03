@@ -29,9 +29,9 @@ const LEVELS = [
 
 // ── Level emblems — illustrated assets ────────────────────────────────────────
 const LEVEL_EMBLEMS = {
-  1: <img src="/icons/Seedling-emblem.svg"    alt="" width="20" height="20" style={{ objectFit: "contain", display: "block" }} />,
-  2: <img src="/icons/Herb-bundle-emblem.svg" alt="" width="20" height="20" style={{ objectFit: "contain", display: "block" }} />,
-  3: <img src="/icons/Alembic-emblem.svg"     alt="" width="20" height="20" style={{ objectFit: "contain", display: "block" }} />,
+  1: <img src="/icons/Seedling-emblem.svg"    alt="" width="26" height="26" style={{ objectFit: "contain", display: "block" }} />,
+  2: <img src="/icons/Herb-bundle-emblem.svg" alt="" width="26" height="26" style={{ objectFit: "contain", display: "block" }} />,
+  3: <img src="/icons/Alembic-emblem.svg"     alt="" width="26" height="26" style={{ objectFit: "contain", display: "block" }} />,
   4: ( // Barrel end — inline fallback (no asset yet)
     <svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round">
       <ellipse cx="10" cy="10" rx="8" ry="8" />
@@ -40,7 +40,7 @@ const LEVEL_EMBLEMS = {
       <path d="M15 3.5C15 3.5 14 10 15 16.5" strokeOpacity="0.7" />
     </svg>
   ),
-  5: <img src="/icons/crest-emblem.svg"       alt="" width="20" height="20" style={{ objectFit: "contain", display: "block" }} />,
+  5: <img src="/icons/crest-emblem.svg"       alt="" width="26" height="26" style={{ objectFit: "contain", display: "block" }} />,
 };
 
 // ── Circular SVG progress ring ────────────────────────────────────────────────
