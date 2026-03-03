@@ -3,8 +3,10 @@ import { badgesData } from "../../../data/academy/badges";
 // ── Badge glyphs — illustrated assets where available, inline SVG fallback ────
 const Glyph = ({ id, size = 36 }) => {
   const ASSET = {
+    "first-lesson":    "/icons/First-lesson.svg",
     "master-botanist": "/icons/master-botanist-badge-glyph.svg",
     "cocktail-expert": "/icons/cocktail-expert-badge-glyph.svg",
+    "speed-learner":   "/icons/speed-learner-badge-glyph.webp",
     "perfect-score":   "/icons/perfect-score-badge-glyph.svg",
     "streak-7":        "/icons/streak-7-badge-glyph.svg",
   };

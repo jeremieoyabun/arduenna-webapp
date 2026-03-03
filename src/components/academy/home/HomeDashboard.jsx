@@ -551,15 +551,6 @@ export const HomeDashboard = ({
           delay={`${6 * 55}ms`}
         />
 
-        <UpgradePackCard
-          title="Arduenna B2B"
-          features="Dashboard Équipe · Classement Régional · Export CSV"
-          lockLabel="Sur devis"
-          ctaLabel="Contacter"
-          ctaHref="mailto:academy@arduenna.com?subject=Arduenna%20B2B"
-          delay={`${7 * 55}ms`}
-        />
-
         {/* ── MINI LEADERBOARD ─────────────────────────────────────────────── */}
         <div style={staggerStyle(8, mounted)}>
           <MiniLeaderboard onViewAll={() => onSwitchTab("classement")} />
