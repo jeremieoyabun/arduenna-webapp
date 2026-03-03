@@ -562,9 +562,15 @@ a {
 }
 
 .btn-primary:hover {
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-md);
-  opacity: 0.92;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(11, 54, 61, 0.25);
+  opacity: 0.95;
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow-sm);
+  transition-duration: 80ms;
 }
 
 .btn-ghost {
@@ -601,14 +607,16 @@ a {
   border: 1px solid var(--border-light);
   border-radius: var(--radius-lg);
   padding: var(--space-8);
-  transition: all var(--duration-normal) var(--ease-out);
+  transition: transform 0.25s var(--ease-out),
+              box-shadow 0.25s var(--ease-out),
+              border-color 0.25s var(--ease-out);
   box-shadow: var(--shadow-sm);
 }
 
 .card:hover {
-  border-color: var(--border-medium);
-  box-shadow: var(--shadow-md);
-  transform: translateY(-2px);
+  border-color: rgba(11, 54, 61, 0.14);
+  box-shadow: 0 8px 32px rgba(11, 54, 61, 0.1);
+  transform: translateY(-3px);
 }
 
 .card--interactive {
@@ -828,7 +836,7 @@ a {
   width: auto;
   margin: 0 auto var(--space-8);
   display: block;
-  opacity: 0.85;
+  opacity: 1;
 }
 
 [data-theme="dark"] .age-gate__logo {
@@ -877,6 +885,43 @@ a {
   overflow: hidden;
 }
 
+/* Pine illustration decorations */
+.hero__pine {
+  position: absolute;
+  pointer-events: none;
+  user-select: none;
+  opacity: 0.07;
+}
+
+.hero__pine--left {
+  bottom: -5%;
+  left: -8%;
+  width: 340px;
+  height: auto;
+  transform: rotate(-8deg);
+}
+
+.hero__pine--right {
+  top: 5%;
+  right: -6%;
+  width: 280px;
+  height: auto;
+  transform: rotate(12deg) scaleX(-1);
+}
+
+.hero__pine--topleft {
+  top: 8%;
+  left: 2%;
+  width: 160px;
+  height: auto;
+  transform: rotate(-20deg);
+  opacity: 0.05;
+}
+
+[data-theme="dark"] .hero__pine {
+  opacity: 0.12;
+}
+
 .hero__content {
   position: relative;
   z-index: 1;
@@ -901,6 +946,19 @@ a {
   justify-content: center;
 }
 
+/* Brand mark above the heading */
+.hero__brand-mark {
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--accent-secondary);
+  margin-bottom: var(--space-3);
+  opacity: 0.8;
+  animation: fadeSlideUp 0.7s var(--ease-out) both;
+}
+
 .hero__heading {
   font-family: var(--font-display);
   font-size: var(--text-hero);
@@ -908,6 +966,20 @@ a {
   line-height: 1.05;
   margin-bottom: var(--space-6);
   color: var(--text-primary);
+  animation: fadeSlideUp 0.8s var(--ease-out) 0.1s both;
+}
+
+.hero__heading-main {
+  display: block;
+  font-weight: 300;
+}
+
+.hero__heading-italic {
+  display: block;
+  font-style: italic;
+  font-weight: 300;
+  color: var(--accent-secondary);
+  opacity: 0.9;
 }
 
 .hero__heading em {
@@ -922,6 +994,7 @@ a {
   margin: 0 auto var(--space-10);
   line-height: var(--leading-normal);
   letter-spacing: var(--tracking-normal);
+  animation: fadeSlideUp 0.9s var(--ease-out) 0.2s both;
 }
 
 .hero__bottle {
@@ -1105,8 +1178,8 @@ a {
 
 .cocktail-card__name {
   font-family: var(--font-display);
-  font-size: var(--text-lg);
-  font-weight: 400;
+  font-size: var(--text-xl);
+  font-weight: 500;
   font-style: italic;
   flex: 1;
   color: var(--text-primary);
@@ -1152,7 +1225,7 @@ a {
 .toolbox-card__title {
   font-family: var(--font-display);
   font-size: var(--text-lg);
-  font-weight: 400;
+  font-weight: 600;
   font-style: italic;
   margin-bottom: var(--space-2);
   color: var(--text-primary);
@@ -1186,8 +1259,8 @@ a {
 
 .sustain-card__title {
   font-family: var(--font-display);
-  font-size: 1.0625rem;
-  font-weight: 400;
+  font-size: var(--text-lg);
+  font-weight: 600;
   font-style: italic;
   margin-bottom: var(--space-2);
   color: var(--text-primary);
@@ -1229,6 +1302,87 @@ a {
   margin-bottom: var(--space-4);
 }
 
+/* Newsletter */
+.newsletter-section {
+  background: var(--color-teal);
+  padding: var(--space-16) var(--space-6);
+  text-align: center;
+}
+
+.newsletter-section__inner {
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.newsletter-section__title {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: 300;
+  color: var(--color-cream);
+  margin-bottom: var(--space-3);
+}
+
+.newsletter-section__desc {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  color: rgba(254, 248, 236, 0.7);
+  margin-bottom: var(--space-8);
+}
+
+.newsletter-section__form {
+  display: flex;
+  gap: var(--space-3);
+  max-width: 440px;
+  margin: 0 auto;
+}
+
+.newsletter-section__input {
+  flex: 1;
+  padding: 14px 18px;
+  border: 1px solid rgba(254, 248, 236, 0.25);
+  border-radius: var(--radius-sm);
+  background: rgba(254, 248, 236, 0.1);
+  color: var(--color-cream);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  outline: none;
+  transition: border-color var(--duration-normal);
+}
+
+.newsletter-section__input::placeholder {
+  color: rgba(254, 248, 236, 0.4);
+}
+
+.newsletter-section__input:focus {
+  border-color: rgba(254, 248, 236, 0.6);
+  background: rgba(254, 248, 236, 0.15);
+}
+
+.newsletter-section__btn {
+  background: var(--color-cream);
+  color: var(--color-teal);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.newsletter-section__btn:hover {
+  background: #fff;
+  transform: translateY(-2px);
+}
+
+.newsletter-section__success {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  color: var(--color-cream);
+  opacity: 0.85;
+}
+
+@media (max-width: 480px) {
+  .newsletter-section__form {
+    flex-direction: column;
+  }
+}
+
 /* Footer */
 .footer {
   padding: var(--space-12) var(--space-6) var(--space-8);
@@ -1247,7 +1401,7 @@ a {
   width: auto;
   margin: 0 auto var(--space-3);
   display: block;
-  opacity: 0.7;
+  opacity: 1;
 }
 
 [data-theme="dark"] .footer__logo {
@@ -1312,6 +1466,11 @@ a {
   to { opacity: 1; transform: translateY(0); }
 }
 
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 @keyframes modalIn {
   from { opacity: 0; transform: translateY(16px) scale(0.98); }
   to { opacity: 1; transform: translateY(0) scale(1); }
@@ -1330,6 +1489,21 @@ a {
 @keyframes gentleFloat {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-8px); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes revealWidth {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+@keyframes subtlePulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
 }
 
 /* Scroll reveal */
@@ -1376,6 +1550,21 @@ a {
 
   .hero__bottle {
     width: 180px;
+  }
+
+  .hero__pine--left {
+    width: 220px;
+    left: -12%;
+    bottom: -2%;
+  }
+
+  .hero__pine--right {
+    width: 180px;
+    right: -10%;
+  }
+
+  .hero__pine--topleft {
+    width: 110px;
   }
 
   .grid-2,
@@ -1515,9 +1704,9 @@ a {
 /* ─── Cocktail Accroche (narrative hook) ─── */
 .cocktail-card__accroche {
   font-family: var(--font-display);
-  font-size: var(--text-sm);
+  font-size: var(--text-base);
   font-style: italic;
-  color: var(--text-muted);
+  color: var(--text-secondary);
   margin-top: var(--space-2);
   line-height: var(--leading-snug);
 }

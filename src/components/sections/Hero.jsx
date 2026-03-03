@@ -1,15 +1,31 @@
-import { BotanicalDeco } from "../ui/BotanicalDeco";
-
 export const Hero = ({ t, sectionRefs, scrollTo }) => (
   <section id="hero" ref={(el) => (sectionRefs.current.hero = el)} className="hero">
-    <BotanicalDeco style={{ top: "10%", left: "-5%", width: 200, transform: "rotate(-15deg)" }} />
-    <BotanicalDeco style={{ top: "15%", right: "-3%", width: 160, transform: "rotate(20deg) scaleX(-1)" }} />
+    {/* Pine illustrations — decorative background */}
+    <img
+      src="/Sapin-illu.webp"
+      alt=""
+      aria-hidden="true"
+      className="hero__pine hero__pine--left"
+    />
+    <img
+      src="/Sapin-illu-02.webp"
+      alt=""
+      aria-hidden="true"
+      className="hero__pine hero__pine--right"
+    />
+    <img
+      src="/pin-illu-01.webp"
+      alt=""
+      aria-hidden="true"
+      className="hero__pine hero__pine--topleft"
+    />
 
     <div className="hero__content">
       <div className="hero__text">
+        <div className="hero__brand-mark">ARDUENNA</div>
         <h1 className="hero__heading">
-          <span style={{ display: "block" }}>{t.hero.tagline}</span>
-          <span style={{ display: "block", fontStyle: "italic" }}>
+          <span className="hero__heading-main">{t.hero.tagline}</span>
+          <span className="hero__heading-italic">
             — <em>{t.hero.tagline2}</em> —
           </span>
         </h1>

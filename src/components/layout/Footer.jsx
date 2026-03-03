@@ -11,7 +11,8 @@ export const Footer = ({ t }) => (
 
     <div className="footer__links">
       <a href="https://arduenna-gin.com" target="_blank" rel="noopener noreferrer" className="footer__link">{t.footer.shop}</a>
-      <span className="footer__link">{t.footer.legal}</span>
+      <a href="https://arduenna-gin.com/conditions-generales-de-vente/" target="_blank" rel="noopener noreferrer" className="footer__link">{t.footer.legal}</a>
+      <a href="https://arduenna-gin.com/confidentialite/" target="_blank" rel="noopener noreferrer" className="footer__link">{t.footer.privacy}</a>
       <a href="mailto:info@arduenna-gin.com" className="footer__link">info@arduenna-gin.com</a>
     </div>
 

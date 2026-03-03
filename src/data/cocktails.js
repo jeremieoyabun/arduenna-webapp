@@ -96,7 +96,7 @@ export const cocktailsData = [
 
   { id: 11, nameFr: "L'Espresso Arduenna", nameEn: "Arduenna Espresso", product: "gin", difficulty: "medium", season: "allYear",
     bar: "Paname",
-    img: "/Cocktails/L'espresso Arduenna.webp",
+    img: "/Cocktails/Espresso Arduenna.webp",
     accrocheFr: "L'énergie du café rencontre la profondeur de la forêt ardennaise.", accrocheEn: "Coffee energy meets the depth of the Ardennes forest.",
     ingredientsFr: ["4 cl Arduenna Gin", "3 cl espresso froid", "2 cl liqueur de café", "1 cl sirop de vanille", "Glaçons"],
     ingredientsEn: ["4 cl Arduenna Gin", "3 cl cold espresso", "2 cl coffee liqueur", "1 cl vanilla syrup", "Ice cubes"],
@@ -197,10 +197,10 @@ export const cocktailsData = [
 ];
 
 export const awardsData = [
-  { year: "2025", title: "World Gin Awards", detail: "Silver" },
-  { year: "2023", title: "London Awards", detail: "Gin of the Year" },
-  { year: "2022", title: "Europe Wine & Spirits", detail: "Double Gold" },
-  { year: "2022", title: "Women's Int'l Trophy", detail: "Winner" },
-  { year: "2022", title: "Yellow Line Design", detail: "Gold" },
-  { year: "2021", title: "IWSC Gin & Tonic", detail: "Bronze" },
+  { year: "2025", title: "World Gin Awards", detail: "Silver", tier: "silver" },
+  { year: "2023", title: "London Awards", detail: "Gin of the Year", tier: "gold" },
+  { year: "2022", title: "Europe Wine & Spirits", detail: "Double Gold", tier: "gold" },
+  { year: "2022", title: "Women's Int'l Trophy", detail: "Winner", tier: "silver" },
+  { year: "2022", title: "Yellow Line Design", detail: "Gold", tier: "gold" },
+  { year: "2021", title: "IWSC Gin & Tonic", detail: "Bronze", tier: "bronze" },
 ];

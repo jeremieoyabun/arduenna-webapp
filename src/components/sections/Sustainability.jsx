@@ -11,11 +11,12 @@ export const Sustainability = ({ t, sectionRefs }) => (
 
     <div className="grid-3 reveal">
       {[
-        { icon: "bcorp", title: t.sustainability.bcorp, desc: t.sustainability.bcorpDesc },
+        { icon: "bcorp",   title: t.sustainability.bcorp,   desc: t.sustainability.bcorpDesc },
         { icon: "organic", title: t.sustainability.organic, desc: t.sustainability.organicDesc },
-        { icon: "oldest", title: t.sustainability.oldest, desc: t.sustainability.oldestDesc },
-        { icon: "bottle", title: t.sustainability.bottle, desc: t.sustainability.bottleDesc },
-        { icon: "local", title: t.sustainability.local, desc: t.sustainability.localDesc },
+        { icon: "oldest",  title: t.sustainability.oldest,  desc: t.sustainability.oldestDesc },
+        { icon: "bottle",  title: t.sustainability.bottle,  desc: t.sustainability.bottleDesc },
+        { icon: "local",   title: t.sustainability.local,   desc: t.sustainability.localDesc },
+        { icon: "leaf",    title: t.sustainability.gastro,  desc: t.sustainability.gastroDesc },
       ].map((item, i) => (
         <div key={i} className="card sustain-card">
           <div className="sustain-card__icon" aria-hidden="true"><SustainIcon type={item.icon} /></div>

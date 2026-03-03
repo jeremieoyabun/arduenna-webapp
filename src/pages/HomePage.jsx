@@ -11,6 +11,7 @@ import { CocktailLab } from "../components/sections/CocktailLab";
 import { Toolbox } from "../components/sections/Toolbox";
 import { Sustainability } from "../components/sections/Sustainability";
 import { Teasers } from "../components/sections/Teasers";
+import { Newsletter } from "../components/sections/Newsletter";
 import { Footer } from "../components/layout/Footer";
 import { IconHome, IconGlass, IconLeafNav, IconBriefcase } from "../components/ui/Icons";
 
@@ -224,7 +225,7 @@ export const HomePage = ({ lang, setLang, theme, toggleTheme, t }) => {
       <BottomNav activeSection={activeSection} bottomNavItems={bottomNavItems} scrollTo={scrollTo} />
 
       <Hero t={t} sectionRefs={sectionRefs} scrollTo={scrollTo} />
-      <Story t={t} sectionRefs={sectionRefs} />
+      <Story t={t} sectionRefs={sectionRefs} theme={theme} />
       <Awards t={t} />
       <Products
         t={t} lang={lang} sectionRefs={sectionRefs}
@@ -244,6 +245,7 @@ export const HomePage = ({ lang, setLang, theme, toggleTheme, t }) => {
       <Toolbox t={t} sectionRefs={sectionRefs} />
       <Sustainability t={t} sectionRefs={sectionRefs} />
       <Teasers t={t} teaserNotifs={teaserNotifs} setTeaserNotifs={setTeaserNotifs} />
+      <Newsletter t={t} />
       <Footer t={t} />
     </div>
   );
