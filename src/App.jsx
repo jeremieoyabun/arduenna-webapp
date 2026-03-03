@@ -5,6 +5,7 @@ import { AgeGate } from "./components/layout/AgeGate";
 import { HomePage } from "./pages/HomePage";
 import { LoginPage } from "./pages/LoginPage";
 import { AcademyPage } from "./pages/AcademyPage";
+import { AdminPage } from "./pages/AdminPage";
 
 export default function ArduennaWebapp() {
   const [lang, setLang] = useState("fr");
@@ -38,6 +39,7 @@ export default function ArduennaWebapp() {
       } />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/academy" element={<AcademyPage />} />
+      <Route path="/admin" element={<AdminPage />} />
     </Routes>
   );
 }

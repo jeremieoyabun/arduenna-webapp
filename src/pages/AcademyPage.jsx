@@ -308,23 +308,64 @@ export const AcademyPage = () => {
           </div>
         )}
 
-        {/* Logout */}
-        <button
-          onClick={handleLogout}
-          style={{
-            width: "100%", padding: "14px 24px",
-            background: "transparent", color: "var(--accent-secondary)",
-            border: "1px solid rgba(194,116,74,0.25)",
-            borderRadius: 8,
-            fontFamily: "'DM Sans', sans-serif", fontSize: 14, fontWeight: 500,
-            cursor: "pointer",
-          }}
-        >
-          Se déconnecter
-        </button>
+        {/* Settings */}
+        <div style={{ ...card, padding: "18px 20px", marginBottom: 16 }}>
+          <div style={{ ...label, marginBottom: 14 }}>Paramètres</div>
+
+          {/* Dark mode toggle */}
+          <SettingRow
+            icon="🌙"
+            title="Mode sombre"
+            action={
+              <ThemeToggle />
+            }
+          />
+
+          {/* Admin link (only for admins) */}
+          {profile?.isAdmin && (
+            <SettingRow
+              icon="⚙️"
+              title="Administration"
+              action={
+                <button
+                  onClick={() => navigate("/admin")}
+                  style={{
+                    padding: "6px 14px",
+                    background: "rgba(11,54,61,0.06)",
+                    border: "1px solid rgba(11,54,61,0.15)",
+                    borderRadius: 6,
+                    fontFamily: "'DM Sans', sans-serif", fontSize: 12, fontWeight: 500,
+                    color: "var(--text-secondary)", cursor: "pointer",
+                  }}
+                >
+                  Ouvrir →
+                </button>
+              }
+            />
+          )}
+
+          {/* Logout */}
+          <div style={{ marginTop: 8 }}>
+            <button
+              onClick={handleLogout}
+              style={{
+                width: "100%", padding: "12px 20px",
+                background: "transparent", color: "var(--accent-secondary)",
+                border: "1px solid rgba(194,116,74,0.22)",
+                borderRadius: 8,
+                fontFamily: "'DM Sans', sans-serif", fontSize: 13, fontWeight: 500,
+                cursor: "pointer",
+              }}
+            >
+              Se déconnecter
+            </button>
+          </div>
+        </div>
       </div>
     );
   };
+
+  // ── Settings helpers ────────────────────────────────────────────────────────
 
   // ── Render ───────────────────────────────────────────────────────────────
 
@@ -420,6 +461,62 @@ export const AcademyPage = () => {
         ))}
       </nav>
     </div>
+  );
+};
+
+// ── Settings helpers ──────────────────────────────────────────────────────────
+
+const SettingRow = ({ icon, title, action }) => (
+  <div style={{
+    display: "flex", alignItems: "center", justifyContent: "space-between",
+    padding: "10px 0",
+    borderBottom: "1px solid var(--border-light)",
+  }}>
+    <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+      <span style={{ fontSize: 16 }}>{icon}</span>
+      <span style={{
+        fontFamily: "'DM Sans', sans-serif", fontSize: 13,
+        color: "var(--text-secondary)",
+      }}>
+        {title}
+      </span>
+    </div>
+    {action}
+  </div>
+);
+
+const ThemeToggle = () => {
+  const [dark, setDark] = useState(
+    document.documentElement.getAttribute("data-theme") === "dark"
+  );
+  const toggle = () => {
+    const next = dark ? "light" : "dark";
+    document.documentElement.setAttribute("data-theme", next);
+    setDark(!dark);
+  };
+  return (
+    <button
+      onClick={toggle}
+      style={{
+        width: 44, height: 24,
+        borderRadius: 999,
+        background: dark ? "#0b363d" : "var(--border-medium)",
+        border: "none", cursor: "pointer",
+        position: "relative", transition: "background 0.2s",
+        flexShrink: 0,
+      }}
+      aria-label="Toggle dark mode"
+    >
+      <div style={{
+        position: "absolute",
+        top: 3, left: dark ? 23 : 3,
+        width: 18, height: 18,
+        borderRadius: 999,
+        background: dark ? "#c2744a" : "#fef8ec",
+        boxShadow: "0 1px 3px rgba(0,0,0,0.2)",
+        transition: "left 0.2s",
+      }} />
+    </button>
   );
 };
 
