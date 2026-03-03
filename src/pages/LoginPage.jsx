@@ -104,7 +104,7 @@ export const LoginPage = () => {
           <img
             src="/Arduennagin_logo_vert_.webp"
             alt="Arduenna"
-            style={{ height: 80, width: "auto", display: "inline-block" }}
+            style={{ maxWidth: 140, height: "auto", display: "inline-block" }}
           />
         </div>
 
