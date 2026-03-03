@@ -4,6 +4,7 @@
    ═══════════════════════════════════════════════════════ */
 
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap');
+@import url('https://api.fontshare.com/v2/css?f[]=the-seasons@700&display=swap');
 
 /* ─── Design Tokens ─── */
 :root {
@@ -110,11 +111,12 @@
   /* Academy theme — light (default) */
   --bg:               #fef8ec;
   --surface:          #ffffff;
+  --elevated:         #fdfaf5;
   --text-1:           #0b363d;
   --text-2:           rgba(11, 54, 61, 0.72);
   --text-3:           rgba(11, 54, 61, 0.45);
   --text-4:           rgba(11, 54, 61, 0.28);
-  --border-subtle:    rgba(11, 54, 61, 0.07);
+  --border-subtle:    rgba(11, 54, 61, 0.08);
   --header-bg:        rgba(254, 248, 236, 0.96);
   --header-border:    rgba(11, 54, 61, 0.08);
   --tabbar-bg:        rgba(254, 248, 236, 0.94);
@@ -123,6 +125,7 @@
   --tab-active-text:  #fef8ec;
   --tab-icon:         rgba(11, 54, 61, 0.40);
   --module-tint:      #fdf5e4;
+  --font-seasons:     'The Seasons', 'Cormorant Garamond', Georgia, serif;
 }
 
 /* ─── Dark mode ─── */
@@ -155,27 +158,100 @@
   --glass-bg: rgba(7, 28, 33, 0.92);
   --glass-border: 1px solid rgba(254, 248, 236, 0.07);
 
-  /* Academy theme — dark */
-  --bg:               #071c21;
-  --surface:          #0d2832;
+  /* Academy theme — dark (Premium Botanical Gaming) */
+  --bg:               #060f14;
+  --surface:          #0c2027;
+  --elevated:         #112930;
   --text-1:           #fef8ec;
-  --text-2:           rgba(254, 248, 236, 0.72);
-  --text-3:           rgba(254, 248, 236, 0.38);
+  --text-2:           rgba(254, 248, 236, 0.78);
+  --text-3:           rgba(254, 248, 236, 0.44);
   --text-4:           rgba(254, 248, 236, 0.28);
-  --border-subtle:    rgba(254, 248, 236, 0.07);
-  --header-bg:        rgba(7, 28, 33, 0.96);
-  --header-border:    rgba(194, 116, 74, 0.12);
-  --tabbar-bg:        rgba(8, 31, 35, 0.94);
-  --tabbar-border:    rgba(254, 248, 236, 0.08);
+  --border-subtle:    rgba(194, 116, 74, 0.14);
+  --header-bg:        rgba(6, 15, 20, 0.96);
+  --header-border:    rgba(194, 116, 74, 0.18);
+  --tabbar-bg:        rgba(6, 15, 20, 0.94);
+  --tabbar-border:    rgba(194, 116, 74, 0.15);
   --tab-active-bg:    #fef8ec;
   --tab-active-text:  #0b363d;
-  --tab-icon:         rgba(254, 248, 236, 0.45);
-  --module-tint:      #0a2129;
+  --tab-icon:         rgba(254, 248, 236, 0.42);
+  --module-tint:      #091e26;
 }
 
 /* Academy logo — inverted in dark, normal in light */
 .academy-logo { filter: brightness(0) invert(1); }
 [data-theme="light"] .academy-logo { filter: none; }
+
+/* ─── Academy Cards ─── */
+.a-card {
+  background: var(--surface);
+  border-radius: 10px;
+  border: 1px solid var(--border-subtle);
+  overflow: hidden;
+}
+.a-card-lift {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.a-card-lift:hover,
+.a-card-lift:focus-within {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(194, 116, 74, 0.10);
+}
+
+/* ─── CTA Button ─── */
+.cta-copper {
+  background: #c2744a;
+  color: #fef8ec;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 18px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  letter-spacing: 0.2px;
+  transition: background 0.18s ease, box-shadow 0.18s ease;
+}
+.cta-copper:hover {
+  background: #d4855e;
+  box-shadow: 0 4px 16px rgba(194, 116, 74, 0.30);
+}
+
+/* ─── Academy Keyframe Animations ─── */
+@keyframes badge-pop {
+  0%   { transform: scale(0.72); opacity: 0; }
+  65%  { transform: scale(1.10); opacity: 1; }
+  100% { transform: scale(1);    opacity: 1; }
+}
+@keyframes glow-pulse-copper {
+  0%, 100% { box-shadow: 0 0  0   0   rgba(194, 116, 74, 0.00); }
+  50%       { box-shadow: 0 0 18px 3px rgba(194, 116, 74, 0.22); }
+}
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0);   }
+}
+
+/* ─── Theme switch smoothing ─── */
+html { transition: background-color 250ms ease; }
+
+/* ─── Reduced motion ─── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .a-card-lift:hover,
+  .a-card-lift:focus-within {
+    transform: none;
+    box-shadow: none;
+  }
+}
 
 /* ─── Reset & Base ─── */
 *, *::before, *::after {

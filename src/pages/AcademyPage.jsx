@@ -452,7 +452,7 @@ export const AcademyPage = () => {
       {showNotifPrompt && (
         <NotificationPrompt onDone={() => setShowNotifPrompt(false)} />
       )}
-      <AcademyHeader xp={xp} />
+      <AcademyHeader xp={xp} onLogout={handleLogout} />
 
       {/* Tab content */}
       {activeTab === "accueil" && renderAccueil()}
@@ -599,7 +599,7 @@ const ThemeToggle = () => {
 
 // ── Shared header component ───────────────────────────────────────────────────
 
-const AcademyHeader = ({ xp }) => (
+const AcademyHeader = ({ xp, onLogout }) => (
   <div style={{
     padding: "11px 20px",
     borderBottom: "1px solid var(--header-border)",
@@ -638,6 +638,30 @@ const AcademyHeader = ({ xp }) => (
         }}>
           ⭐ {xp}
         </div>
+      )}
+      {onLogout && (
+        <button
+          onClick={onLogout}
+          aria-label="Se déconnecter"
+          title="Se déconnecter"
+          style={{
+            background: "none",
+            border: "1px solid var(--border-subtle)",
+            borderRadius: 7,
+            width: 32, height: 32,
+            display: "flex", alignItems: "center", justifyContent: "center",
+            cursor: "pointer",
+            color: "var(--text-3)",
+            flexShrink: 0,
+            transition: "opacity 0.2s",
+          }}
+        >
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4" />
+            <polyline points="16 17 21 12 16 7" />
+            <line x1="21" y1="12" x2="9" y2="12" />
+          </svg>
+        </button>
       )}
     </div>
   </div>
