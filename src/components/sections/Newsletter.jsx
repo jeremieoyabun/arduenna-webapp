@@ -3,12 +3,27 @@ import { useState } from "react";
 export const Newsletter = ({ t }) => {
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!email.trim()) return;
-    // TODO: wire up to Mailchimp / Klaviyo / etc.
-    setSubmitted(true);
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await fetch("/api/newsletter", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: email.trim() }),
+      });
+      if (!res.ok) throw new Error("error");
+      setSubmitted(true);
+    } catch {
+      setError(t.footer.newsletterError ?? "Une erreur est survenue, réessayez.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -28,13 +43,19 @@ export const Newsletter = ({ t }) => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
+              disabled={loading}
               aria-label={t.footer.newsletterPlaceholder}
             />
-            <button type="submit" className="btn-primary newsletter-section__btn">
-              {t.footer.newsletterCta}
+            <button
+              type="submit"
+              className="btn-primary newsletter-section__btn"
+              disabled={loading}
+            >
+              {loading ? "…" : t.footer.newsletterCta}
             </button>
           </form>
         )}
+        {error && <p className="newsletter-section__error">{error}</p>}
       </div>
     </section>
   );

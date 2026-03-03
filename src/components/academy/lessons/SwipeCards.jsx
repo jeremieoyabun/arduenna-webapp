@@ -3,8 +3,8 @@ import { useSwipeGesture } from "../../../hooks/useSwipeGesture";
 
 /**
  * Swipe card lesson format. User swipes/taps through N cards, then clicks "Compris →" to proceed.
+ * Cards can optionally include an `img` path and `imgContain` boolean.
  */
-/** Pick the correct language field from a lesson object. */
 const L = (obj, key, lang) => obj[key + (lang === "en" ? "En" : "Fr")] ?? obj[key + "Fr"] ?? "";
 
 export const SwipeCards = ({ lesson, onNext, lang = "fr" }) => {
@@ -36,6 +36,7 @@ export const SwipeCards = ({ lesson, onNext, lang = "fr" }) => {
   });
 
   const card = cards[index];
+  const hasImg = !!card.img;
 
   const slideStyle = animDir
     ? { transform: `translateX(${animDir === "left" ? "-60px" : "60px"})`, opacity: 0, transition: "transform 0.18s ease-out, opacity 0.18s ease-out" }
@@ -48,33 +49,59 @@ export const SwipeCards = ({ lesson, onNext, lang = "fr" }) => {
         style={{
           background: "var(--bg-surface)",
           borderRadius: 16,
-          padding: "36px 28px",
+          padding: hasImg ? 0 : "36px 28px",
           border: "1px solid var(--border-light)",
           boxShadow: "0 4px 24px var(--border-light)",
           minHeight: 240,
           cursor: "grab",
           userSelect: "none",
           touchAction: "pan-y",
+          overflow: "hidden",
           ...slideStyle,
         }}
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
         onPointerUp={onPointerUp}
       >
-        <div style={{
-          fontFamily: "'Cormorant Garamond', Georgia, serif",
-          fontSize: 24, fontWeight: 600, fontStyle: "italic",
-          color: "var(--text-primary)", marginBottom: 18, lineHeight: 1.2,
-        }}>
-          {L(card, "title", lang)}
+        {/* Optional image */}
+        {hasImg && (
+          <div style={{
+            width: "100%", height: 200,
+            background: card.imgContain ? "var(--color-cream, #fef8ec)" : "transparent",
+            display: "flex", alignItems: "center", justifyContent: "center",
+            overflow: "hidden",
+          }}>
+            <img
+              src={card.img}
+              alt=""
+              aria-hidden="true"
+              style={{
+                width: "100%", height: "100%",
+                objectFit: card.imgContain ? "contain" : "cover",
+                padding: card.imgContain ? "16px" : 0,
+                display: "block",
+              }}
+            />
+          </div>
+        )}
+
+        {/* Text content */}
+        <div style={{ padding: hasImg ? "20px 24px 24px" : 0 }}>
+          <div style={{
+            fontFamily: "'Cormorant Garamond', Georgia, serif",
+            fontSize: 24, fontWeight: 600, fontStyle: "italic",
+            color: "var(--text-primary)", marginBottom: 14, lineHeight: 1.2,
+          }}>
+            {L(card, "title", lang)}
+          </div>
+          <p style={{
+            fontFamily: "'DM Sans', sans-serif",
+            fontSize: 15, lineHeight: 1.7,
+            color: "var(--text-secondary)", margin: 0,
+          }}>
+            {L(card, "text", lang)}
+          </p>
         </div>
-        <p style={{
-          fontFamily: "'DM Sans', sans-serif",
-          fontSize: 15, lineHeight: 1.7,
-          color: "var(--text-secondary)", margin: 0,
-        }}>
-          {L(card, "text", lang)}
-        </p>
       </div>
 
       {/* Dots */}
@@ -97,7 +124,7 @@ export const SwipeCards = ({ lesson, onNext, lang = "fr" }) => {
         fontFamily: "'DM Sans', sans-serif", fontSize: 12,
         color: "rgba(11,54,61,0.3)", textAlign: "center", margin: 0,
       }}>
-        Swipez ou tapez pour naviguer
+        {lang === "en" ? "Swipe or tap to navigate" : "Swipez ou tapez pour naviguer"}
       </p>
 
       {/* Nav buttons */}
