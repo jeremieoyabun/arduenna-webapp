@@ -1,7 +1,7 @@
 /**
  * Editorial featured block — no card chrome.
- * A single left accent bar in parcours color is the only decorative element.
- * Cormorant headline at 34px. Hover: opacity only.
+ * Left accent bar in parcours color + subtle left-edge color wash for depth.
+ * 34px Cormorant italic headline. Hover: opacity only.
  */
 export const NextModuleCard = ({ module, parcoursId, percent, onStart }) => {
   if (!module) return null;
@@ -31,6 +31,12 @@ export const NextModuleCard = ({ module, parcoursId, percent, onStart }) => {
         paddingLeft: 20,
         cursor: "pointer",
         transition: "opacity 0.22s ease-out",
+        // Parcours-color left wash — depth without a card frame
+        background: `linear-gradient(90deg, ${meta.color}0e 0%, transparent 55%)`,
+        borderRadius: 4,
+        paddingTop: 14,
+        paddingBottom: 14,
+        paddingRight: 4,
       }}
       onMouseEnter={e => { e.currentTarget.style.opacity = "0.72"; }}
       onMouseLeave={e => { e.currentTarget.style.opacity = "1"; }}
@@ -40,7 +46,7 @@ export const NextModuleCard = ({ module, parcoursId, percent, onStart }) => {
       {/* Parcours label */}
       <div style={{ ...CAP, marginBottom: 14 }}>{meta.label}</div>
 
-      {/* Module title — editorial, large Cormorant */}
+      {/* Module title — editorial large */}
       <div style={{
         fontFamily: "'Cormorant Garamond', Georgia, serif",
         fontSize: 34, fontWeight: 600, fontStyle: "italic",
@@ -58,19 +64,34 @@ export const NextModuleCard = ({ module, parcoursId, percent, onStart }) => {
         {module.lessonCount} activités · {module.duration}
       </div>
 
-      {/* Progress bar — shown only if started */}
+      {/* Progress bar */}
       {percent > 0 && (
         <div style={{ marginBottom: 16 }}>
           <div style={{
-            height: 2, borderRadius: 999,
-            background: "var(--border-subtle)", overflow: "hidden",
+            position: "relative", height: 2, borderRadius: 999,
+            background: "var(--border-subtle)",
           }}>
             <div style={{
+              position: "absolute", top: 0, left: 0,
               height: "100%", borderRadius: 999,
               width: `${percent}%`,
               background: meta.color,
               transition: "width 0.4s ease-out",
             }} />
+            {/* Leaf-diamond terminus */}
+            {percent < 100 && (
+              <div style={{
+                position: "absolute",
+                left: `${percent}%`,
+                top: "50%",
+                transform: "translate(-50%, -50%) rotate(45deg)",
+                width: 7, height: 7,
+                background: meta.color,
+                borderRadius: "0 2px 0 2px",
+                opacity: 0.8,
+                transition: "left 0.4s ease-out",
+              }} />
+            )}
           </div>
           <div style={{
             fontFamily: "'DM Sans', sans-serif",
