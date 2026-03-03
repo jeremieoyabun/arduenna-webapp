@@ -46,9 +46,10 @@ export const LoginPage = () => {
     }
   };
 
-  const handleGoogle = () => {
+  const handleGoogle = async () => {
+    setError(null);
     try {
-      loginWithGoogle(selectedRole); // redirects to Google, returns to this page
+      await loginWithGoogle(selectedRole);
     } catch (err) {
       setError(err.message);
     }

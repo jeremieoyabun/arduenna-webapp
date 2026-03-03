@@ -74,7 +74,7 @@ export const AuthProvider = ({ children }) => {
     assertAuth();
     if (pendingRole) localStorage.setItem("arduenna_pending_role", pendingRole);
     const provider = new GoogleAuthProvider();
-    signInWithRedirect(auth, provider);
+    return signInWithRedirect(auth, provider);
   };
 
   const logout = async () => {
