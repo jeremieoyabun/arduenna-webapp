@@ -46,15 +46,21 @@ export const AuthProvider = ({ children }) => {
     return unsubscribe;
   }, []);
 
-  const login = (email, password) => signInWithEmailAndPassword(auth, email, password);
-  const signup = (email, password) => createUserWithEmailAndPassword(auth, email, password);
+  const assertAuth = () => {
+    if (!auth) throw new Error("Firebase non configuré — vérifiez VITE_FIREBASE_API_KEY, VITE_FIREBASE_AUTH_DOMAIN, VITE_FIREBASE_PROJECT_ID dans Vercel.");
+  };
+
+  const login = (email, password) => { assertAuth(); return signInWithEmailAndPassword(auth, email, password); };
+  const signup = (email, password) => { assertAuth(); return createUserWithEmailAndPassword(auth, email, password); };
 
   const loginWithGoogle = () => {
+    assertAuth();
     const provider = new GoogleAuthProvider();
     return signInWithPopup(auth, provider);
   };
 
   const logout = async () => {
+    if (!auth) return;
     await signOut(auth);
     setProfile(null);
   };

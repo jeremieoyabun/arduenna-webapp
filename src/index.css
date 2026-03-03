@@ -1110,8 +1110,7 @@ a {
 
 .product-card__radar {
   width: 100%;
-  max-width: 340px;
-  margin: var(--space-4) auto var(--space-4);
+  margin: var(--space-6) auto var(--space-2);
 }
 
 .product-card__desc {
