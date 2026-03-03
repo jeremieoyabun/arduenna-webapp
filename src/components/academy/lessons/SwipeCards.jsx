@@ -4,7 +4,10 @@ import { useSwipeGesture } from "../../../hooks/useSwipeGesture";
 /**
  * Swipe card lesson format. User swipes/taps through N cards, then clicks "Compris →" to proceed.
  */
-export const SwipeCards = ({ lesson, onNext }) => {
+/** Pick the correct language field from a lesson object. */
+const L = (obj, key, lang) => obj[key + (lang === "en" ? "En" : "Fr")] ?? obj[key + "Fr"] ?? "";
+
+export const SwipeCards = ({ lesson, onNext, lang = "fr" }) => {
   const { cards } = lesson;
   const [index, setIndex] = useState(0);
   const [animDir, setAnimDir] = useState(null); // "left" | "right" | null
@@ -63,14 +66,14 @@ export const SwipeCards = ({ lesson, onNext }) => {
           fontSize: 24, fontWeight: 600, fontStyle: "italic",
           color: "var(--text-primary)", marginBottom: 18, lineHeight: 1.2,
         }}>
-          {card.titleFr}
+          {L(card, "title", lang)}
         </div>
         <p style={{
           fontFamily: "'DM Sans', sans-serif",
           fontSize: 15, lineHeight: 1.7,
           color: "var(--text-secondary)", margin: 0,
         }}>
-          {card.textFr}
+          {L(card, "text", lang)}
         </p>
       </div>
 
@@ -122,7 +125,7 @@ export const SwipeCards = ({ lesson, onNext }) => {
             cursor: "pointer",
           }}
         >
-          {isLast ? "Compris →" : "Suivant →"}
+          {isLast ? (lang === "en" ? "Got it →" : "Compris →") : (lang === "en" ? "Next →" : "Suivant →")}
         </button>
       </div>
     </div>

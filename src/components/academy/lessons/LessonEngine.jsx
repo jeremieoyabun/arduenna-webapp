@@ -16,7 +16,7 @@ import { BadgeUnlockModal } from "../gamification/BadgeUnlockModal";
  * Orchestrates a full module: renders lesson steps by type, saves progress on completion,
  * checks badge unlocks, and shows BadgeUnlockModal for each new badge earned.
  */
-export const LessonEngine = ({ moduleId, parcoursId, onComplete, onExit }) => {
+export const LessonEngine = ({ moduleId, parcoursId, onComplete, onExit, lang = "fr" }) => {
   const { user } = useAuth();
   const lessons = lessonsData[moduleId] || [];
   const {
@@ -111,7 +111,7 @@ export const LessonEngine = ({ moduleId, parcoursId, onComplete, onExit }) => {
       />
 
       {currentLesson.type === "swipe" && (
-        <SwipeCards lesson={currentLesson} onNext={handleNext} />
+        <SwipeCards lesson={currentLesson} onNext={handleNext} lang={lang} />
       )}
       {currentLesson.type === "mcq" && (
         <MultipleChoiceQuiz
@@ -119,6 +119,7 @@ export const LessonEngine = ({ moduleId, parcoursId, onComplete, onExit }) => {
           lesson={currentLesson}
           stepIndex={currentIndex}
           onNext={handleNext}
+          lang={lang}
         />
       )}
       {currentLesson.type === "truefalse" && (
@@ -126,6 +127,7 @@ export const LessonEngine = ({ moduleId, parcoursId, onComplete, onExit }) => {
           key={currentIndex}
           lesson={currentLesson}
           onNext={handleNext}
+          lang={lang}
         />
       )}
     </div>

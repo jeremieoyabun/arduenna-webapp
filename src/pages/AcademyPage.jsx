@@ -11,7 +11,14 @@ import { BadgeGrid } from "../components/academy/gamification/BadgeGrid";
 import { HomeDashboard } from "../components/academy/home/HomeDashboard";
 import { CertificateCard } from "../components/academy/certificates/CertificateCard";
 import { OfflineIndicator } from "../components/academy/ui/OfflineIndicator";
+import { NotificationPrompt } from "../components/academy/ui/NotificationPrompt";
 import { setupOnlineListener } from "../lib/offlineService";
+import {
+  getPermissionStatus,
+  scheduleStreakReminder,
+  checkInactivityNotification,
+  cancelStreakReminder,
+} from "../lib/notificationService";
 import { modulesData } from "../data/academy/modules";
 import { parcoursData } from "../data/academy/parcours";
 
@@ -92,6 +99,7 @@ export const AcademyPage = () => {
   const [view, setView] = useState("tabs");
   const [selectedParcoursId, setSelectedParcoursId] = useState(null);
   const [selectedModuleId, setSelectedModuleId] = useState(null);
+  const [showNotifPrompt, setShowNotifPrompt] = useState(false);
 
   const navigate = useNavigate();
 
@@ -100,6 +108,30 @@ export const AcademyPage = () => {
     const cleanup = setupOnlineListener(() => progressHook.refreshProgress());
     return cleanup;
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Notification setup — after progress loads
+  useEffect(() => {
+    if (progressLoading) return;
+    const status = getPermissionStatus();
+
+    // Show custom prompt once if permission not yet decided
+    if (status === "default" && !sessionStorage.getItem("arduenna_notif_prompted")) {
+      sessionStorage.setItem("arduenna_notif_prompted", "1");
+      // Delay 3s so user settles into the app first
+      const timer = setTimeout(() => setShowNotifPrompt(true), 3000);
+      return () => clearTimeout(timer);
+    }
+
+    if (status === "granted") {
+      // Check inactivity (3+ days without login)
+      checkInactivityNotification(profile?.lastLoginAt || null);
+      // Schedule streak danger reminder
+      const lastActivity = progressHook.progress?.lastActivityAt || null;
+      scheduleStreakReminder(streak?.current || 0, lastActivity);
+    }
+
+    return () => cancelStreakReminder();
+  }, [progressLoading]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (authLoading) {
     return (
@@ -415,6 +447,7 @@ export const AcademyPage = () => {
       <LessonEngine
         moduleId={selectedModuleId}
         parcoursId={selectedParcoursId}
+        lang={profile?.lang || "fr"}
         onComplete={async () => {
           await progressHook.refreshProgress();
           setView("module-detail");
@@ -428,6 +461,9 @@ export const AcademyPage = () => {
   return (
     <div style={{ minHeight: "100vh", background: "var(--bg-primary)", paddingBottom: 80 }}>
       <OfflineIndicator />
+      {showNotifPrompt && (
+        <NotificationPrompt onDone={() => setShowNotifPrompt(false)} />
+      )}
       <AcademyHeader xp={xp} />
 
       {/* Tab content */}

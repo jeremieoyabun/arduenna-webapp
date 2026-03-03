@@ -1,9 +1,11 @@
 import { useState } from "react";
 
+const L = (obj, key, lang) => obj[key + (lang === "en" ? "En" : "Fr")] ?? obj[key + "Fr"] ?? "";
+
 /**
  * MCQ lesson format. 4 options, immediate color feedback, explanation, then "Suivant".
  */
-export const MultipleChoiceQuiz = ({ lesson, stepIndex, onNext }) => {
+export const MultipleChoiceQuiz = ({ lesson, stepIndex, onNext, lang = "fr" }) => {
   const [selected, setSelected] = useState(null);
   const answered = selected !== null;
   const isCorrect = selected === lesson.correctIndex;
@@ -54,13 +56,19 @@ export const MultipleChoiceQuiz = ({ lesson, stepIndex, onNext }) => {
         fontFamily: "'DM Sans', sans-serif", fontSize: 18, fontWeight: 700,
         color: "var(--text-primary)", lineHeight: 1.4,
       }}>
-        {lesson.questionFr}
+        {L(lesson, "question", lang)}
       </div>
 
       {/* Options */}
-      <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-        {lesson.optionsFr.map((opt, i) => (
-          <button key={i} style={getOptionStyle(i)} onClick={() => handleSelect(i)}>
+      <div role="group" aria-label="Choix de réponse" style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+        {(L(lesson, "options", lang) || []).map((opt, i) => (
+          <button
+            key={i}
+            style={getOptionStyle(i)}
+            onClick={() => handleSelect(i)}
+            aria-pressed={answered ? i === lesson.correctIndex : undefined}
+            aria-disabled={answered}
+          >
             {getIndicator(i)}
             <span>{opt}</span>
           </button>
@@ -69,7 +77,7 @@ export const MultipleChoiceQuiz = ({ lesson, stepIndex, onNext }) => {
 
       {/* Explanation */}
       {answered && (
-        <div style={{
+        <div aria-live="polite" style={{
           padding: "14px 16px",
           background: isCorrect ? "rgba(216,243,220,0.5)" : "rgba(255,243,224,0.6)",
           borderRadius: 10,
@@ -80,13 +88,15 @@ export const MultipleChoiceQuiz = ({ lesson, stepIndex, onNext }) => {
             fontWeight: 700, textTransform: "uppercase", letterSpacing: 1,
             color: isCorrect ? "#1d6432" : "#8a4a00", marginBottom: 6,
           }}>
-            {isCorrect ? "Bonne réponse !" : "Pas tout à fait..."}
+            {isCorrect
+              ? (lang === "en" ? "Correct!" : "Bonne réponse !")
+              : (lang === "en" ? "Not quite..." : "Pas tout à fait...")}
           </div>
           <p style={{
             fontFamily: "'DM Sans', sans-serif", fontSize: 13, lineHeight: 1.55,
             color: "var(--text-secondary)", margin: 0,
           }}>
-            {lesson.explanationFr}
+            {L(lesson, "explanation", lang)}
           </p>
         </div>
       )}
@@ -102,7 +112,7 @@ export const MultipleChoiceQuiz = ({ lesson, stepIndex, onNext }) => {
             cursor: "pointer",
           }}
         >
-          Suivant →
+          {lang === "en" ? "Next →" : "Suivant →"}
         </button>
       )}
     </div>

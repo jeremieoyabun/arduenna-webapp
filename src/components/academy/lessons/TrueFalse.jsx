@@ -1,9 +1,11 @@
 import { useState } from "react";
 
+const L = (obj, key, lang) => obj[key + (lang === "en" ? "En" : "Fr")] ?? obj[key + "Fr"] ?? "";
+
 /**
  * True/False lesson format. Statement + 2 big buttons + feedback + explanation.
  */
-export const TrueFalse = ({ lesson, onNext }) => {
+export const TrueFalse = ({ lesson, onNext, lang = "fr" }) => {
   const [answer, setAnswer] = useState(null); // null | true | false
   const answered = answer !== null;
   const isCorrect = answer === lesson.correct;
@@ -57,13 +59,13 @@ export const TrueFalse = ({ lesson, onNext }) => {
           fontWeight: 600, textTransform: "uppercase", letterSpacing: 1.5,
           color: "var(--text-tertiary)", marginBottom: 14,
         }}>
-          Vrai ou Faux ?
+          {lang === "en" ? "True or False?" : "Vrai ou Faux ?"}
         </div>
         <p style={{
           fontFamily: "'DM Sans', sans-serif", fontSize: 17, lineHeight: 1.55,
           color: "var(--text-primary)", margin: 0, fontWeight: 500,
         }}>
-          {lesson.statementFr}
+          {L(lesson, "statement", lang)}
         </p>
       </div>
 
@@ -72,18 +74,18 @@ export const TrueFalse = ({ lesson, onNext }) => {
         <button style={btnStyle(true)} onClick={() => handleAnswer(true)}>
           {answered && answer === true && lesson.correct === true && "✓ "}
           {answered && answer === true && lesson.correct !== true && "✗ "}
-          Vrai
+          {lang === "en" ? "True" : "Vrai"}
         </button>
         <button style={btnStyle(false)} onClick={() => handleAnswer(false)}>
           {answered && answer === false && lesson.correct === false && "✓ "}
           {answered && answer === false && lesson.correct !== false && "✗ "}
-          Faux
+          {lang === "en" ? "False" : "Faux"}
         </button>
       </div>
 
       {/* Explanation */}
       {answered && (
-        <div style={{
+        <div aria-live="polite" style={{
           padding: "14px 16px",
           background: isCorrect ? "rgba(216,243,220,0.5)" : "rgba(255,243,224,0.6)",
           borderRadius: 10,
@@ -94,13 +96,15 @@ export const TrueFalse = ({ lesson, onNext }) => {
             fontWeight: 700, textTransform: "uppercase", letterSpacing: 1,
             color: isCorrect ? "#1d6432" : "#8a4a00", marginBottom: 6,
           }}>
-            {isCorrect ? "Correct !" : "Pas tout à fait..."}
+            {isCorrect
+              ? (lang === "en" ? "Correct!" : "Correct !")
+              : (lang === "en" ? "Not quite..." : "Pas tout à fait...")}
           </div>
           <p style={{
             fontFamily: "'DM Sans', sans-serif", fontSize: 13, lineHeight: 1.55,
             color: "var(--text-secondary)", margin: 0,
           }}>
-            {lesson.explanationFr}
+            {L(lesson, "explanation", lang)}
           </p>
         </div>
       )}
@@ -116,7 +120,7 @@ export const TrueFalse = ({ lesson, onNext }) => {
             cursor: "pointer",
           }}
         >
-          Suivant →
+          {lang === "en" ? "Next →" : "Suivant →"}
         </button>
       )}
     </div>
