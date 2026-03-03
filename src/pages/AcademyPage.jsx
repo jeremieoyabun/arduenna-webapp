@@ -31,22 +31,22 @@ const tabs = [
   { id: "profil", label: "Profil", icon: "user" },
 ];
 
-const TabIcon = ({ type, active }) => {
-  const color = active ? "var(--accent-secondary)" : "var(--text-muted)";
+const TabIcon = ({ type, customColor }) => {
+  const color = customColor || "rgba(254,248,236,0.45)";
   const icons = {
     home: (
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8">
         <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
         <polyline points="9 22 9 12 15 12 15 22" />
       </svg>
     ),
     book: (
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8">
         <path d="M4 19.5A2.5 2.5 0 016.5 17H20" /><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z" />
       </svg>
     ),
     trophy: (
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8">
         <path d="M6 9H4.5a2.5 2.5 0 010-5H6" /><path d="M18 9h1.5a2.5 2.5 0 000-5H18" />
         <path d="M4 22h16" /><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20 7 22" />
         <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20 17 22" />
@@ -54,7 +54,7 @@ const TabIcon = ({ type, active }) => {
       </svg>
     ),
     user: (
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8">
         <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" /><circle cx="12" cy="7" r="4" />
       </svg>
     ),
@@ -62,21 +62,23 @@ const TabIcon = ({ type, active }) => {
   return icons[type] || null;
 };
 
-// ── Shared styles ─────────────────────────────────────────────────────────────
+// ── Shared dark styles ────────────────────────────────────────────────────────
+
+const DARK_BG = "#071c21";
 
 const card = {
-  background: "var(--bg-surface)",
-  borderRadius: 12,
-  border: "1px solid var(--border-light)",
-  boxShadow: "0 2px 12px rgba(11,54,61,0.03)",
+  background: "rgba(255,255,255,0.05)",
+  borderRadius: 16,
+  border: "1px solid rgba(254,248,236,0.07)",
+  boxShadow: "8px 8px 24px rgba(0,0,0,0.38), -2px -2px 8px rgba(255,255,255,0.02)",
 };
 
 const label = {
   fontFamily: "'DM Sans', sans-serif",
-  fontSize: 11,
-  color: "var(--text-tertiary)",
+  fontSize: 10,
+  color: "rgba(254,248,236,0.38)",
   textTransform: "uppercase",
-  letterSpacing: 1.5,
+  letterSpacing: 2,
 };
 
 // ── Role labels ───────────────────────────────────────────────────────────────
@@ -135,8 +137,8 @@ export const AcademyPage = () => {
 
   if (authLoading) {
     return (
-      <div style={{ minHeight: "100vh", background: "var(--bg-primary)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-        <div style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 22, color: "var(--accent-secondary)", fontStyle: "italic" }}>
+      <div style={{ minHeight: "100vh", background: DARK_BG, display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <div style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 22, color: "#c2744a", fontStyle: "italic" }}>
           Chargement...
         </div>
       </div>
@@ -209,33 +211,34 @@ export const AcademyPage = () => {
 
   const renderProfil = () => {
     const p1completed = getParcoursCompletedCount("univers");
-    const p1total = modulesData.filter(m => m.parcoursId === "univers").length;
     const earnedBadges = progressHook.progress?.badges || [];
 
-    // Earned certificates: parcours where completedAt is set
     const earnedCerts = parcoursData.filter(p =>
       !!progressHook.progress?.parcours?.[p.id]?.completedAt
     );
 
     return (
-      <div style={{ padding: "28px 20px" }}>
-        {/* Avatar */}
+      <div style={{ padding: "24px 18px" }}>
+
+        {/* Avatar block */}
         <div style={{ textAlign: "center", marginBottom: 28 }}>
           <div style={{
-            width: 80, height: 80, borderRadius: 999,
-            background: "#c2744a", margin: "0 auto 16px",
+            width: 84, height: 84, borderRadius: 999,
+            background: "linear-gradient(135deg, #7a2e00, #c2744a)",
+            margin: "0 auto 14px",
             display: "flex", alignItems: "center", justifyContent: "center",
-            color: "var(--text-on-dark)",
+            color: "#fef8ec",
             fontFamily: "'Cormorant Garamond', Georgia, serif",
-            fontSize: 32, fontWeight: 400, fontStyle: "italic",
+            fontSize: 34, fontWeight: 600, fontStyle: "italic",
+            boxShadow: "0 8px 24px rgba(194,116,74,0.35)",
           }}>
             {firstName[0].toUpperCase()}
           </div>
 
           <h2 style={{
             fontFamily: "'Cormorant Garamond', Georgia, serif",
-            fontSize: 22, fontWeight: 400, fontStyle: "italic",
-            color: "var(--text-primary)", marginBottom: 6,
+            fontSize: 24, fontWeight: 600, fontStyle: "italic",
+            color: "#fef8ec", marginBottom: 6,
           }}>
             {firstName}
           </h2>
@@ -244,31 +247,32 @@ export const AcademyPage = () => {
             <div style={{
               display: "inline-block",
               padding: "4px 14px", borderRadius: 999,
-              background: "rgba(194,116,74,0.1)",
-              fontFamily: "'DM Sans', sans-serif", fontSize: 12, color: "var(--accent-secondary)",
-              marginBottom: 4,
+              background: "rgba(194,116,74,0.15)",
+              border: "1px solid rgba(194,116,74,0.25)",
+              fontFamily: "'DM Sans', sans-serif", fontSize: 12, color: "#c2744a",
+              marginBottom: 6,
             }}>
               {ROLE_LABELS[role] || role}
             </div>
           )}
 
-          <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: "var(--text-tertiary)", marginTop: 6 }}>
+          <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, color: "rgba(254,248,236,0.38)", marginTop: 4 }}>
             {user.email}
           </div>
         </div>
 
-        {/* Stats */}
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 20 }}>
+        {/* Stats 2×2 */}
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 16 }}>
           {[
-            { icon: "⭐", value: xp, label: "XP total" },
-            { icon: "🔥", value: `${streak}j`, label: "Streak" },
-            { icon: "📚", value: p1completed, label: "Modules faits" },
-            { icon: "🏅", value: earnedBadges.length, label: "Badges" },
-          ].map(({ icon, value, label: lbl }) => (
+            { icon: "⭐", value: xp, lbl: "XP total" },
+            { icon: "🔥", value: `${streak}j`, lbl: "Streak" },
+            { icon: "📚", value: p1completed, lbl: "Modules faits" },
+            { icon: "🏅", value: earnedBadges.length, lbl: "Badges" },
+          ].map(({ icon, value, lbl }) => (
             <div key={lbl} style={{ ...card, padding: "14px 16px", display: "flex", alignItems: "center", gap: 10 }}>
               <span style={{ fontSize: 20 }}>{icon}</span>
               <div>
-                <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 16, fontWeight: 600, color: "var(--text-primary)" }}>
+                <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 18, fontWeight: 700, color: "#fef8ec" }}>
                   {value}
                 </div>
                 <div style={{ ...label }}>{lbl}</div>
@@ -277,9 +281,9 @@ export const AcademyPage = () => {
           ))}
         </div>
 
-        {/* Progression parcours — all 4 (dynamic) */}
-        <div style={{ ...card, padding: "18px 20px", marginBottom: 16 }}>
-          <div style={{ ...label, marginBottom: 14 }}>Progression parcours</div>
+        {/* Parcours progress */}
+        <div style={{ ...card, padding: "18px 20px", marginBottom: 14 }}>
+          <div style={{ ...label, marginBottom: 16 }}>Progression parcours</div>
           {parcoursData.map(p => {
             const total = modulesData.filter(m => m.parcoursId === p.id).length;
             const done = getParcoursCompletedCount(p.id);
@@ -287,22 +291,24 @@ export const AcademyPage = () => {
             const active = !!progressHook.progress?.parcours?.[p.id];
             return (
               <div key={p.id} style={{ marginBottom: 14 }}>
-                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 5 }}>
+                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 6 }}>
                   <span style={{
                     fontFamily: "'DM Sans', sans-serif", fontSize: 13,
-                    color: active ? "var(--text-secondary)" : "var(--text-muted)", fontWeight: active ? 500 : 400,
+                    color: active ? "rgba(254,248,236,0.85)" : "rgba(254,248,236,0.25)",
+                    fontWeight: active ? 500 : 400,
                   }}>
                     {p.titleFr}
                   </span>
-                  <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, color: "var(--text-tertiary)" }}>
+                  <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 11, fontWeight: 600, color: pct === 100 ? p.color : "rgba(254,248,236,0.3)" }}>
                     {active ? `${done}/${total}` : "—"}
                   </span>
                 </div>
-                <div style={{ height: 5, borderRadius: 999, background: "var(--border-light)", overflow: "hidden" }}>
+                <div style={{ height: 6, borderRadius: 999, background: "rgba(255,255,255,0.07)", overflow: "hidden" }}>
                   <div style={{
                     height: "100%", borderRadius: 999,
                     width: `${pct}%`,
-                    background: pct === 100 ? p.color : "#0b363d",
+                    background: pct === 100 ? p.color : "#2a8fa0",
+                    boxShadow: pct > 0 ? `0 0 8px ${pct === 100 ? p.color : "#2a8fa0"}88` : "none",
                     transition: "width 0.4s ease-out",
                   }} />
                 </div>
@@ -312,15 +318,13 @@ export const AcademyPage = () => {
         </div>
 
         {/* Badges */}
-        <div style={{ ...card, padding: "18px 20px", marginBottom: 16 }}>
-          <div style={{ ...label, marginBottom: 14 }}>
-            Mes Badges ({earnedBadges.length}/10)
-          </div>
+        <div style={{ ...card, padding: "18px 20px", marginBottom: 14 }}>
+          <div style={{ ...label, marginBottom: 14 }}>Mes Badges ({earnedBadges.length}/10)</div>
           <BadgeGrid earnedBadges={earnedBadges} />
           {earnedBadges.length === 0 && (
             <div style={{
               fontFamily: "'DM Sans', sans-serif", fontSize: 12,
-              color: "var(--text-muted)", textAlign: "center",
+              color: "rgba(254,248,236,0.3)", textAlign: "center",
               marginTop: 12, fontStyle: "italic",
             }}>
               Complétez des modules pour débloquer vos badges
@@ -330,10 +334,8 @@ export const AcademyPage = () => {
 
         {/* Certificates */}
         {earnedCerts.length > 0 && (
-          <div style={{ ...card, padding: "18px 20px", marginBottom: 16 }}>
-            <div style={{ ...label, marginBottom: 14 }}>
-              Mes Certificats ({earnedCerts.length})
-            </div>
+          <div style={{ ...card, padding: "18px 20px", marginBottom: 14 }}>
+            <div style={{ ...label, marginBottom: 14 }}>Mes Certificats ({earnedCerts.length})</div>
             <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
               {earnedCerts.map(p => (
                 <CertificateCard
@@ -349,19 +351,11 @@ export const AcademyPage = () => {
         )}
 
         {/* Settings */}
-        <div style={{ ...card, padding: "18px 20px", marginBottom: 16 }}>
+        <div style={{ ...card, padding: "18px 20px", marginBottom: 14 }}>
           <div style={{ ...label, marginBottom: 14 }}>Paramètres</div>
 
-          {/* Dark mode toggle */}
-          <SettingRow
-            icon="🌙"
-            title="Mode sombre"
-            action={
-              <ThemeToggle />
-            }
-          />
+          <SettingRow icon="🌙" title="Mode sombre" action={<ThemeToggle />} />
 
-          {/* Admin link (only for admins) */}
           {profile?.isAdmin && (
             <SettingRow
               icon="⚙️"
@@ -371,11 +365,11 @@ export const AcademyPage = () => {
                   onClick={() => navigate("/admin")}
                   style={{
                     padding: "6px 14px",
-                    background: "rgba(11,54,61,0.06)",
-                    border: "1px solid rgba(11,54,61,0.15)",
+                    background: "rgba(254,248,236,0.07)",
+                    border: "1px solid rgba(254,248,236,0.15)",
                     borderRadius: 6,
                     fontFamily: "'DM Sans', sans-serif", fontSize: 12, fontWeight: 500,
-                    color: "var(--text-secondary)", cursor: "pointer",
+                    color: "rgba(254,248,236,0.7)", cursor: "pointer",
                   }}
                 >
                   Ouvrir →
@@ -384,16 +378,15 @@ export const AcademyPage = () => {
             />
           )}
 
-          {/* Logout */}
-          <div style={{ marginTop: 8 }}>
+          <div style={{ marginTop: 10 }}>
             <button
               onClick={handleLogout}
               style={{
                 width: "100%", padding: "12px 20px",
-                background: "transparent", color: "var(--accent-secondary)",
-                border: "1px solid rgba(194,116,74,0.22)",
-                borderRadius: 8,
-                fontFamily: "'DM Sans', sans-serif", fontSize: 13, fontWeight: 500,
+                background: "transparent", color: "#c2744a",
+                border: "1px solid rgba(194,116,74,0.3)",
+                borderRadius: 10,
+                fontFamily: "'DM Sans', sans-serif", fontSize: 13, fontWeight: 600,
                 cursor: "pointer",
               }}
             >
@@ -412,7 +405,7 @@ export const AcademyPage = () => {
   // Full-screen views (no bottom tab bar)
   if (view === "parcours-detail") {
     return (
-      <div style={{ minHeight: "100vh", background: "var(--bg-primary)" }}>
+      <div style={{ minHeight: "100vh", background: DARK_BG }}>
         <AcademyHeader />
         <ParcoursDetail
           parcoursId={selectedParcoursId}
@@ -428,7 +421,7 @@ export const AcademyPage = () => {
 
   if (view === "module-detail") {
     return (
-      <div style={{ minHeight: "100vh", background: "var(--bg-primary)" }}>
+      <div style={{ minHeight: "100vh", background: DARK_BG }}>
         <AcademyHeader />
         <ModuleDetail
           moduleId={selectedModuleId}
@@ -459,7 +452,7 @@ export const AcademyPage = () => {
 
   // Tabs view
   return (
-    <div style={{ minHeight: "100vh", background: "var(--bg-primary)", paddingBottom: 80 }}>
+    <div style={{ minHeight: "100vh", background: DARK_BG, paddingBottom: 120 }}>
       <OfflineIndicator />
       {showNotifPrompt && (
         <NotificationPrompt onDone={() => setShowNotifPrompt(false)} />
@@ -477,52 +470,65 @@ export const AcademyPage = () => {
       {activeTab === "classement" && renderClassement()}
       {activeTab === "profil" && renderProfil()}
 
-      {/* Bottom tab bar */}
-      <nav style={{
-        position: "fixed", bottom: 0, left: 0, right: 0,
-        background: "var(--bg-surface)",
-        borderTop: "1px solid var(--border-light)",
-        display: "flex", justifyContent: "space-around", alignItems: "stretch",
-        padding: "0 0 env(safe-area-inset-bottom, 0px)",
+      {/* ── Floating pill tab bar ──────────────────────────────────────────── */}
+      <div style={{
+        position: "fixed",
+        bottom: "calc(24px + env(safe-area-inset-bottom, 0px))",
+        left: "50%",
+        transform: "translateX(-50%)",
         zIndex: 1000,
-        boxShadow: "0 -4px 24px rgba(11,54,61,0.07)",
       }}>
-        {tabs.map((tab) => {
-          const active = activeTab === tab.id;
-          return (
-            <button
-              key={tab.id}
-              onClick={() => switchTab(tab.id)}
-              style={{
-                flex: 1, background: "none", border: "none",
-                display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
-                gap: 4, padding: "10px 4px 10px",
-                cursor: "pointer", position: "relative",
-                transition: "color 0.15s ease-out",
-              }}
-            >
-              {/* Active top bar */}
-              <div style={{
-                position: "absolute", top: 0, left: "50%",
-                transform: `translateX(-50%) scaleX(${active ? 1 : 0})`,
-                width: 28, height: 2.5, borderRadius: "0 0 3px 3px",
-                background: "#0b363d",
-                transition: "transform 0.2s cubic-bezier(0.34,1.56,0.64,1)",
-              }} />
-              <TabIcon type={tab.icon} active={active} />
-              <span style={{
-                fontFamily: "'DM Sans', sans-serif",
-                fontSize: 10, letterSpacing: "0.04em",
-                color: active ? "#0b363d" : "rgba(11,54,61,0.35)",
-                fontWeight: active ? 600 : 400,
-                transition: "color 0.15s, font-weight 0.15s",
-              }}>
-                {tab.label}
-              </span>
-            </button>
-          );
-        })}
-      </nav>
+        <nav style={{
+          background: "rgba(8,31,35,0.94)",
+          backdropFilter: "blur(24px)",
+          WebkitBackdropFilter: "blur(24px)",
+          borderRadius: 999,
+          padding: "6px",
+          display: "flex",
+          gap: 4,
+          boxShadow: "0 8px 40px rgba(11,54,61,0.4), 0 2px 8px rgba(11,54,61,0.2)",
+          border: "1px solid rgba(254,248,236,0.08)",
+        }}>
+          {tabs.map((tab) => {
+            const active = activeTab === tab.id;
+            return (
+              <button
+                key={tab.id}
+                onClick={() => switchTab(tab.id)}
+                style={{
+                  background: active ? "#fef8ec" : "transparent",
+                  borderRadius: 999,
+                  padding: active ? "9px 18px" : "9px 13px",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: active ? 7 : 0,
+                  border: "none",
+                  cursor: "pointer",
+                  transition: "all 0.28s cubic-bezier(0.34,1.56,0.64,1)",
+                  overflow: "hidden",
+                  whiteSpace: "nowrap",
+                  flexShrink: 0,
+                }}
+              >
+                <TabIcon
+                  type={tab.icon}
+                  customColor={active ? "#0b363d" : "rgba(254,248,236,0.45)"}
+                />
+                {active && (
+                  <span style={{
+                    fontFamily: "'DM Sans', sans-serif",
+                    fontSize: 12, fontWeight: 700,
+                    color: "#0b363d",
+                    letterSpacing: 0.1,
+                  }}>
+                    {tab.label}
+                  </span>
+                )}
+              </button>
+            );
+          })}
+        </nav>
+      </div>
     </div>
   );
 };
@@ -532,14 +538,14 @@ export const AcademyPage = () => {
 const SettingRow = ({ icon, title, action }) => (
   <div style={{
     display: "flex", alignItems: "center", justifyContent: "space-between",
-    padding: "10px 0",
-    borderBottom: "1px solid var(--border-light)",
+    padding: "11px 0",
+    borderBottom: "1px solid rgba(254,248,236,0.07)",
   }}>
     <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
       <span style={{ fontSize: 16 }}>{icon}</span>
       <span style={{
         fontFamily: "'DM Sans', sans-serif", fontSize: 13,
-        color: "var(--text-secondary)",
+        color: "rgba(254,248,236,0.72)",
       }}>
         {title}
       </span>
@@ -587,22 +593,24 @@ const ThemeToggle = () => {
 
 const AcademyHeader = ({ xp }) => (
   <div style={{
-    padding: "10px 20px",
-    borderBottom: "1px solid var(--border-light)",
+    padding: "11px 20px",
+    borderBottom: "1px solid rgba(194,116,74,0.12)",
     display: "flex", alignItems: "center", justifyContent: "space-between",
-    background: "var(--bg-surface)",
+    background: "rgba(7,28,33,0.96)",
+    backdropFilter: "blur(20px)",
+    WebkitBackdropFilter: "blur(20px)",
     position: "sticky", top: 0, zIndex: 100,
-    boxShadow: "0 1px 8px rgba(11,54,61,0.04)",
+    boxShadow: "0 4px 20px rgba(0,0,0,0.35)",
   }}>
-    <Link to="/" style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: 8 }}>
+    <Link to="/" style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: 9 }}>
       <img
         src="/Arduennagin_logo_vert_.webp"
         alt="Arduenna"
-        style={{ height: 26, width: "auto", objectFit: "contain", display: "block" }}
+        style={{ height: 24, width: "auto", objectFit: "contain", display: "block", filter: "brightness(0) invert(1)" }}
       />
       <span style={{
         fontFamily: "'Cormorant Garamond', Georgia, serif",
-        fontSize: 15, fontStyle: "italic", color: "var(--accent-secondary)",
+        fontSize: 15, fontStyle: "italic", color: "#c2744a",
         letterSpacing: 0.5,
       }}>
         Academy
@@ -611,12 +619,15 @@ const AcademyHeader = ({ xp }) => (
     {xp !== undefined && (
       <div style={{
         display: "flex", alignItems: "center", gap: 5,
-        background: "#0b363d", color: "#fef8ec",
-        padding: "5px 13px", borderRadius: 999,
-        fontFamily: "'DM Sans', sans-serif", fontSize: 12, fontWeight: 600,
+        background: "rgba(194,116,74,0.18)",
+        border: "1px solid rgba(194,116,74,0.3)",
+        color: "#D4A574",
+        padding: "5px 14px", borderRadius: 999,
+        fontFamily: "'DM Sans', sans-serif", fontSize: 12, fontWeight: 700,
         letterSpacing: 0.3,
+        boxShadow: "0 0 16px rgba(194,116,74,0.15)",
       }}>
-        <span style={{ fontSize: 11 }}>⭐</span> {xp} XP
+        ⭐ {xp} XP
       </div>
     )}
   </div>
