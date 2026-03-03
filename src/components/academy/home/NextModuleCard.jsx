@@ -7,10 +7,10 @@ export const NextModuleCard = ({ module, parcoursId, percent, onStart }) => {
   if (!module) return null;
 
   const PARCOURS_META = {
-    univers:  { label: "L'Univers Arduenna", color: "#4a9b8a" },
-    gamme:    { label: "La Gamme",           color: "#c2744a" },
-    cocktail: { label: "Le Cocktail Lab",    color: "#7ab8c4" },
-    vente:    { label: "Vendre Arduenna",    color: "#c9a84c" },
+    univers:  { label: "L'Univers Arduenna", color: "#4a9b8a", bg: "/Sapin-dark.webp"    },
+    gamme:    { label: "La Gamme",           color: "#c2744a", bg: "/Mirabelle-dark.webp" },
+    cocktail: { label: "Le Cocktail Lab",    color: "#7ab8c4", bg: "/pin-illu-02.webp"    },
+    vente:    { label: "Vendre Arduenna",    color: "#c9a84c", bg: null                   },
   };
 
   const CAP = {
@@ -27,6 +27,8 @@ export const NextModuleCard = ({ module, parcoursId, percent, onStart }) => {
     <div
       onClick={onStart}
       style={{
+        position: "relative",
+        overflow: "hidden",
         borderLeft: `3px solid ${meta.color}`,
         paddingLeft: 20,
         cursor: "pointer",
@@ -43,6 +45,31 @@ export const NextModuleCard = ({ module, parcoursId, percent, onStart }) => {
       onTouchStart={e => { e.currentTarget.style.opacity = "0.72"; }}
       onTouchEnd={e => { e.currentTarget.style.opacity = "1"; }}
     >
+      {/* Background botanical image — fades left→right toward transparent */}
+      {meta.bg && (
+        <div style={{
+          position: "absolute",
+          right: 0, top: 0, bottom: 0,
+          width: "58%",
+          WebkitMaskImage: "linear-gradient(to right, transparent 0%, black 40%, black 70%, transparent 100%)",
+          maskImage: "linear-gradient(to right, transparent 0%, black 40%, black 70%, transparent 100%)",
+          pointerEvents: "none",
+        }}>
+          <img
+            src={meta.bg}
+            alt=""
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              objectPosition: "center",
+              opacity: 0.18,
+              display: "block",
+            }}
+          />
+        </div>
+      )}
+
       {/* Parcours label */}
       <div style={{ ...CAP, marginBottom: 14 }}>{meta.label}</div>
 
