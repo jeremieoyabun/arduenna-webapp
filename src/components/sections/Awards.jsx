@@ -1,9 +1,9 @@
 import { awardsData } from "../../data/cocktails";
 
-const tierIcon = {
-  gold:   { emoji: "🥇", color: "#c9910a", bg: "rgba(212,165,116,0.12)", border: "rgba(212,165,116,0.35)" },
-  silver: { emoji: "🥈", color: "#7a8fa6", bg: "rgba(160,160,160,0.1)",  border: "rgba(160,160,160,0.3)"  },
-  bronze: { emoji: "🥉", color: "#a07040", bg: "rgba(194,139,106,0.1)",  border: "rgba(194,139,106,0.3)"  },
+const tierStyle = {
+  gold:   { color: "#c9910a", bg: "rgba(212,165,116,0.10)", border: "rgba(212,165,116,0.30)" },
+  silver: { color: "#7a8fa6", bg: "rgba(160,160,160,0.08)",  border: "rgba(160,160,160,0.25)"  },
+  bronze: { color: "#a07040", bg: "rgba(194,139,106,0.08)",  border: "rgba(194,139,106,0.25)"  },
 };
 
 export const Awards = ({ t }) => (
@@ -16,7 +16,7 @@ export const Awards = ({ t }) => (
 
     <div className="grid-3 reveal">
       {awardsData.map((a, i) => {
-        const tier = tierIcon[a.tier] ?? tierIcon.bronze;
+        const tier = tierStyle[a.tier] ?? tierStyle.bronze;
         return (
           <div
             key={i}
@@ -25,20 +25,82 @@ export const Awards = ({ t }) => (
               borderTop: `3px solid ${tier.border}`,
               background: tier.bg,
               textAlign: "center",
-              padding: "var(--space-8) var(--space-6)",
+              padding: "var(--space-8) var(--space-4)",
+              position: "relative",
+              overflow: "hidden",
             }}
           >
-            <div style={{ fontSize: 32, marginBottom: "var(--space-3)", lineHeight: 1 }}>
-              {tier.emoji}
+            {/* Leaf decorations */}
+            <img
+              src="/icons/leaf-left.svg"
+              alt=""
+              style={{
+                position: "absolute",
+                left: -4, top: "50%",
+                transform: "translateY(-50%)",
+                height: "80%",
+                width: "auto",
+                opacity: 0.12,
+                pointerEvents: "none",
+              }}
+            />
+            <img
+              src="/icons/leaf-right.svg"
+              alt=""
+              style={{
+                position: "absolute",
+                right: -4, top: "50%",
+                transform: "translateY(-50%)",
+                height: "80%",
+                width: "auto",
+                opacity: 0.12,
+                pointerEvents: "none",
+              }}
+            />
+
+            {/* Year — large */}
+            <div style={{
+              fontFamily: "var(--font-display)",
+              fontSize: 36, fontWeight: 700,
+              color: tier.color,
+              lineHeight: 1, marginBottom: 8,
+              position: "relative",
+            }}>
+              {a.year}
             </div>
-            <div className="award-card__detail" style={{ color: tier.color, fontWeight: 700, fontSize: "var(--text-sm)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "var(--space-2)" }}>
+
+            {/* Medal detail (Gold / Silver / etc) */}
+            <div style={{
+              fontFamily: "var(--font-body)",
+              fontSize: "var(--text-xs)",
+              fontWeight: 700,
+              textTransform: "uppercase",
+              letterSpacing: "0.15em",
+              color: tier.color,
+              marginBottom: 10,
+              position: "relative",
+            }}>
               {a.detail}
             </div>
-            <div className="award-card__title" style={{ fontFamily: "var(--font-display)", fontSize: "var(--text-lg)", fontWeight: 500, color: "var(--text-primary)", marginBottom: "var(--space-1)" }}>
+
+            {/* Thin separator */}
+            <div style={{
+              width: 32, height: 1,
+              background: tier.border,
+              margin: "0 auto 10px",
+              position: "relative",
+            }} />
+
+            {/* Award name */}
+            <div style={{
+              fontFamily: "var(--font-display)",
+              fontSize: "var(--text-base)",
+              fontWeight: 500,
+              color: "var(--text-primary)",
+              lineHeight: 1.3,
+              position: "relative",
+            }}>
               {a.title}
-            </div>
-            <div className="award-card__year" style={{ fontSize: "var(--text-xs)", color: "var(--text-tertiary)", fontFamily: "var(--font-body)", letterSpacing: "0.1em" }}>
-              {a.year}
             </div>
           </div>
         );
