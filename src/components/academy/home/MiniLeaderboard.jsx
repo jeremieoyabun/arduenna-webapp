@@ -52,7 +52,7 @@ export const MiniLeaderboard = ({ onViewAll }) => {
         display: "flex", justifyContent: "space-between",
         alignItems: "center", marginBottom: 14,
       }}>
-        <div style={CAP}>Top apprenants</div>
+        <div style={CAP}>Top Apprentis</div>
         {entries.length > 0 && (
           <button
             onClick={onViewAll}

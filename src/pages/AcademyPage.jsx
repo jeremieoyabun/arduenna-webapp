@@ -194,10 +194,13 @@ export const AcademyPage = () => {
 
   // ── Accueil tab ──────────────────────────────────────────────────────────
 
+  const photoURL = user.photoURL || profile?.avatarUrl || null;
+
   const renderAccueil = () => (
     <HomeDashboard
       firstName={firstName}
       role={role}
+      photoURL={photoURL}
       xp={xp}
       streak={streak}
       progress={progressHook.progress}
@@ -234,18 +237,32 @@ export const AcademyPage = () => {
 
         {/* Avatar block */}
         <div style={{ textAlign: "center", marginBottom: 28 }}>
-          <div style={{
-            width: 84, height: 84, borderRadius: 999,
-            background: "linear-gradient(135deg, #7a2e00, #c2744a)",
-            margin: "0 auto 14px",
-            display: "flex", alignItems: "center", justifyContent: "center",
-            color: "#fef8ec",
-            fontFamily: "'Cormorant Garamond', Georgia, serif",
-            fontSize: 34, fontWeight: 600, fontStyle: "italic",
-            boxShadow: "0 4px 16px rgba(194,116,74,0.18)",
-          }}>
-            {firstName[0].toUpperCase()}
-          </div>
+          {photoURL ? (
+            <img
+              src={photoURL}
+              alt={firstName}
+              style={{
+                width: 84, height: 84, borderRadius: 999,
+                objectFit: "cover", display: "block",
+                margin: "0 auto 14px",
+                boxShadow: "0 4px 16px rgba(194,116,74,0.18)",
+                border: "3px solid rgba(194,116,74,0.25)",
+              }}
+            />
+          ) : (
+            <div style={{
+              width: 84, height: 84, borderRadius: 999,
+              background: "linear-gradient(135deg, #7a2e00, #c2744a)",
+              margin: "0 auto 14px",
+              display: "flex", alignItems: "center", justifyContent: "center",
+              color: "#fef8ec",
+              fontFamily: "'Cormorant Garamond', Georgia, serif",
+              fontSize: 34, fontWeight: 600, fontStyle: "italic",
+              boxShadow: "0 4px 16px rgba(194,116,74,0.18)",
+            }}>
+              {firstName[0].toUpperCase()}
+            </div>
+          )}
 
           <h2 style={{
             fontFamily: "'Cormorant Garamond', Georgia, serif",

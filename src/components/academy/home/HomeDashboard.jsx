@@ -220,7 +220,7 @@ const staggerStyle = (i, mounted) => ({
 });
 
 export const HomeDashboard = ({
-  firstName, role, xp, streak, progress,
+  firstName, role, photoURL, xp, streak, progress,
   getModulePercent, isLocked, isCompleted, getParcoursCompletedCount,
   progressLoading, onOpenModule, onSwitchTab,
 }) => {
@@ -292,8 +292,11 @@ export const HomeDashboard = ({
     (acc, p) => acc + getParcoursCompletedCount(p.id), 0
   );
 
-  const dayOfWeek = new Intl.DateTimeFormat("fr-FR", { weekday: "long" }).format(new Date());
-  const dayCapitalized = dayOfWeek.charAt(0).toUpperCase() + dayOfWeek.slice(1);
+  const now = new Date();
+  const dayFull = new Intl.DateTimeFormat("fr-FR", {
+    weekday: "long", day: "2-digit", month: "long",
+  }).format(now);
+  const dateCap = dayFull.charAt(0).toUpperCase() + dayFull.slice(1);
 
   return (
     <div style={{ paddingBottom: 60 }}>
@@ -303,28 +306,59 @@ export const HomeDashboard = ({
         padding: "32px 24px 24px",
         borderBottom: "1px solid var(--border-subtle)",
       }}>
-        <div style={{ ...CAP, marginBottom: 10 }}>{dayCapitalized}</div>
-        <div style={{ display: "flex", alignItems: "baseline", gap: 12 }}>
-          <span style={{
-            fontFamily: "'Cormorant Garamond', Georgia, serif",
-            fontSize: 42, fontWeight: 600, fontStyle: "italic",
-            color: "var(--text-1)", lineHeight: 1, letterSpacing: "-0.5px",
-          }}>
-            {firstName}
-          </span>
-          <span style={{ ...CAP, color: "var(--text-4)" }}>
-            {ROLE_LABELS[role] || "Apprenant"}
-          </span>
-        </div>
-        {completedModules > 0 && (
-          <div style={{
-            fontFamily: "'Cormorant Garamond', Georgia, serif",
-            fontSize: 14, fontStyle: "italic",
-            color: "var(--text-3)", marginTop: 6,
-          }}>
-            {completedModules} module{completedModules > 1 ? "s" : ""} maîtrisé{completedModules > 1 ? "s" : ""} sur {totalModules}
+        <div style={{ ...CAP, marginBottom: 14 }}>{dateCap}</div>
+
+        <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+          {/* Avatar */}
+          {photoURL ? (
+            <img
+              src={photoURL}
+              alt={firstName}
+              style={{
+                width: 52, height: 52, borderRadius: 999,
+                objectFit: "cover", display: "block", flexShrink: 0,
+                border: "2px solid rgba(194,116,74,0.25)",
+                boxShadow: "0 2px 10px rgba(194,116,74,0.15)",
+              }}
+            />
+          ) : (
+            <div style={{
+              width: 52, height: 52, borderRadius: 999, flexShrink: 0,
+              background: "linear-gradient(135deg, #7a2e00, #c2744a)",
+              display: "flex", alignItems: "center", justifyContent: "center",
+              color: "#fef8ec",
+              fontFamily: "'Cormorant Garamond', Georgia, serif",
+              fontSize: 22, fontWeight: 600, fontStyle: "italic",
+              boxShadow: "0 2px 10px rgba(194,116,74,0.15)",
+            }}>
+              {firstName[0].toUpperCase()}
+            </div>
+          )}
+
+          <div style={{ minWidth: 0 }}>
+            <span style={{
+              fontFamily: "'Cormorant Garamond', Georgia, serif",
+              fontSize: 36, fontWeight: 600, fontStyle: "italic",
+              color: "var(--text-1)", lineHeight: 1, letterSpacing: "-0.5px",
+              display: "block",
+            }}>
+              {firstName}
+            </span>
+            <div style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 4 }}>
+              <span style={{ ...CAP, color: "var(--text-4)" }}>
+                {ROLE_LABELS[role] || "Apprenti"}
+              </span>
+              {completedModules > 0 && (
+                <span style={{
+                  fontFamily: "'DM Sans', sans-serif",
+                  fontSize: 11, color: "var(--text-3)", fontStyle: "italic",
+                }}>
+                  · {completedModules}/{totalModules} modules
+                </span>
+              )}
+            </div>
           </div>
-        )}
+        </div>
       </div>
 
       {/* ── CARDS COLUMN ───────────────────────────────────────────────────── */}

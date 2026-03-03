@@ -19,7 +19,7 @@ export const academyTranslations = {
       start: "Commencer",
       locked: "Complétez le module précédent",
       completeToStart: "Complétez votre inscription pour commencer",
-      top3: "Top 3 apprenants",
+      top3: "Top 3 Apprentis",
       beFirst: "Soyez le premier à compléter un module !",
       recentActivity: "Activité récente",
       noActivity: "Aucune activité pour le moment",
@@ -57,7 +57,7 @@ export const academyTranslations = {
     },
     leaderboard: {
       title: "Classement",
-      subtitle: "Comparez-vous aux autres apprenants",
+      subtitle: "Comparez-vous aux autres apprentis",
       global: "Global",
       myTeam: "Mon équipe",
       thisWeek: "Cette semaine",
