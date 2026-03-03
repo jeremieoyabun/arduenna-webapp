@@ -1,3 +1,12 @@
+import { IconInstagram, IconFacebook, IconLinkedIn, IconPinterest } from "../ui/Icons";
+
+const socials = [
+  { href: "https://www.instagram.com/arduenna.gin/",                    Icon: IconInstagram, label: "Instagram" },
+  { href: "https://www.facebook.com/ArduennaGin",                       Icon: IconFacebook,  label: "Facebook"  },
+  { href: "https://be.linkedin.com/company/arduenna-organic-gin",       Icon: IconLinkedIn,  label: "LinkedIn"  },
+  { href: "https://www.pinterest.com/ArduennaGin/",                     Icon: IconPinterest, label: "Pinterest" },
+];
+
 export const Footer = ({ t }) => (
   <footer className="footer">
     <div className="footer__brand">
@@ -7,6 +16,21 @@ export const Footer = ({ t }) => (
         className="footer__logo"
       />
       <div className="footer__tagline">{t.footer.tagline}</div>
+    </div>
+
+    <div className="footer__social">
+      {socials.map(({ href, Icon, label }) => (
+        <a
+          key={label}
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="footer__social-link"
+          aria-label={label}
+        >
+          <Icon />
+        </a>
+      ))}
     </div>
 
     <div className="footer__links">

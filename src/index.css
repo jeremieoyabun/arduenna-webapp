@@ -1437,6 +1437,33 @@ a {
   color: var(--text-primary);
 }
 
+.footer__social {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-5);
+  margin-bottom: var(--space-8);
+}
+
+.footer__social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--border-light);
+  color: var(--text-tertiary);
+  transition: color var(--duration-normal) var(--ease-out),
+              border-color var(--duration-normal) var(--ease-out),
+              transform var(--duration-normal) var(--ease-out);
+}
+
+.footer__social-link:hover {
+  color: var(--accent-primary);
+  border-color: var(--accent-primary);
+  transform: translateY(-2px);
+}
+
 .footer__legal {
   text-align: center;
   font-family: var(--font-body);
