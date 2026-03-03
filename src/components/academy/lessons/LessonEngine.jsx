@@ -1,17 +1,20 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useAuth } from "../../../components/auth/AuthProvider";
 import { useLessonState } from "../../../hooks/useLessonState";
 import { lessonsData } from "../../../data/academy/lessons";
 import { modulesData } from "../../../data/academy/modules";
 import { saveModuleProgress } from "../../../lib/progressService";
+import { checkBadgeUnlocks } from "../../../lib/gamificationService";
 import { LessonProgress } from "./LessonProgress";
 import { SwipeCards } from "./SwipeCards";
 import { MultipleChoiceQuiz } from "./MultipleChoiceQuiz";
 import { TrueFalse } from "./TrueFalse";
 import { LessonComplete } from "./LessonComplete";
+import { BadgeUnlockModal } from "../gamification/BadgeUnlockModal";
 
 /**
- * Orchestrates a full module: renders lesson steps by type, saves progress on completion.
+ * Orchestrates a full module: renders lesson steps by type, saves progress on completion,
+ * checks badge unlocks, and shows BadgeUnlockModal for each new badge earned.
  */
 export const LessonEngine = ({ moduleId, parcoursId, onComplete, onExit }) => {
   const { user } = useAuth();
@@ -23,6 +26,8 @@ export const LessonEngine = ({ moduleId, parcoursId, onComplete, onExit }) => {
 
   const [saving, setSaving] = useState(false);
   const [result, setResult] = useState(null); // { xpGain, avgScore }
+  const [newBadges, setNewBadges] = useState([]); // queue of badge IDs to show
+  const startTime = useRef(Date.now());
 
   // Save to Firestore when all steps are done
   useEffect(() => {
@@ -35,15 +40,24 @@ export const LessonEngine = ({ moduleId, parcoursId, onComplete, onExit }) => {
       .map(m => m.id);
 
     saveModuleProgress(user.uid, parcoursId, moduleId, answersMap, parcoursModuleIds)
-      .then(({ xpGain, avgScore }) => {
+      .then(async ({ xpGain, avgScore, progressData }) => {
         setResult({ xpGain, avgScore });
+
+        // Check badge unlocks with fresh progress data
+        if (progressData) {
+          const earned = await checkBadgeUnlocks(user.uid, progressData, {
+            moduleScore: avgScore,
+            moduleDurationMs: Date.now() - startTime.current,
+          });
+          if (earned.length > 0) setNewBadges(earned);
+        }
       })
       .catch(err => {
         console.warn("saveModuleProgress error:", err);
         setResult({ xpGain: 50, avgScore: getAvgScore() });
       })
       .finally(() => setSaving(false));
-  }, [phase]);
+  }, [phase]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Complete screen
   if (phase === "complete") {
@@ -61,11 +75,19 @@ export const LessonEngine = ({ moduleId, parcoursId, onComplete, onExit }) => {
     }
 
     return (
-      <LessonComplete
-        score={result.avgScore}
-        xpGain={result.xpGain}
-        onContinue={onComplete}
-      />
+      <>
+        <LessonComplete
+          score={result.avgScore}
+          xpGain={result.xpGain}
+          onContinue={onComplete}
+        />
+        {newBadges.length > 0 && (
+          <BadgeUnlockModal
+            badgeId={newBadges[0]}
+            onDismiss={() => setNewBadges(prev => prev.slice(1))}
+          />
+        )}
+      </>
     );
   }
 

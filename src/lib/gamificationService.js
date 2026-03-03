@@ -150,7 +150,7 @@ export async function checkBadgeUnlocks(uid, progressData, context) {
 /**
  * Update leaderboard entry for a user.
  */
-async function updateLeaderboardEntry(uid, xp) {
+export async function updateLeaderboardEntry(uid, xp) {
   if (!db) return;
   try {
     const userRef = doc(db, "users", uid);

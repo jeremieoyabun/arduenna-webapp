@@ -6,6 +6,8 @@ import { ParcoursGrid } from "../components/academy/parcours/ParcoursGrid";
 import { ParcoursDetail } from "../components/academy/parcours/ParcoursDetail";
 import { ModuleDetail } from "../components/academy/parcours/ModuleDetail";
 import { LessonEngine } from "../components/academy/lessons/LessonEngine";
+import { LeaderboardView } from "../components/academy/leaderboard/LeaderboardView";
+import { BadgeGrid } from "../components/academy/gamification/BadgeGrid";
 import { modulesData } from "../data/academy/modules";
 
 // ── Tab bar ──────────────────────────────────────────────────────────────────
@@ -230,15 +232,24 @@ export const AcademyPage = () => {
           </div>
         )}
 
-        {/* Mini leaderboard placeholder */}
-        <div style={{ ...card, padding: "18px 20px" }}>
-          <div style={{ ...label, marginBottom: 16 }}>Top apprenants</div>
+        {/* Mini leaderboard CTA */}
+        <div
+          onClick={() => switchTab("classement")}
+          style={{ ...card, padding: "18px 20px", cursor: "pointer" }}
+        >
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
+            <div style={{ ...label }}>Top apprenants</div>
+            <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 11, color: "var(--accent-secondary)" }}>
+              Voir tout →
+            </span>
+          </div>
           <div style={{
             fontFamily: "'DM Sans', sans-serif", fontSize: 13,
-            color: "var(--text-tertiary)", textAlign: "center",
-            fontStyle: "italic", padding: "8px 0",
+            color: "var(--text-tertiary)", fontStyle: "italic",
           }}>
-            Soyez le premier à compléter un module !
+            {xp > 0
+              ? `Vous avez ${xp} XP — consultez le classement !`
+              : "Complétez un module pour apparaître au classement."}
           </div>
         </div>
       </div>
@@ -247,59 +258,14 @@ export const AcademyPage = () => {
 
   // ── Classement tab ───────────────────────────────────────────────────────
 
-  const renderClassement = () => (
-    <div style={{ padding: "28px 20px", textAlign: "center" }}>
-      <h2 style={{
-        fontFamily: "'Cormorant Garamond', Georgia, serif",
-        fontSize: 22, fontWeight: 400, fontStyle: "italic",
-        color: "var(--text-primary)", marginBottom: 8,
-      }}>
-        Classement
-      </h2>
-      <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: "var(--text-tertiary)", marginBottom: 32 }}>
-        Comparez-vous aux autres apprenants
-      </p>
-
-      {/* Empty podium */}
-      <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "center", gap: 8, marginBottom: 32, height: 160 }}>
-        {[
-          { pos: 2, h: 90, color: "rgba(11,54,61,0.04)", avatarSize: 36 },
-          { pos: 1, h: 120, color: "rgba(194,116,74,0.08)", avatarSize: 40 },
-          { pos: 3, h: 65, color: "rgba(11,54,61,0.03)", avatarSize: 32 },
-        ].map(({ pos, h, color, avatarSize }) => (
-          <div key={pos} style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-            <div style={{
-              width: avatarSize, height: avatarSize, borderRadius: 999,
-              background: pos === 1 ? "rgba(194,116,74,0.1)" : "var(--border-light)",
-              marginBottom: 8,
-            }} />
-            <div style={{
-              width: 70, height: h, borderRadius: "8px 8px 0 0", background: color,
-              display: "flex", alignItems: "center", justifyContent: "center",
-              fontFamily: "'DM Sans', sans-serif", fontSize: 20, fontWeight: 600,
-              color: pos === 1 ? "rgba(194,116,74,0.3)" : "var(--border-medium)",
-            }}>
-              {pos}
-            </div>
-          </div>
-        ))}
-      </div>
-
-      <p style={{
-        fontFamily: "'DM Sans', sans-serif", fontSize: 14,
-        color: "var(--text-tertiary)", fontStyle: "italic", lineHeight: 1.6,
-      }}>
-        Le classement sera disponible dès que les premiers modules seront complétés.
-        <br />Soyez le premier sur le podium !
-      </p>
-    </div>
-  );
+  const renderClassement = () => <LeaderboardView />;
 
   // ── Profil tab ───────────────────────────────────────────────────────────
 
   const renderProfil = () => {
     const p1completed = getParcoursCompletedCount("univers");
     const p1total = modulesData.filter(m => m.parcoursId === "univers").length;
+    const earnedBadges = progressHook.progress?.badges || [];
 
     return (
       <div style={{ padding: "28px 20px" }}>
@@ -347,7 +313,7 @@ export const AcademyPage = () => {
             { icon: "⭐", value: xp, label: "XP total" },
             { icon: "🔥", value: `${streak}j`, label: "Streak" },
             { icon: "📚", value: p1completed, label: "Modules faits" },
-            { icon: "🏅", value: "0", label: "Badges" },
+            { icon: "🏅", value: earnedBadges.length, label: "Badges" },
           ].map(({ icon, value, label: lbl }) => (
             <div key={lbl} style={{ ...card, padding: "14px 16px", display: "flex", alignItems: "center", gap: 10 }}>
               <span style={{ fontSize: 20 }}>{icon}</span>
@@ -397,30 +363,21 @@ export const AcademyPage = () => {
           ))}
         </div>
 
-        {/* Badges placeholder */}
+        {/* Badges */}
         <div style={{ ...card, padding: "18px 20px", marginBottom: 16 }}>
-          <div style={{ ...label, marginBottom: 14 }}>Mes Badges</div>
-          <div style={{ display: "flex", gap: 12, justifyContent: "center" }}>
-            {[1, 2, 3].map(n => (
-              <div key={n} style={{
-                width: 52, height: 52, borderRadius: 999,
-                background: "rgba(11,54,61,0.04)",
-                border: "2px dashed rgba(11,54,61,0.1)",
-                display: "flex", alignItems: "center", justifyContent: "center",
-              }}>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(11,54,61,0.15)" strokeWidth="1.5">
-                  <circle cx="12" cy="8" r="7" /><path d="M8.21 13.89L7 23l5-3 5 3-1.21-9.12" />
-                </svg>
-              </div>
-            ))}
+          <div style={{ ...label, marginBottom: 14 }}>
+            Mes Badges ({earnedBadges.length}/10)
           </div>
-          <div style={{
-            fontFamily: "'DM Sans', sans-serif", fontSize: 12,
-            color: "var(--text-muted)", textAlign: "center",
-            marginTop: 12, fontStyle: "italic",
-          }}>
-            Complétez des modules pour débloquer vos badges
-          </div>
+          <BadgeGrid earnedBadges={earnedBadges} />
+          {earnedBadges.length === 0 && (
+            <div style={{
+              fontFamily: "'DM Sans', sans-serif", fontSize: 12,
+              color: "var(--text-muted)", textAlign: "center",
+              marginTop: 12, fontStyle: "italic",
+            }}>
+              Complétez des modules pour débloquer vos badges
+            </div>
+          )}
         </div>
 
         {/* Logout */}

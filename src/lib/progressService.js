@@ -1,5 +1,6 @@
 import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { db } from "./firebase";
+import { updateLeaderboardEntry } from "./gamificationService";
 
 const COLLECTION = "progress";
 
@@ -153,7 +154,8 @@ export async function saveModuleProgress(uid, parcoursId, moduleId, answersMap, 
   }
 
   await setDoc(ref, data);
-  return { xpGain, avgScore };
+  await updateLeaderboardEntry(uid, data.xp);
+  return { xpGain, avgScore, progressData: data };
 }
 
 /**
