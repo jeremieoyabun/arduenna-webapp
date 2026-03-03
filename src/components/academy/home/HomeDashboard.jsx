@@ -301,61 +301,124 @@ export const HomeDashboard = ({
   return (
     <div style={{ paddingBottom: 60 }}>
 
-      {/* ── IDENTITY HEADER ────────────────────────────────────────────────── */}
-      <div style={{
-        padding: "32px 24px 24px",
-        borderBottom: "1px solid var(--border-subtle)",
-      }}>
-        <div style={{ ...CAP, marginBottom: 14 }}>{dateCap}</div>
+      {/* ── PLAYER CARD ────────────────────────────────────────────────────── */}
+      <div style={{ padding: "16px 12px 0" }}>
+        <div
+          className="a-card"
+          style={{
+            padding: "22px 20px 18px",
+            position: "relative", overflow: "hidden",
+            background: "linear-gradient(135deg, var(--surface) 0%, var(--module-tint) 100%)",
+          }}
+        >
+          {/* Decorative leaf watermark */}
+          <LeafVein style={{ right: -10, top: -6, opacity: 0.045 }} />
 
-        <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-          {/* Avatar */}
-          {photoURL ? (
-            <img
-              src={photoURL}
-              alt={firstName}
-              style={{
-                width: 52, height: 52, borderRadius: 999,
-                objectFit: "cover", display: "block", flexShrink: 0,
-                border: "2px solid rgba(194,116,74,0.25)",
-                boxShadow: "0 2px 10px rgba(194,116,74,0.15)",
-              }}
-            />
-          ) : (
-            <div style={{
-              width: 52, height: 52, borderRadius: 999, flexShrink: 0,
-              background: "linear-gradient(135deg, #7a2e00, #c2744a)",
-              display: "flex", alignItems: "center", justifyContent: "center",
-              color: "#fef8ec",
-              fontFamily: "'Cormorant Garamond', Georgia, serif",
-              fontSize: 22, fontWeight: 600, fontStyle: "italic",
-              boxShadow: "0 2px 10px rgba(194,116,74,0.15)",
-            }}>
-              {firstName[0].toUpperCase()}
-            </div>
-          )}
+          {/* Date top-right */}
+          <div style={{
+            position: "absolute", top: 14, right: 18,
+            fontFamily: "'DM Sans', sans-serif",
+            fontSize: 11, color: "var(--text-4)",
+            letterSpacing: "0.3px",
+          }}>
+            {dateCap}
+          </div>
 
-          <div style={{ minWidth: 0 }}>
-            <span style={{
-              fontFamily: "'Cormorant Garamond', Georgia, serif",
-              fontSize: 36, fontWeight: 600, fontStyle: "italic",
-              color: "var(--text-1)", lineHeight: 1, letterSpacing: "-0.5px",
-              display: "block",
-            }}>
-              {firstName}
-            </span>
-            <div style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 4 }}>
-              <span style={{ ...CAP, color: "var(--text-4)" }}>
-                {ROLE_LABELS[role] || "Apprenti"}
+          {/* Avatar + Name row */}
+          <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 16 }}>
+            {photoURL ? (
+              <img
+                src={photoURL}
+                alt={firstName}
+                style={{
+                  width: 62, height: 62, borderRadius: 999,
+                  objectFit: "cover", display: "block", flexShrink: 0,
+                  border: "3px solid rgba(194,116,74,0.25)",
+                  boxShadow: "0 4px 16px rgba(194,116,74,0.18)",
+                }}
+              />
+            ) : (
+              <div style={{
+                width: 62, height: 62, borderRadius: 999, flexShrink: 0,
+                background: "linear-gradient(135deg, #7a2e00, #c2744a)",
+                display: "flex", alignItems: "center", justifyContent: "center",
+                color: "#fef8ec",
+                fontFamily: "'Cormorant Garamond', Georgia, serif",
+                fontSize: 26, fontWeight: 600, fontStyle: "italic",
+                boxShadow: "0 4px 16px rgba(194,116,74,0.18)",
+              }}>
+                {firstName[0].toUpperCase()}
+              </div>
+            )}
+
+            <div style={{ minWidth: 0, flex: 1 }}>
+              <span style={{
+                fontFamily: "'Cormorant Garamond', Georgia, serif",
+                fontSize: 28, fontWeight: 600, fontStyle: "italic",
+                color: "var(--text-1)", lineHeight: 1.1, letterSpacing: "-0.3px",
+                display: "block", marginBottom: 6,
+              }}>
+                {firstName}
               </span>
-              {completedModules > 0 && (
-                <span style={{
-                  fontFamily: "'DM Sans', sans-serif",
-                  fontSize: 11, color: "var(--text-3)", fontStyle: "italic",
-                }}>
-                  · {completedModules}/{totalModules} modules
-                </span>
-              )}
+              <div style={{
+                display: "inline-block",
+                padding: "3px 12px", borderRadius: 999,
+                background: "rgba(194,116,74,0.12)",
+                border: "1px solid rgba(194,116,74,0.22)",
+                fontFamily: "'DM Sans', sans-serif",
+                fontSize: 10, fontWeight: 600, color: "#c2744a",
+                textTransform: "uppercase", letterSpacing: "1.5px",
+              }}>
+                {ROLE_LABELS[role] || "Apprenti"}
+              </div>
+            </div>
+          </div>
+
+          {/* Divider */}
+          <div style={{ height: 1, background: "var(--border-subtle)", marginBottom: 14 }} />
+
+          {/* Stats row */}
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-around" }}>
+            <div style={{ textAlign: "center" }}>
+              <div style={{
+                fontFamily: "'DM Sans', sans-serif",
+                fontSize: 20, fontWeight: 800, color: "var(--text-1)", lineHeight: 1,
+              }}>
+                {xp}
+              </div>
+              <div style={{ ...CAP, fontSize: 9, marginTop: 3 }}>XP</div>
+            </div>
+            <div style={{ width: 1, height: 28, background: "var(--border-subtle)" }} />
+            <div style={{ textAlign: "center" }}>
+              <div style={{
+                fontFamily: "'DM Sans', sans-serif",
+                fontSize: 20, fontWeight: 800, color: "var(--text-1)", lineHeight: 1,
+                display: "flex", alignItems: "center", justifyContent: "center", gap: 4,
+              }}>
+                {streak}
+                <img src="/icons/Streakk.svg" alt="" width="16" height="16" style={{ objectFit: "contain", display: "block" }} />
+              </div>
+              <div style={{ ...CAP, fontSize: 9, marginTop: 3 }}>Série</div>
+            </div>
+            <div style={{ width: 1, height: 28, background: "var(--border-subtle)" }} />
+            <div style={{ textAlign: "center" }}>
+              <div style={{
+                fontFamily: "'DM Sans', sans-serif",
+                fontSize: 20, fontWeight: 800, color: "var(--text-1)", lineHeight: 1,
+              }}>
+                {completedModules}/{totalModules}
+              </div>
+              <div style={{ ...CAP, fontSize: 9, marginTop: 3 }}>Modules</div>
+            </div>
+            <div style={{ width: 1, height: 28, background: "var(--border-subtle)" }} />
+            <div style={{ textAlign: "center" }}>
+              <div style={{
+                fontFamily: "'DM Sans', sans-serif",
+                fontSize: 20, fontWeight: 800, color: "var(--text-1)", lineHeight: 1,
+              }}>
+                {earnedBadgeIds.length}
+              </div>
+              <div style={{ ...CAP, fontSize: 9, marginTop: 3 }}>Badges</div>
             </div>
           </div>
         </div>
