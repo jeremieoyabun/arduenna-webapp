@@ -95,6 +95,68 @@ export async function completeModule(uid, parcoursId, moduleId, totalLessons) {
 }
 
 /**
+ * Save all lesson answers + mark module complete + update XP + streak in one write.
+ * answersMap: { [stepIndex]: { score: number | null } }
+ * parcoursModuleIds: all module IDs in the parcours (for parcours completion check)
+ * Returns { xpGain, avgScore }
+ */
+export async function saveModuleProgress(uid, parcoursId, moduleId, answersMap, parcoursModuleIds) {
+  if (!db) return { xpGain: 0, avgScore: null };
+  const ref = doc(db, COLLECTION, uid);
+  const snap = await getDoc(ref);
+  const data = snap.exists()
+    ? snap.data()
+    : { xp: 0, streak: { current: 0, lastDate: null, best: 0 }, badges: [], parcours: {} };
+
+  if (!data.parcours[parcoursId]) {
+    data.parcours[parcoursId] = { started: true, completedAt: null, modules: {} };
+  }
+  if (!data.parcours[parcoursId].modules[moduleId]) {
+    data.parcours[parcoursId].modules[moduleId] = {
+      started: true, completedAt: null, score: null, startedAt: Date.now(), lessons: {},
+    };
+  }
+
+  const mod = data.parcours[parcoursId].modules[moduleId];
+
+  // Persist each step answer
+  Object.entries(answersMap).forEach(([idx, answer]) => {
+    const prev = mod.lessons[idx]?.attempts || 0;
+    mod.lessons[idx] = { completed: true, score: answer.score ?? null, attempts: prev + 1 };
+  });
+
+  // Average score from scored steps only
+  const scores = Object.values(mod.lessons).filter(l => l.score != null).map(l => l.score);
+  const avgScore = scores.length > 0 ? Math.round(scores.reduce((a, b) => a + b, 0) / scores.length) : null;
+
+  mod.completedAt = Date.now();
+  mod.score = avgScore;
+
+  // XP: +50 module, +25 bonus if perfect
+  const xpGain = 50 + (avgScore === 100 ? 25 : 0);
+  data.xp = (data.xp || 0) + xpGain;
+
+  // Check parcours completion
+  if (parcoursModuleIds?.length > 0) {
+    const allDone = parcoursModuleIds.every(id => data.parcours[parcoursId]?.modules?.[id]?.completedAt);
+    if (allDone) data.parcours[parcoursId].completedAt = Date.now();
+  }
+
+  // Streak update (once per day)
+  const today = new Date().toISOString().split("T")[0];
+  const lastDate = data.streak?.lastDate;
+  const yesterday = new Date(Date.now() - 86400000).toISOString().split("T")[0];
+  if (lastDate !== today) {
+    data.streak.current = lastDate === yesterday ? (data.streak.current || 0) + 1 : 1;
+    data.streak.lastDate = today;
+    data.streak.best = Math.max(data.streak.best || 0, data.streak.current);
+  }
+
+  await setDoc(ref, data);
+  return { xpGain, avgScore };
+}
+
+/**
  * Get completion status for all modules of a parcours.
  */
 export function getParcoursProgress(progressData, parcoursId) {

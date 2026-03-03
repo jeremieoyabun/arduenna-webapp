@@ -5,6 +5,7 @@ import { useProgress } from "../hooks/useProgress";
 import { ParcoursGrid } from "../components/academy/parcours/ParcoursGrid";
 import { ParcoursDetail } from "../components/academy/parcours/ParcoursDetail";
 import { ModuleDetail } from "../components/academy/parcours/ModuleDetail";
+import { LessonEngine } from "../components/academy/lessons/LessonEngine";
 import { modulesData } from "../data/academy/modules";
 
 // ── Tab bar ──────────────────────────────────────────────────────────────────
@@ -476,30 +477,16 @@ export const AcademyPage = () => {
   }
 
   if (view === "lesson") {
-    // Mission 9 placeholder
     return (
-      <div style={{ minHeight: "100vh", background: "#fef8ec" }}>
-        <AcademyHeader />
-        <div style={{ padding: "40px 20px", textAlign: "center" }}>
-          <div style={{
-            fontFamily: "'Cormorant Garamond', Georgia, serif",
-            fontSize: 22, color: "#c2744a", fontStyle: "italic", marginBottom: 16,
-          }}>
-            Moteur de leçons
-          </div>
-          <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 14, color: "rgba(11,54,61,0.5)" }}>
-            Mission 9 — bientôt disponible
-          </p>
-          <button onClick={goBack} style={{
-            marginTop: 24, padding: "12px 24px",
-            background: "#0b363d", color: "#fef8ec",
-            border: "none", borderRadius: 8,
-            fontFamily: "'DM Sans', sans-serif", fontSize: 14, cursor: "pointer",
-          }}>
-            ← Retour
-          </button>
-        </div>
-      </div>
+      <LessonEngine
+        moduleId={selectedModuleId}
+        parcoursId={selectedParcoursId}
+        onComplete={async () => {
+          await progressHook.refreshProgress();
+          setView("module-detail");
+        }}
+        onExit={() => setView("module-detail")}
+      />
     );
   }
 

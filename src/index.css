@@ -1700,3 +1700,15 @@ button:focus:not(:focus-visible) {
   white-space: nowrap;
   border-width: 0;
 }
+
+/* ─── Academy Lesson Animations ─── */
+@keyframes confetti-fall {
+  0%   { transform: translateY(0) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+
+@keyframes badge-pop {
+  0%   { transform: scale(0); opacity: 0; }
+  60%  { transform: scale(1.2); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
