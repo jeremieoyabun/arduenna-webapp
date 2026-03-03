@@ -224,7 +224,7 @@ export const HomePage = ({ lang, setLang, theme, toggleTheme, t }) => {
 
       <BottomNav activeSection={activeSection} bottomNavItems={bottomNavItems} scrollTo={scrollTo} />
 
-      <Hero t={t} sectionRefs={sectionRefs} scrollTo={scrollTo} />
+      <Hero t={t} sectionRefs={sectionRefs} scrollTo={scrollTo} theme={theme} />
       <Story t={t} sectionRefs={sectionRefs} theme={theme} />
       <Awards t={t} />
       <Products
