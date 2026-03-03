@@ -1,7 +1,7 @@
 /**
- * Editorial next-module card.
- * Dark surface, thin left color border, Cormorant headline, minimal right-aligned CTA.
- * The entire card is clickable (scale hover).
+ * Editorial featured block — no card chrome.
+ * A single left accent bar in parcours color is the only decorative element.
+ * Cormorant headline at 34px. Hover: opacity only.
  */
 export const NextModuleCard = ({ module, parcoursId, percent, onStart }) => {
   if (!module) return null;
@@ -13,51 +13,38 @@ export const NextModuleCard = ({ module, parcoursId, percent, onStart }) => {
     vente:    { label: "Vendre Arduenna",    color: "#c9a84c" },
   };
 
-  const meta   = PARCOURS_META[parcoursId] || PARCOURS_META.cocktail;
-  const btnLabel = percent > 0 ? "Continuer" : "Commencer";
+  const CAP = {
+    fontFamily: "'DM Sans', sans-serif",
+    fontSize: 10, fontWeight: 600,
+    color: "var(--text-3)",
+    textTransform: "uppercase", letterSpacing: "2.5px",
+  };
 
-  const handleHoverIn  = e => { e.currentTarget.style.transform = "scale(1.01)"; e.currentTarget.style.opacity = "0.88"; };
-  const handleHoverOut = e => { e.currentTarget.style.transform = "scale(1)";    e.currentTarget.style.opacity = "1"; };
+  const meta = PARCOURS_META[parcoursId] || PARCOURS_META.cocktail;
+  const btnLabel = percent > 0 ? "Continuer" : "Commencer";
 
   return (
     <div
       onClick={onStart}
       style={{
-        background: "var(--surface)",
-        borderRadius: 8,
-        border: "1px solid var(--border-subtle)",
-        borderLeft: `2px solid ${meta.color}`,
-        padding: "20px 20px 18px",
-        marginBottom: 10,
+        borderLeft: `3px solid ${meta.color}`,
+        paddingLeft: 20,
         cursor: "pointer",
-        transition: "transform 0.22s ease-out, background 0.22s ease-out",
+        transition: "opacity 0.22s ease-out",
       }}
-      onMouseEnter={handleHoverIn}
-      onMouseLeave={handleHoverOut}
-      onTouchStart={handleHoverIn}
-      onTouchEnd={handleHoverOut}
+      onMouseEnter={e => { e.currentTarget.style.opacity = "0.72"; }}
+      onMouseLeave={e => { e.currentTarget.style.opacity = "1"; }}
+      onTouchStart={e => { e.currentTarget.style.opacity = "0.72"; }}
+      onTouchEnd={e => { e.currentTarget.style.opacity = "1"; }}
     >
       {/* Parcours label */}
-      <div style={{ display: "flex", alignItems: "center", gap: 7, marginBottom: 14 }}>
-        <div style={{
-          width: 5, height: 5, borderRadius: "50%",
-          background: meta.color, flexShrink: 0,
-        }} />
-        <span style={{
-          fontFamily: "'DM Sans', sans-serif",
-          fontSize: 10, fontWeight: 600,
-          color: "var(--text-3)",
-          textTransform: "uppercase", letterSpacing: "2.5px",
-        }}>
-          {meta.label}
-        </span>
-      </div>
+      <div style={{ ...CAP, marginBottom: 14 }}>{meta.label}</div>
 
-      {/* Module title */}
+      {/* Module title — editorial, large Cormorant */}
       <div style={{
         fontFamily: "'Cormorant Garamond', Georgia, serif",
-        fontSize: 24, fontWeight: 600, fontStyle: "italic",
-        color: "var(--text-1)", lineHeight: 1.2, marginBottom: 6,
+        fontSize: 34, fontWeight: 600, fontStyle: "italic",
+        color: "var(--text-1)", lineHeight: 1.15, marginBottom: 8,
       }}>
         {module.titleFr}
       </div>
@@ -66,7 +53,7 @@ export const NextModuleCard = ({ module, parcoursId, percent, onStart }) => {
       <div style={{
         fontFamily: "'DM Sans', sans-serif",
         fontSize: 12, color: "var(--text-4)",
-        marginBottom: percent > 0 ? 16 : 18,
+        marginBottom: percent > 0 ? 16 : 22,
       }}>
         {module.lessonCount} activités · {module.duration}
       </div>
@@ -75,7 +62,7 @@ export const NextModuleCard = ({ module, parcoursId, percent, onStart }) => {
       {percent > 0 && (
         <div style={{ marginBottom: 16 }}>
           <div style={{
-            height: 3, borderRadius: 999,
+            height: 2, borderRadius: 999,
             background: "var(--border-subtle)", overflow: "hidden",
           }}>
             <div style={{
@@ -95,7 +82,7 @@ export const NextModuleCard = ({ module, parcoursId, percent, onStart }) => {
         </div>
       )}
 
-      {/* CTA — right-aligned, text style */}
+      {/* CTA — right-aligned */}
       <div style={{ display: "flex", justifyContent: "flex-end" }}>
         <div style={{
           display: "inline-flex", alignItems: "center", gap: 5,

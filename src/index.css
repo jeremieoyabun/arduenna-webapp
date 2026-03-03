@@ -122,6 +122,7 @@
   --tab-active-bg:    #0b363d;
   --tab-active-text:  #fef8ec;
   --tab-icon:         rgba(11, 54, 61, 0.40);
+  --module-tint:      #fdf5e4;
 }
 
 /* ─── Dark mode ─── */
@@ -169,6 +170,7 @@
   --tab-active-bg:    #fef8ec;
   --tab-active-text:  #0b363d;
   --tab-icon:         rgba(254, 248, 236, 0.45);
+  --module-tint:      #0a2129;
 }
 
 /* Academy logo — inverted in dark, normal in light */

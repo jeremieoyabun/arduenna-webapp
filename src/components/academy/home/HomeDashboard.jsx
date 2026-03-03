@@ -60,57 +60,53 @@ export const HomeDashboard = ({
   const dayCapitalized = dayOfWeek.charAt(0).toUpperCase() + dayOfWeek.slice(1);
 
   return (
-    <div style={{ padding: "0 20px" }}>
+    <div style={{ paddingBottom: 48 }}>
 
-      {/* ── HERO — editorial, typographic ──────────────────────────────────── */}
+      {/* ── HERO — immersive, full-bleed typographic ──────────────────────── */}
       <div style={{
-        paddingTop: 40,
-        paddingBottom: 32,
-        background: "radial-gradient(ellipse 90% 120px at 35% -5%, rgba(74,155,138,0.06) 0%, transparent 100%)",
+        padding: "52px 24px 44px",
+        background: "linear-gradient(170deg, var(--module-tint) 0%, var(--bg) 65%)",
+        borderBottom: "1px solid var(--border-subtle)",
       }}>
-        <div style={{ ...CAP, marginBottom: 18 }}>{dayCapitalized}</div>
+        <div style={{ ...CAP, marginBottom: 20 }}>{dayCapitalized}</div>
 
         <h1 style={{
           fontFamily: "'Cormorant Garamond', Georgia, serif",
-          fontSize: 50, fontWeight: 600, fontStyle: "italic",
+          fontSize: 62, fontWeight: 600, fontStyle: "italic",
           color: "var(--text-1)", margin: 0, lineHeight: 1,
           letterSpacing: "-0.5px",
         }}>
           {firstName}
         </h1>
 
+        {/* Poetic subtitle — Cormorant italic, not DM Sans */}
         <div style={{
-          fontFamily: "'DM Sans', sans-serif",
-          fontSize: 12, color: "var(--text-3)",
-          marginTop: 9, letterSpacing: "0.2px",
+          fontFamily: "'Cormorant Garamond', Georgia, serif",
+          fontSize: 17, fontStyle: "italic",
+          color: "var(--text-3)", marginTop: 10, lineHeight: 1.5,
         }}>
-          {ROLE_LABELS[role] || "Apprenant"} · Arduenna Academy
+          {completedModules > 0
+            ? `${completedModules} module${completedModules > 1 ? "s" : ""} maîtrisé${completedModules > 1 ? "s" : ""} sur ${totalModules}`
+            : "Le parcours commence ici"}
         </div>
 
-        {/* Copper hairline + progress context */}
-        <div style={{ display: "flex", alignItems: "center", gap: 14, marginTop: 26 }}>
+        {/* Copper hairline + role context */}
+        <div style={{ display: "flex", alignItems: "center", gap: 12, marginTop: 24 }}>
           <div style={{
-            height: 1, width: 40,
-            background: "rgba(194,116,74,0.40)",
+            height: 1, width: 32,
+            background: "rgba(194,116,74,0.50)",
             flexShrink: 0,
           }} />
-          <div style={{
-            fontFamily: "'DM Sans', sans-serif",
-            fontSize: 11, color: "var(--text-3)",
-            letterSpacing: "0.2px",
-          }}>
-            {completedModules > 0
-              ? `${completedModules} module${completedModules > 1 ? "s" : ""} complété${completedModules > 1 ? "s" : ""} sur ${totalModules}`
-              : "Prêt à commencer votre parcours"}
+          <div style={{ ...CAP }}>
+            {ROLE_LABELS[role] || "Apprenant"} · Arduenna Academy
           </div>
         </div>
       </div>
 
-      {/* ── KPI STRIP — no cards, single hairline divider only ──────────────── */}
+      {/* ── KPI STRIP — bare numbers, no card chrome ──────────────────────── */}
       <div style={{
         display: "flex",
-        paddingBottom: 28,
-        marginBottom: 24,
+        padding: "28px 24px 28px",
         borderBottom: "1px solid var(--border-subtle)",
       }}>
         {/* Streak */}
@@ -139,7 +135,7 @@ export const HomeDashboard = ({
         <div style={{
           width: 1,
           background: "var(--border-subtle)",
-          margin: "4px 28px 0",
+          margin: "4px 32px 0",
           alignSelf: "stretch",
         }} />
 
@@ -164,45 +160,37 @@ export const HomeDashboard = ({
         </div>
       </div>
 
-      {/* ── NEXT MODULE ─────────────────────────────────────────────────────── */}
-      {nextModule ? (
-        <NextModuleCard
-          module={nextModule}
-          parcoursId={nextParcoursId}
-          percent={getModulePercent(nextParcoursId, nextModule.id)}
-          onStart={() => onOpenModule(nextParcoursId, nextModule.id)}
-        />
-      ) : (
-        <div style={{
-          background: "var(--surface)",
-          borderRadius: 8,
-          border: "1px solid var(--border-subtle)",
-          padding: "20px",
-          marginBottom: 10,
-        }}>
-          <div style={{ ...CAP, marginBottom: 10 }}>Prochain module</div>
+      {/* ── NEXT MODULE — tonal band, editorial featured ───────────────────── */}
+      <div style={{
+        background: "var(--module-tint)",
+        padding: "28px 24px 36px",
+        borderBottom: "1px solid var(--border-subtle)",
+      }}>
+        <div style={{ ...CAP, marginBottom: 22 }}>Prochain module</div>
+        {nextModule ? (
+          <NextModuleCard
+            module={nextModule}
+            parcoursId={nextParcoursId}
+            percent={getModulePercent(nextParcoursId, nextModule.id)}
+            onStart={() => onOpenModule(nextParcoursId, nextModule.id)}
+          />
+        ) : (
           <div style={{
             fontFamily: "'Cormorant Garamond', Georgia, serif",
-            fontSize: 18, fontStyle: "italic",
+            fontSize: 19, fontStyle: "italic",
             color: "var(--text-3)",
           }}>
             {progressLoading ? "Chargement…" : "Tous vos parcours sont complétés 🎉"}
           </div>
-        </div>
-      )}
+        )}
+      </div>
 
-      {/* ── PARCOURS PROGRESS ───────────────────────────────────────────────── */}
+      {/* ── PARCOURS PROGRESS ────────────────────────────────────────────────── */}
       {parcoursProgress.some(p => p.done > 0) && (
-        <div style={{
-          background: "var(--surface)",
-          borderRadius: 8,
-          border: "1px solid var(--border-subtle)",
-          padding: "20px",
-          marginBottom: 10,
-        }}>
+        <div style={{ padding: "28px 24px 8px" }}>
           <div style={{ ...CAP, marginBottom: 22 }}>Ma progression</div>
           {parcoursProgress.map(({ id, titleFr, done, total, percent, started, color }) => (
-            <div key={id} style={{ marginBottom: 20 }}>
+            <div key={id} style={{ marginBottom: 22 }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 9 }}>
                 <span style={{
                   fontFamily: "'DM Sans', sans-serif", fontSize: 13,
@@ -231,11 +219,15 @@ export const HomeDashboard = ({
         </div>
       )}
 
-      {/* ── RECENT ACTIVITY ─────────────────────────────────────────────────── */}
-      <RecentActivity progress={progress} onOpenModule={onOpenModule} />
+      {/* ── RECENT ACTIVITY ──────────────────────────────────────────────────── */}
+      <div style={{ padding: "0 24px" }}>
+        <RecentActivity progress={progress} onOpenModule={onOpenModule} />
+      </div>
 
-      {/* ── MINI LEADERBOARD ────────────────────────────────────────────────── */}
-      <MiniLeaderboard onViewAll={() => onSwitchTab("classement")} />
+      {/* ── MINI LEADERBOARD ─────────────────────────────────────────────────── */}
+      <div style={{ padding: "0 24px" }}>
+        <MiniLeaderboard onViewAll={() => onSwitchTab("classement")} />
+      </div>
 
     </div>
   );
