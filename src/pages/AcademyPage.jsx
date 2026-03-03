@@ -482,28 +482,46 @@ export const AcademyPage = () => {
         position: "fixed", bottom: 0, left: 0, right: 0,
         background: "var(--bg-surface)",
         borderTop: "1px solid var(--border-light)",
-        display: "flex", justifyContent: "space-around",
-        padding: "8px 0 env(safe-area-inset-bottom, 8px)",
+        display: "flex", justifyContent: "space-around", alignItems: "stretch",
+        padding: "0 0 env(safe-area-inset-bottom, 0px)",
         zIndex: 1000,
+        boxShadow: "0 -4px 24px rgba(11,54,61,0.07)",
       }}>
-        {tabs.map((tab) => (
-          <button
-            key={tab.id}
-            onClick={() => switchTab(tab.id)}
-            style={{
-              background: "none", border: "none", display: "flex",
-              flexDirection: "column", alignItems: "center", gap: 2,
-              padding: "8px 12px",
-              color: activeTab === tab.id ? "var(--accent-secondary)" : "var(--text-muted)",
-              fontFamily: "'DM Sans', sans-serif", fontSize: 10,
-              letterSpacing: "0.08em", cursor: "pointer",
-              transition: "color 0.2s ease-out",
-            }}
-          >
-            <TabIcon type={tab.icon} active={activeTab === tab.id} />
-            {tab.label}
-          </button>
-        ))}
+        {tabs.map((tab) => {
+          const active = activeTab === tab.id;
+          return (
+            <button
+              key={tab.id}
+              onClick={() => switchTab(tab.id)}
+              style={{
+                flex: 1, background: "none", border: "none",
+                display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
+                gap: 4, padding: "10px 4px 10px",
+                cursor: "pointer", position: "relative",
+                transition: "color 0.15s ease-out",
+              }}
+            >
+              {/* Active top bar */}
+              <div style={{
+                position: "absolute", top: 0, left: "50%",
+                transform: `translateX(-50%) scaleX(${active ? 1 : 0})`,
+                width: 28, height: 2.5, borderRadius: "0 0 3px 3px",
+                background: "#0b363d",
+                transition: "transform 0.2s cubic-bezier(0.34,1.56,0.64,1)",
+              }} />
+              <TabIcon type={tab.icon} active={active} />
+              <span style={{
+                fontFamily: "'DM Sans', sans-serif",
+                fontSize: 10, letterSpacing: "0.04em",
+                color: active ? "#0b363d" : "rgba(11,54,61,0.35)",
+                fontWeight: active ? 600 : 400,
+                transition: "color 0.15s, font-weight 0.15s",
+              }}>
+                {tab.label}
+              </span>
+            </button>
+          );
+        })}
       </nav>
     </div>
   );
@@ -569,35 +587,37 @@ const ThemeToggle = () => {
 
 const AcademyHeader = ({ xp }) => (
   <div style={{
-    padding: "14px 20px",
+    padding: "10px 20px",
     borderBottom: "1px solid var(--border-light)",
     display: "flex", alignItems: "center", justifyContent: "space-between",
     background: "var(--bg-surface)",
     position: "sticky", top: 0, zIndex: 100,
+    boxShadow: "0 1px 8px rgba(11,54,61,0.04)",
   }}>
-    <Link to="/" style={{ textDecoration: "none" }}>
+    <Link to="/" style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: 8 }}>
       <img
         src="/Arduennagin_logo_vert_.webp"
         alt="Arduenna"
-        className="academy-header__logo"
-        style={{ height: 36, width: "auto", objectFit: "contain", display: "block" }}
+        style={{ height: 26, width: "auto", objectFit: "contain", display: "block" }}
       />
-    </Link>
-    <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-      {xp !== undefined && (
-        <div style={{
-          fontFamily: "'DM Sans', sans-serif", fontSize: 12,
-          color: "var(--text-tertiary)",
-        }}>
-          ⭐ {xp} XP
-        </div>
-      )}
-      <div style={{
+      <span style={{
         fontFamily: "'Cormorant Garamond', Georgia, serif",
-        fontSize: 16, fontStyle: "italic", color: "var(--accent-secondary)",
+        fontSize: 15, fontStyle: "italic", color: "var(--accent-secondary)",
+        letterSpacing: 0.5,
       }}>
         Academy
+      </span>
+    </Link>
+    {xp !== undefined && (
+      <div style={{
+        display: "flex", alignItems: "center", gap: 5,
+        background: "#0b363d", color: "#fef8ec",
+        padding: "5px 13px", borderRadius: 999,
+        fontFamily: "'DM Sans', sans-serif", fontSize: 12, fontWeight: 600,
+        letterSpacing: 0.3,
+      }}>
+        <span style={{ fontSize: 11 }}>⭐</span> {xp} XP
       </div>
-    </div>
+    )}
   </div>
 );

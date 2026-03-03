@@ -73,35 +73,82 @@ export const HomeDashboard = ({
   // ── Streak flame color ─────────────────────────────────────────────────────
   const streakColor = streak >= 7 ? "#D4A574" : streak >= 4 ? "#c2744a" : "var(--text-muted)";
 
-  return (
-    <div style={{ padding: "28px 20px" }}>
-      {/* Greeting */}
-      <h2 style={{
-        fontFamily: "'Cormorant Garamond', Georgia, serif",
-        fontSize: 26, fontWeight: 400, fontStyle: "italic",
-        color: "var(--text-primary)", marginBottom: 24,
-      }}>
-        Bonjour {firstName} 👋
-      </h2>
+  const dayOfWeek = new Intl.DateTimeFormat("fr-FR", { weekday: "long" }).format(new Date());
+  const dayCapitalized = dayOfWeek.charAt(0).toUpperCase() + dayOfWeek.slice(1);
 
-      {/* Streak + XP */}
+  return (
+    <div style={{ padding: "24px 20px" }}>
+      {/* Greeting */}
+      <div style={{ marginBottom: 22 }}>
+        <div style={{
+          fontFamily: "'DM Sans', sans-serif", fontSize: 11,
+          color: "var(--text-tertiary)", textTransform: "uppercase",
+          letterSpacing: "1.5px", marginBottom: 4,
+        }}>
+          {dayCapitalized}
+        </div>
+        <h2 style={{
+          fontFamily: "'Cormorant Garamond', Georgia, serif",
+          fontSize: 28, fontWeight: 600, fontStyle: "italic",
+          color: "var(--text-primary)", margin: 0, lineHeight: 1.15,
+        }}>
+          Bonjour, {firstName}
+        </h2>
+      </div>
+
+      {/* Streak + XP — big stat cards */}
       <div style={{ display: "flex", gap: 12, marginBottom: 20 }}>
-        <div style={{ ...card, flex: 1, padding: "16px", display: "flex", alignItems: "center", gap: 10 }}>
-          <span style={{ fontSize: 22, filter: streak >= 7 ? "saturate(1.8)" : streak >= 4 ? "saturate(1.2)" : "saturate(0.5)" }}>🔥</span>
-          <div>
-            <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 18, fontWeight: 600, color: streakColor }}>
-              {streak} jour{streak !== 1 ? "s" : ""}
-            </div>
-            <div style={{ ...label }}>Streak</div>
+        {/* Streak */}
+        <div style={{
+          flex: 1, padding: "20px 16px",
+          borderRadius: 16,
+          background: streak >= 7
+            ? "linear-gradient(135deg, rgba(212,165,116,0.18), rgba(194,116,74,0.08))"
+            : streak >= 4 ? "rgba(194,116,74,0.07)" : "var(--bg-surface)",
+          border: `1px solid ${streak >= 4 ? "rgba(194,116,74,0.22)" : "var(--border-light)"}`,
+          boxShadow: streak >= 4 ? "0 4px 16px rgba(194,116,74,0.08)" : "0 2px 8px rgba(11,54,61,0.03)",
+        }}>
+          <div style={{
+            fontSize: 30, marginBottom: 10,
+            filter: streak >= 7 ? "saturate(1.8) drop-shadow(0 2px 4px rgba(194,116,74,0.4))"
+              : streak >= 4 ? "saturate(1.3)" : "saturate(0.35) opacity(0.6)",
+          }}>🔥</div>
+          <div style={{
+            fontFamily: "'DM Sans', sans-serif", fontSize: 32,
+            fontWeight: 700, color: streakColor, lineHeight: 1,
+          }}>
+            {streak}
+          </div>
+          <div style={{
+            fontFamily: "'DM Sans', sans-serif", fontSize: 10,
+            color: "var(--text-tertiary)", textTransform: "uppercase",
+            letterSpacing: "1.2px", marginTop: 5,
+          }}>
+            Jour{streak !== 1 ? "s" : ""} de suite
           </div>
         </div>
-        <div style={{ ...card, flex: 1, padding: "16px", display: "flex", alignItems: "center", gap: 10 }}>
-          <span style={{ fontSize: 22 }}>⭐</span>
-          <div>
-            <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 18, fontWeight: 600, color: "var(--text-primary)" }}>
-              {xp} XP
-            </div>
-            <div style={{ ...label }}>Total</div>
+
+        {/* XP */}
+        <div style={{
+          flex: 1, padding: "20px 16px",
+          borderRadius: 16,
+          background: "rgba(11,54,61,0.04)",
+          border: "1px solid rgba(11,54,61,0.09)",
+          boxShadow: "0 2px 8px rgba(11,54,61,0.03)",
+        }}>
+          <div style={{ fontSize: 30, marginBottom: 10 }}>⭐</div>
+          <div style={{
+            fontFamily: "'DM Sans', sans-serif", fontSize: 32,
+            fontWeight: 700, color: "#0b363d", lineHeight: 1,
+          }}>
+            {xp}
+          </div>
+          <div style={{
+            fontFamily: "'DM Sans', sans-serif", fontSize: 10,
+            color: "var(--text-tertiary)", textTransform: "uppercase",
+            letterSpacing: "1.2px", marginTop: 5,
+          }}>
+            Points XP
           </div>
         </div>
       </div>
@@ -128,33 +175,37 @@ export const HomeDashboard = ({
 
       {/* Parcours progress bars */}
       {parcoursProgress.some(p => p.done > 0) && (
-        <div style={{ ...card, padding: "16px 20px", marginBottom: 16 }}>
-          <div style={{ ...label, marginBottom: 14 }}>Ma progression</div>
+        <div style={{
+          ...card, padding: "18px 20px", marginBottom: 16,
+          boxShadow: "0 2px 12px rgba(11,54,61,0.05)",
+        }}>
+          <div style={{ ...label, marginBottom: 16 }}>Ma progression</div>
           {parcoursProgress.map(({ id, titleFr, done, total, percent, started, color }) => (
-            <div key={id} style={{ marginBottom: 12 }}>
-              <div style={{
-                display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 5,
-              }}>
+            <div key={id} style={{ marginBottom: 14 }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 7 }}>
                 <span style={{
-                  fontFamily: "'DM Sans', sans-serif", fontSize: 12,
+                  fontFamily: "'DM Sans', sans-serif", fontSize: 13,
                   color: started ? "var(--text-secondary)" : "var(--text-muted)",
                   fontWeight: started ? 500 : 400,
                 }}>
                   {titleFr}
                 </span>
                 <span style={{
-                  fontFamily: "'DM Sans', sans-serif", fontSize: 11,
-                  color: "var(--text-tertiary)",
+                  fontFamily: "'DM Sans', sans-serif", fontSize: 11, fontWeight: 600,
+                  color: percent === 100 ? color : "var(--text-tertiary)",
                 }}>
-                  {done}/{total}
+                  {done}/{total} {percent === 100 ? "✓" : ""}
                 </span>
               </div>
-              <div style={{ height: 5, borderRadius: 999, background: "var(--border-light)", overflow: "hidden" }}>
+              <div style={{
+                height: 7, borderRadius: 999,
+                background: "rgba(11,54,61,0.07)", overflow: "hidden",
+              }}>
                 <div style={{
                   height: "100%", borderRadius: 999,
                   width: `${percent}%`,
                   background: percent === 100 ? color : "#0b363d",
-                  transition: "width 0.4s ease-out",
+                  transition: "width 0.5s cubic-bezier(0.34,1.2,0.64,1)",
                 }} />
               </div>
             </div>

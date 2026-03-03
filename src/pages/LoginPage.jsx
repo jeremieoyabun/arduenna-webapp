@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { getRedirectResult } from "firebase/auth";
+import { auth } from "../lib/firebase";
 import { useAuth } from "../components/auth/AuthProvider";
 import { createUserProfile } from "../lib/userService";
 
@@ -19,10 +21,18 @@ export const LoginPage = () => {
   const [isSignup, setIsSignup] = useState(false);
   const [error, setError] = useState(null);
 
-  // Redirect to Academy if already authenticated (handles Google redirect return)
+  // Redirect if already authenticated
   useEffect(() => {
     if (!loading && user) navigate("/academy", { replace: true });
   }, [user, loading, navigate]);
+
+  // Explicit redirect result handler for new Google accounts
+  useEffect(() => {
+    if (!auth) return;
+    getRedirectResult(auth)
+      .then((result) => { if (result?.user) navigate("/academy", { replace: true }); })
+      .catch((err) => { if (err?.code !== "auth/no-auth-event") setError(err.message); });
+  }, [navigate]);
 
   const handleSubmit = async () => {
     setError(null);
