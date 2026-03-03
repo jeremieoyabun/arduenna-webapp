@@ -12,7 +12,7 @@ export const Footer = ({ t }) => (
     <div className="footer__links">
       <a href="https://arduenna-gin.com" target="_blank" rel="noopener noreferrer" className="footer__link">{t.footer.shop}</a>
       <span className="footer__link">{t.footer.legal}</span>
-      <span className="footer__link">{t.footer.contact}</span>
+      <a href="mailto:info@arduenna-gin.com" className="footer__link">info@arduenna-gin.com</a>
     </div>
 
     <div className="footer__legal">

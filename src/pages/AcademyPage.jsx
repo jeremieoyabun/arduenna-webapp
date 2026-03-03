@@ -506,12 +506,12 @@ const AcademyHeader = ({ xp }) => (
     position: "sticky", top: 0, zIndex: 100,
   }}>
     <Link to="/" style={{ textDecoration: "none" }}>
-      <div style={{
-        fontFamily: "'Cormorant Garamond', Georgia, serif",
-        fontSize: 18, fontWeight: 600, letterSpacing: 4, color: "var(--text-primary)",
-      }}>
-        ARDUENNA
-      </div>
+      <img
+        src="/Arduennagin_logo_vert_.webp"
+        alt="Arduenna"
+        className="academy-header__logo"
+        style={{ height: 36, width: "auto", objectFit: "contain", display: "block" }}
+      />
     </Link>
     <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
       {xp !== undefined && (

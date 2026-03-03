@@ -51,28 +51,44 @@ export const CocktailLab = ({
       {/* Cocktail grid */}
       <div className="grid-2 reveal">
         {filteredCocktails.map((c) => (
-          <div key={c.id} className="card card--interactive cocktail-card" onClick={() => setSelectedCocktail(c)} role="button" tabIndex={0} onKeyDown={(e) => e.key === "Enter" && setSelectedCocktail(c)}>
-            <div className="cocktail-card__header">
-              <h4 className="cocktail-card__name">{lang === "fr" ? c.nameFr : c.nameEn}</h4>
-              <button
-                className={`cocktail-card__save ${savedCocktails.includes(c.id) ? "cocktail-card__save--active" : ""} ${heartPulse === c.id ? "heart-pulse" : ""}`}
-                onClick={(e) => { e.stopPropagation(); toggleSaved(c.id); }}
-                aria-label={savedCocktails.includes(c.id) ? "Remove from favourites" : "Add to favourites"}
-                aria-pressed={savedCocktails.includes(c.id)}
-              >
-                {savedCocktails.includes(c.id) ? <IconHeartFilled /> : <IconHeart />}
-              </button>
+          <div key={c.id} className="card card--interactive cocktail-card cocktail-card--has-img" onClick={() => setSelectedCocktail(c)} role="button" tabIndex={0} onKeyDown={(e) => e.key === "Enter" && setSelectedCocktail(c)}>
+            {/* Cocktail photo */}
+            {c.img && (
+              <img
+                src={c.img}
+                alt={lang === "fr" ? c.nameFr : c.nameEn}
+                className="cocktail-card__img"
+                loading="lazy"
+              />
+            )}
+            <div className="cocktail-card__body">
+              <div className="cocktail-card__header">
+                <div>
+                  <h4 className="cocktail-card__name">{lang === "fr" ? c.nameFr : c.nameEn}</h4>
+                  {c.bar && (
+                    <div className="cocktail-card__bar">by {c.bar}</div>
+                  )}
+                </div>
+                <button
+                  className={`cocktail-card__save ${savedCocktails.includes(c.id) ? "cocktail-card__save--active" : ""} ${heartPulse === c.id ? "heart-pulse" : ""}`}
+                  onClick={(e) => { e.stopPropagation(); toggleSaved(c.id); }}
+                  aria-label={savedCocktails.includes(c.id) ? "Remove from favourites" : "Add to favourites"}
+                  aria-pressed={savedCocktails.includes(c.id)}
+                >
+                  {savedCocktails.includes(c.id) ? <IconHeartFilled /> : <IconHeart />}
+                </button>
+              </div>
+              <div className="cocktail-card__tags">
+                <span className="tag">
+                  {productsData.find((p) => p.id === c.product)?.[lang === "fr" ? "nameFr" : "nameEn"]}
+                </span>
+                <span className={`tag ${c.difficulty === "easy" ? "tag--sage" : c.difficulty === "medium" ? "tag--copper" : "tag--teal"}`}>
+                  {t.cocktails[c.difficulty]}
+                </span>
+                <span className="tag">{seasonEmojis[c.season]} {t.cocktails[c.season] || t.cocktails.allYear}</span>
+              </div>
+              <div className="cocktail-card__accroche">{lang === "fr" ? c.accrocheFr : c.accrocheEn}</div>
             </div>
-            <div className="cocktail-card__tags">
-              <span className="tag">
-                {productsData.find((p) => p.id === c.product)?.[lang === "fr" ? "nameFr" : "nameEn"]}
-              </span>
-              <span className={`tag ${c.difficulty === "easy" ? "tag--sage" : c.difficulty === "medium" ? "tag--copper" : "tag--teal"}`}>
-                {t.cocktails[c.difficulty]}
-              </span>
-              <span className="tag">{seasonEmojis[c.season]} {t.cocktails[c.season] || t.cocktails.allYear}</span>
-            </div>
-            <div className="cocktail-card__accroche">{lang === "fr" ? c.accrocheFr : c.accrocheEn}</div>
           </div>
         ))}
       </div>
@@ -82,12 +98,27 @@ export const CocktailLab = ({
     {selectedCocktail && (
       <div className="overlay" onClick={() => setSelectedCocktail(null)} role="dialog" aria-label={lang === "fr" ? selectedCocktail.nameFr : selectedCocktail.nameEn}>
         <div className="modal" onClick={(e) => e.stopPropagation()}>
+
+          {/* Hero image */}
+          {selectedCocktail.img && (
+            <img
+              src={selectedCocktail.img}
+              alt={lang === "fr" ? selectedCocktail.nameFr : selectedCocktail.nameEn}
+              className="cocktail-modal__img"
+            />
+          )}
+
           <div className="modal__header">
             <div>
               <h3 style={{ fontFamily: "var(--font-display)", fontSize: "var(--text-2xl)", fontWeight: 400, fontStyle: "italic", color: "var(--text-primary)" }}>
                 {lang === "fr" ? selectedCocktail.nameFr : selectedCocktail.nameEn}
               </h3>
-              <div style={{ display: "flex", gap: "var(--space-2)", marginTop: "var(--space-2)" }}>
+              {selectedCocktail.bar && (
+                <div style={{ fontFamily: "var(--font-body)", fontSize: "var(--text-sm)", color: "var(--accent-secondary)", fontStyle: "italic", marginBottom: "var(--space-1)" }}>
+                  by {selectedCocktail.bar}
+                </div>
+              )}
+              <div style={{ display: "flex", gap: "var(--space-2)", marginTop: "var(--space-2)", flexWrap: "wrap" }}>
                 <span className={`tag ${selectedCocktail.difficulty === "easy" ? "tag--sage" : selectedCocktail.difficulty === "medium" ? "tag--copper" : "tag--teal"}`}>
                   {t.cocktails[selectedCocktail.difficulty]}
                 </span>
@@ -107,9 +138,9 @@ export const CocktailLab = ({
               <IconFlask /> {t.cocktails.ingredients}
             </div>
             {(lang === "fr" ? selectedCocktail.ingredientsFr : selectedCocktail.ingredientsEn).map((ing, i) => (
-              <div key={i} className="body-text" style={{
-                fontSize: "var(--text-sm)", padding: "var(--space-1) 0",
-                borderBottom: i < (lang === "fr" ? selectedCocktail.ingredientsFr : selectedCocktail.ingredientsEn).length - 1 ? "1px solid var(--border-light)" : "none",
+              <div key={i} className="body-text cocktail-ingredient" style={{
+                fontSize: "var(--text-base)", padding: "var(--space-2) 0",
+                borderBottom: i < (lang === "fr" ? selectedCocktail.ingredientsFr : selectedCocktail.ingredientsEn).length - 1 ? "1px solid var(--border-medium)" : "none",
               }}>
                 {ing}
               </div>
@@ -120,7 +151,7 @@ export const CocktailLab = ({
             <div className="modal__block-title">{t.cocktails.steps}</div>
             {(lang === "fr" ? selectedCocktail.stepsFr : selectedCocktail.stepsEn).map((step, i) => (
               <div key={i} className="body-text" style={{
-                display: "flex", gap: "var(--space-3)", padding: "var(--space-1) 0", fontSize: "var(--text-sm)",
+                display: "flex", gap: "var(--space-3)", padding: "var(--space-2) 0", fontSize: "var(--text-base)",
               }}>
                 <span style={{ color: "var(--text-primary)", fontWeight: 500, minWidth: 20, fontFamily: "var(--font-body)" }}>{i + 1}.</span>
                 {step}
@@ -129,8 +160,8 @@ export const CocktailLab = ({
           </div>
 
           <div style={{ display: "flex", alignItems: "center", gap: "var(--space-2)", marginTop: "var(--space-4)" }} className="body-text">
-            <span style={{ fontWeight: 500, color: "var(--text-primary)", fontSize: "var(--text-sm)" }}>{t.cocktails.garnish}:</span>
-            <span style={{ fontSize: "var(--text-sm)" }}>{lang === "fr" ? selectedCocktail.garnishFr : selectedCocktail.garnishEn}</span>
+            <span style={{ fontWeight: 500, color: "var(--text-primary)", fontSize: "var(--text-base)" }}>{t.cocktails.garnish}:</span>
+            <span style={{ fontSize: "var(--text-base)" }}>{lang === "fr" ? selectedCocktail.garnishFr : selectedCocktail.garnishEn}</span>
           </div>
 
           {/* Sticky action bar */}

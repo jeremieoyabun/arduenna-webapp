@@ -18,7 +18,7 @@ export const Products = ({ t, lang, sectionRefs, productsData, selectedProduct, 
             <div className="product-card__meta">{p.volume} · {p.abv}</div>
             <div className="product-card__price">{p.price}</div>
             <div className="product-card__radar">
-              <RadarChart data={p.profile} color={p.color} size={200} />
+              <RadarChart data={p.profile} color={p.color} size={260} />
             </div>
             <div className="product-card__serve">
               <strong>{t.products.perfectServe}</strong> — {lang === "fr" ? p.perfectServeFr : p.perfectServeEn}
@@ -63,8 +63,8 @@ export const Products = ({ t, lang, sectionRefs, productsData, selectedProduct, 
 
           <div className="modal__block">
             <div className="modal__block-title">{t.products.profile}</div>
-            <div style={{ maxWidth: 240, margin: "0 auto" }}>
-              <RadarChart data={selectedProduct.profile} color={selectedProduct.color} size={240} />
+            <div style={{ maxWidth: 320, margin: "0 auto" }}>
+              <RadarChart data={selectedProduct.profile} color={selectedProduct.color} size={320} />
             </div>
           </div>
 
