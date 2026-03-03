@@ -8,7 +8,10 @@ import { ModuleDetail } from "../components/academy/parcours/ModuleDetail";
 import { LessonEngine } from "../components/academy/lessons/LessonEngine";
 import { LeaderboardView } from "../components/academy/leaderboard/LeaderboardView";
 import { BadgeGrid } from "../components/academy/gamification/BadgeGrid";
+import { HomeDashboard } from "../components/academy/home/HomeDashboard";
+import { CertificateCard } from "../components/academy/certificates/CertificateCard";
 import { modulesData } from "../data/academy/modules";
+import { parcoursData } from "../data/academy/parcours";
 
 // ── Tab bar ──────────────────────────────────────────────────────────────────
 
@@ -137,124 +140,26 @@ export const AcademyPage = () => {
 
   // ── Accueil tab ──────────────────────────────────────────────────────────
 
-  const renderAccueil = () => {
-    const nextModule = getNextModule();
-    const p1modules = modulesData.filter(m => m.parcoursId === "univers");
-    const p1completed = getParcoursCompletedCount("univers");
-    const p1percent = Math.round((p1completed / p1modules.length) * 100);
-
-    return (
-      <div style={{ padding: "28px 20px" }}>
-        {/* Greeting */}
-        <h2 style={{
-          fontFamily: "'Cormorant Garamond', Georgia, serif",
-          fontSize: 26, fontWeight: 400, fontStyle: "italic",
-          color: "var(--text-primary)", marginBottom: 24,
-        }}>
-          Bonjour {firstName} 👋
-        </h2>
-
-        {/* Streak + XP */}
-        <div style={{ display: "flex", gap: 12, marginBottom: 20 }}>
-          <div style={{ ...card, flex: 1, padding: "16px", display: "flex", alignItems: "center", gap: 10 }}>
-            <span style={{ fontSize: 22 }}>🔥</span>
-            <div>
-              <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 18, fontWeight: 600, color: "var(--text-primary)" }}>
-                {streak} jour{streak !== 1 ? "s" : ""}
-              </div>
-              <div style={{ ...label }}>Streak</div>
-            </div>
-          </div>
-          <div style={{ ...card, flex: 1, padding: "16px", display: "flex", alignItems: "center", gap: 10 }}>
-            <span style={{ fontSize: 22 }}>⭐</span>
-            <div>
-              <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 18, fontWeight: 600, color: "var(--text-primary)" }}>
-                {xp} XP
-              </div>
-              <div style={{ ...label }}>Total</div>
-            </div>
-          </div>
-        </div>
-
-        {/* Prochain module */}
-        {nextModule ? (
-          <div
-            onClick={() => { openParcours("univers"); openModule(nextModule.id); }}
-            style={{ ...card, padding: "18px 20px", marginBottom: 16, cursor: "pointer" }}
-          >
-            <div style={{ ...label, marginBottom: 10 }}>Prochain module</div>
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
-              <div>
-                <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 15, fontWeight: 600, color: "var(--text-primary)", marginBottom: 3 }}>
-                  {nextModule.titleFr}
-                </div>
-                <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, color: "var(--text-tertiary)" }}>
-                  {nextModule.lessonCount} activités · {nextModule.duration}
-                </div>
-              </div>
-              <button style={{
-                padding: "10px 18px",
-                background: "#0b363d", color: "var(--text-on-dark)",
-                border: "none", borderRadius: 8,
-                fontFamily: "'DM Sans', sans-serif", fontSize: 13, fontWeight: 600,
-                cursor: "pointer", flexShrink: 0,
-              }}>
-                {getModulePercent("univers", nextModule.id) > 0 ? "Continuer" : "Commencer"}
-              </button>
-            </div>
-          </div>
-        ) : (
-          <div style={{ ...card, padding: "18px 20px", marginBottom: 16, opacity: 0.6 }}>
-            <div style={{ ...label, marginBottom: 10 }}>Prochain module</div>
-            <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 14, color: "var(--text-tertiary)", fontStyle: "italic" }}>
-              {progressLoading ? "Chargement..." : "Tous les modules du Parcours 1 sont complétés 🎉"}
-            </div>
-          </div>
-        )}
-
-        {/* Parcours 1 progress */}
-        {p1completed > 0 && (
-          <div style={{ ...card, padding: "16px 20px", marginBottom: 16 }}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
-              <div style={{ ...label }}>L'Univers Arduenna</div>
-              <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, color: "var(--text-tertiary)" }}>
-                {p1completed}/{p1modules.length}
-              </span>
-            </div>
-            <div style={{ height: 6, borderRadius: 999, background: "var(--border-light)", overflow: "hidden" }}>
-              <div style={{
-                height: "100%", borderRadius: 999,
-                width: `${p1percent}%`,
-                background: p1percent === 100 ? "#c2744a" : "#0b363d",
-                transition: "width 0.4s ease-out",
-              }} />
-            </div>
-          </div>
-        )}
-
-        {/* Mini leaderboard CTA */}
-        <div
-          onClick={() => switchTab("classement")}
-          style={{ ...card, padding: "18px 20px", cursor: "pointer" }}
-        >
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
-            <div style={{ ...label }}>Top apprenants</div>
-            <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 11, color: "var(--accent-secondary)" }}>
-              Voir tout →
-            </span>
-          </div>
-          <div style={{
-            fontFamily: "'DM Sans', sans-serif", fontSize: 13,
-            color: "var(--text-tertiary)", fontStyle: "italic",
-          }}>
-            {xp > 0
-              ? `Vous avez ${xp} XP — consultez le classement !`
-              : "Complétez un module pour apparaître au classement."}
-          </div>
-        </div>
-      </div>
-    );
-  };
+  const renderAccueil = () => (
+    <HomeDashboard
+      firstName={firstName}
+      role={role}
+      xp={xp}
+      streak={streak}
+      progress={progressHook.progress}
+      getModulePercent={getModulePercent}
+      isLocked={isLocked}
+      isCompleted={isCompleted}
+      getParcoursCompletedCount={getParcoursCompletedCount}
+      progressLoading={progressLoading}
+      onOpenModule={(parcoursId, moduleId) => {
+        setSelectedParcoursId(parcoursId);
+        setSelectedModuleId(moduleId);
+        setView("module-detail");
+      }}
+      onSwitchTab={switchTab}
+    />
+  );
 
   // ── Classement tab ───────────────────────────────────────────────────────
 
@@ -266,6 +171,11 @@ export const AcademyPage = () => {
     const p1completed = getParcoursCompletedCount("univers");
     const p1total = modulesData.filter(m => m.parcoursId === "univers").length;
     const earnedBadges = progressHook.progress?.badges || [];
+
+    // Earned certificates: parcours where completedAt is set
+    const earnedCerts = parcoursData.filter(p =>
+      !!progressHook.progress?.parcours?.[p.id]?.completedAt
+    );
 
     return (
       <div style={{ padding: "28px 20px" }}>
@@ -327,40 +237,38 @@ export const AcademyPage = () => {
           ))}
         </div>
 
-        {/* Progression parcours */}
+        {/* Progression parcours — all 4 (dynamic) */}
         <div style={{ ...card, padding: "18px 20px", marginBottom: 16 }}>
           <div style={{ ...label, marginBottom: 14 }}>Progression parcours</div>
-          {[
-            { name: "L'Univers Arduenna", completed: p1completed, total: p1total, active: true },
-            { name: "La Gamme", completed: 0, total: 4, active: false },
-            { name: "Le Cocktail Lab", completed: 0, total: 4, active: false },
-            { name: "Vendre Arduenna", completed: 0, total: 4, active: false },
-          ].map(({ name, completed: c, total: t, active }) => (
-            <div key={name} style={{ marginBottom: 14 }}>
-              <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 5 }}>
-                <span style={{
-                  fontFamily: "'DM Sans', sans-serif", fontSize: 13,
-                  color: active ? "#0b363d" : "rgba(11,54,61,0.35)",
-                }}>
-                  {name}
-                </span>
-                <span style={{
-                  fontFamily: "'DM Sans', sans-serif", fontSize: 12,
-                  color: "var(--text-tertiary)",
-                }}>
-                  {active ? `${c}/${t}` : "Bientôt"}
-                </span>
+          {parcoursData.map(p => {
+            const total = modulesData.filter(m => m.parcoursId === p.id).length;
+            const done = getParcoursCompletedCount(p.id);
+            const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+            const active = !!progressHook.progress?.parcours?.[p.id];
+            return (
+              <div key={p.id} style={{ marginBottom: 14 }}>
+                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 5 }}>
+                  <span style={{
+                    fontFamily: "'DM Sans', sans-serif", fontSize: 13,
+                    color: active ? "var(--text-secondary)" : "var(--text-muted)", fontWeight: active ? 500 : 400,
+                  }}>
+                    {p.titleFr}
+                  </span>
+                  <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, color: "var(--text-tertiary)" }}>
+                    {active ? `${done}/${total}` : "—"}
+                  </span>
+                </div>
+                <div style={{ height: 5, borderRadius: 999, background: "var(--border-light)", overflow: "hidden" }}>
+                  <div style={{
+                    height: "100%", borderRadius: 999,
+                    width: `${pct}%`,
+                    background: pct === 100 ? p.color : "#0b363d",
+                    transition: "width 0.4s ease-out",
+                  }} />
+                </div>
               </div>
-              <div style={{ height: 5, borderRadius: 999, background: "var(--border-light)", overflow: "hidden" }}>
-                <div style={{
-                  height: "100%", borderRadius: 999,
-                  width: active && t > 0 ? `${Math.round((c / t) * 100)}%` : "0%",
-                  background: "#0b363d",
-                  transition: "width 0.4s ease-out",
-                }} />
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         {/* Badges */}
@@ -379,6 +287,26 @@ export const AcademyPage = () => {
             </div>
           )}
         </div>
+
+        {/* Certificates */}
+        {earnedCerts.length > 0 && (
+          <div style={{ ...card, padding: "18px 20px", marginBottom: 16 }}>
+            <div style={{ ...label, marginBottom: 14 }}>
+              Mes Certificats ({earnedCerts.length})
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+              {earnedCerts.map(p => (
+                <CertificateCard
+                  key={p.id}
+                  parcoursTitle={p.certificateFr}
+                  completedAt={progressHook.progress.parcours[p.id].completedAt}
+                  userName={firstName}
+                  color={p.color}
+                />
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Logout */}
         <button
