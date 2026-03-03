@@ -1,18 +1,6 @@
 import { useEffect, useState } from "react";
 import { badgesData } from "../../../data/academy/badges";
-
-const BADGE_ICONS = {
-  "first-lesson": "🌱",
-  "master-botanist": "🌿",
-  "cocktail-expert": "🍸",
-  "speed-learner": "⚡",
-  "perfect-score": "💯",
-  "streak-7": "🔥",
-  "streak-30": "🏆",
-  "all-parcours": "🌟",
-  "sales-champion": "💼",
-  "mixology-master": "🎯",
-};
+import { BadgeGlyph } from "./BadgeGlyph";
 
 /**
  * Full-screen overlay shown when a badge is newly unlocked.
@@ -60,10 +48,11 @@ export const BadgeUnlockModal = ({ badgeId, onDismiss }) => {
           background: "rgba(194,116,74,0.1)",
           border: "3px solid rgba(194,116,74,0.35)",
           display: "flex", alignItems: "center", justifyContent: "center",
-          fontSize: 44, margin: "0 auto 20px",
+          color: "#c2744a",
+          margin: "0 auto 20px",
           animation: visible ? "badge-pop 0.5s cubic-bezier(0.34,1.56,0.64,1)" : "none",
         }}>
-          {BADGE_ICONS[badgeId] || "🏅"}
+          <BadgeGlyph id={badgeId} size={56} />
         </div>
 
         {/* Eyebrow */}
