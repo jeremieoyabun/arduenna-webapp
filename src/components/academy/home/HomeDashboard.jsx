@@ -27,20 +27,20 @@ const LEVELS = [
   { level: 5, title: "Ambassadeur Arduenna", xpStart: 2200, xpNeeded: null },
 ];
 
-// ── Level emblems — illustrated assets ────────────────────────────────────────
+// ── Level emblems — illustrated assets (shown inside progress ring) ───────────
 const LEVEL_EMBLEMS = {
-  1: <img src="/icons/Seedling-emblem.svg"    alt="" width="26" height="26" style={{ objectFit: "contain", display: "block" }} />,
-  2: <img src="/icons/Herb-bundle-emblem.svg" alt="" width="26" height="26" style={{ objectFit: "contain", display: "block" }} />,
-  3: <img src="/icons/Alembic-emblem.svg"     alt="" width="26" height="26" style={{ objectFit: "contain", display: "block" }} />,
+  1: <img src="/icons/Seedling-emblem.svg"    alt="" width="34" height="34" style={{ objectFit: "contain", display: "block" }} />,
+  2: <img src="/icons/Herb-bundle-emblem.svg" alt="" width="34" height="34" style={{ objectFit: "contain", display: "block" }} />,
+  3: <img src="/icons/Alembic-emblem.svg"     alt="" width="34" height="34" style={{ objectFit: "contain", display: "block" }} />,
   4: ( // Barrel end — inline fallback (no asset yet)
-    <svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round">
+    <svg width="28" height="28" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round">
       <ellipse cx="10" cy="10" rx="8" ry="8" />
       <path d="M2 10h16" />
       <path d="M5 3.5C5 3.5 6 10 5 16.5" strokeOpacity="0.7" />
       <path d="M15 3.5C15 3.5 14 10 15 16.5" strokeOpacity="0.7" />
     </svg>
   ),
-  5: <img src="/icons/crest-emblem.svg"       alt="" width="26" height="26" style={{ objectFit: "contain", display: "block" }} />,
+  5: <img src="/icons/crest-emblem.svg"       alt="" width="34" height="34" style={{ objectFit: "contain", display: "block" }} />,
 };
 
 // ── Circular SVG progress ring ────────────────────────────────────────────────
@@ -69,15 +69,6 @@ const ProgressRing = ({ level, percent }) => {
         transform="rotate(-90 40 40)"
         style={{ transition: "stroke-dashoffset 0.9s cubic-bezier(0.4, 0, 0.2, 1)" }}
       />
-      <text
-        x="40" y="46"
-        textAnchor="middle" dominantBaseline="auto"
-        fontFamily="'The Seasons', 'Cormorant Garamond', Georgia, serif"
-        fontSize="32" fontWeight="700"
-        fill="var(--text-1)"
-      >
-        {level}
-      </text>
     </svg>
   );
 };
@@ -355,7 +346,7 @@ export const HomeDashboard = ({
           <LeafVein style={{ right: -6, bottom: -8, opacity: 0.055 }} />
 
           <div style={{ display: "flex", alignItems: "center", gap: 20, position: "relative" }}>
-            {/* Ring with copper glow */}
+            {/* Ring with copper glow + emblem overlay */}
             <div style={{ position: "relative", flexShrink: 0, width: 80, height: 80 }}>
               <div style={{
                 position: "absolute", inset: -14, borderRadius: "50%",
@@ -363,16 +354,19 @@ export const HomeDashboard = ({
                 pointerEvents: "none",
               }} />
               <ProgressRing level={currentLevel.level} percent={levelPercent} />
+              {/* Emblem centered inside ring */}
+              <div style={{
+                position: "absolute", top: "50%", left: "50%",
+                transform: "translate(-50%, -50%)",
+                display: "flex", alignItems: "center", justifyContent: "center",
+              }}>
+                {LEVEL_EMBLEMS[currentLevel.level]}
+              </div>
             </div>
 
             <div style={{ flex: 1, minWidth: 0 }}>
-              {/* Level label + emblem */}
-              <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 4 }}>
-                <div style={{ ...CAP }}>Niveau {currentLevel.level}</div>
-                <span style={{ opacity: 0.85, display: "flex", alignItems: "center" }}>
-                  {LEVEL_EMBLEMS[currentLevel.level]}
-                </span>
-              </div>
+              {/* Level label */}
+              <div style={{ ...CAP, marginBottom: 4 }}>Niveau {currentLevel.level}</div>
 
               {/* Level title */}
               <div style={{

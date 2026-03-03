@@ -45,14 +45,14 @@ export const NextModuleCard = ({ module, parcoursId, percent, onStart }) => {
       onTouchStart={e => { e.currentTarget.style.opacity = "0.72"; }}
       onTouchEnd={e => { e.currentTarget.style.opacity = "1"; }}
     >
-      {/* Background botanical image — fades left→right toward transparent */}
+      {/* Background botanical image — left-anchored, fades to transparent on the right */}
       {meta.bg && (
         <div style={{
           position: "absolute",
-          right: 0, top: 0, bottom: 0,
-          width: "58%",
-          WebkitMaskImage: "linear-gradient(to right, transparent 0%, black 40%, black 70%, transparent 100%)",
-          maskImage: "linear-gradient(to right, transparent 0%, black 40%, black 70%, transparent 100%)",
+          left: 0, top: 0, bottom: 0,
+          width: "70%",
+          WebkitMaskImage: "linear-gradient(to right, black 0%, black 30%, transparent 90%)",
+          maskImage: "linear-gradient(to right, black 0%, black 30%, transparent 90%)",
           pointerEvents: "none",
         }}>
           <img
@@ -62,8 +62,8 @@ export const NextModuleCard = ({ module, parcoursId, percent, onStart }) => {
               width: "100%",
               height: "100%",
               objectFit: "cover",
-              objectPosition: "center",
-              opacity: 0.18,
+              objectPosition: "left center",
+              opacity: 0.38,
               display: "block",
             }}
           />
