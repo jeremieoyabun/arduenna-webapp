@@ -27,30 +27,12 @@ const LEVELS = [
   { level: 5, title: "Ambassadeur Arduenna", xpStart: 2200, xpNeeded: null },
 ];
 
-// ── Level emblems (inline SVG, 14×14) ─────────────────────────────────────────
+// ── Level emblems — illustrated assets ────────────────────────────────────────
 const LEVEL_EMBLEMS = {
-  1: ( // Seedling
-    <svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round">
-      <path d="M10 18V10M10 10C10 6 14 3 17 2c-1 3-2.5 5.5-7 8M10 10C10 6 6 3 3 2c1 3 2.5 5.5 7 8" />
-    </svg>
-  ),
-  2: ( // Herb bundle
-    <svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round">
-      <path d="M10 16V9" />
-      <path d="M7 7c-1-2 3-6 3-6s4 4 3 6" />
-      <path d="M6 11c-2-1-3-5-3-5s3.5 0 4 3" />
-      <path d="M14 11c2-1 3-5 3-5s-3.5 0-4 3" />
-      <line x1="7" y1="17" x2="13" y2="17" strokeWidth="1.4" />
-    </svg>
-  ),
-  3: ( // Alembic/flask
-    <svg width="13" height="14" viewBox="0 0 14 20" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M4 1h6M5 5l-4 8h12L9 5H5z" />
-      <circle cx="5" cy="13.5" r="0.9" fill="currentColor" stroke="none" />
-      <circle cx="9.5" cy="15" r="0.7" fill="currentColor" stroke="none" />
-    </svg>
-  ),
-  4: ( // Barrel end
+  1: <img src="/icons/Seedling-emblem.svg"    alt="" width="20" height="20" style={{ objectFit: "contain", display: "block" }} />,
+  2: <img src="/icons/Herb-bundle-emblem.svg" alt="" width="20" height="20" style={{ objectFit: "contain", display: "block" }} />,
+  3: <img src="/icons/Alembic-emblem.svg"     alt="" width="20" height="20" style={{ objectFit: "contain", display: "block" }} />,
+  4: ( // Barrel end — inline fallback (no asset yet)
     <svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round">
       <ellipse cx="10" cy="10" rx="8" ry="8" />
       <path d="M2 10h16" />
@@ -58,11 +40,7 @@ const LEVEL_EMBLEMS = {
       <path d="M15 3.5C15 3.5 14 10 15 16.5" strokeOpacity="0.7" />
     </svg>
   ),
-  5: ( // Crown crest
-    <svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M2 15l2-9 3.5 5L10 4l2.5 7L16 6l2 9H2z" />
-    </svg>
-  ),
+  5: <img src="/icons/crest-emblem.svg"       alt="" width="20" height="20" style={{ objectFit: "contain", display: "block" }} />,
 };
 
 // ── Circular SVG progress ring ────────────────────────────────────────────────
@@ -177,12 +155,9 @@ const LeafVein = ({ style }) => (
   </svg>
 );
 
-// ── Padlock (heavier stroke) ──────────────────────────────────────────────────
+// ── Padlock ───────────────────────────────────────────────────────────────────
 const PadlockSmall = () => (
-  <svg width="10" height="11" viewBox="0 0 10 11" fill="none">
-    <rect x="0.6" y="4" width="8.8" height="6.4" rx="1.4" stroke="currentColor" strokeWidth="1.6" />
-    <path d="M2.5 4V3a2.5 2.5 0 015 0v1" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-  </svg>
+  <img src="/icons/Better-Lock-Icon.webp" alt="" width="11" height="11" style={{ objectFit: "contain", display: "block", opacity: 0.75 }} />
 );
 
 // ── Upgrade pack card (UI-only, CTA link) ─────────────────────────────────────
@@ -391,7 +366,7 @@ export const HomeDashboard = ({
               {/* Level label + emblem */}
               <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 4 }}>
                 <div style={{ ...CAP }}>Niveau {currentLevel.level}</div>
-                <span style={{ color: "#c2744a", opacity: 0.75, display: "flex", alignItems: "center" }}>
+                <span style={{ opacity: 0.85, display: "flex", alignItems: "center" }}>
                   {LEVEL_EMBLEMS[currentLevel.level]}
                 </span>
               </div>
