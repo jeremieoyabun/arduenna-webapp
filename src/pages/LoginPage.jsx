@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../components/auth/AuthProvider";
-import { createUserProfile, getUserProfile } from "../lib/userService";
+import { createUserProfile } from "../lib/userService";
 
 const roleLabels = {
   bartender: "Bartender",
@@ -10,7 +10,7 @@ const roleLabels = {
 };
 
 export const LoginPage = () => {
-  const { login, loginWithGoogle, signup, refreshProfile } = useAuth();
+  const { login, loginWithGoogle, signup, refreshProfile, user, loading } = useAuth();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -18,6 +18,11 @@ export const LoginPage = () => {
   const [selectedRole, setSelectedRole] = useState("bartender");
   const [isSignup, setIsSignup] = useState(false);
   const [error, setError] = useState(null);
+
+  // Redirect to Academy if already authenticated (handles Google redirect return)
+  useEffect(() => {
+    if (!loading && user) navigate("/academy", { replace: true });
+  }, [user, loading, navigate]);
 
   const handleSubmit = async () => {
     setError(null);
@@ -41,21 +46,9 @@ export const LoginPage = () => {
     }
   };
 
-  const handleGoogle = async () => {
+  const handleGoogle = () => {
     try {
-      const cred = await loginWithGoogle();
-      // Create profile if first-time Google user
-      const existing = await getUserProfile(cred.user.uid);
-      if (!existing) {
-        await createUserProfile(cred.user.uid, {
-          email: cred.user.email,
-          firstName: cred.user.displayName?.split(" ")[0] || "",
-          displayName: cred.user.displayName || "",
-          role: selectedRole,
-        });
-      }
-      await refreshProfile();
-      navigate("/academy");
+      loginWithGoogle(selectedRole); // redirects to Google, returns to this page
     } catch (err) {
       setError(err.message);
     }

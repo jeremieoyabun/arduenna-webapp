@@ -3,12 +3,13 @@ import {
   onAuthStateChanged,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
-  signInWithPopup,
+  signInWithRedirect,
+  getRedirectResult,
   GoogleAuthProvider,
   signOut,
 } from "firebase/auth";
 import { auth } from "../../lib/firebase";
-import { getUserProfile, updateLastLogin } from "../../lib/userService";
+import { getUserProfile, updateLastLogin, createUserProfile } from "../../lib/userService";
 
 const AuthContext = createContext(null);
 
@@ -28,11 +29,27 @@ export const AuthProvider = ({ children }) => {
       setLoading(false);
       return;
     }
+
+    // Complete any pending Google redirect sign-in
+    getRedirectResult(auth).catch(() => {});
+
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       setUser(firebaseUser);
       if (firebaseUser) {
         try {
-          const p = await getUserProfile(firebaseUser.uid);
+          let p = await getUserProfile(firebaseUser.uid);
+          if (!p) {
+            // New user via Google redirect — auto-create profile
+            const role = localStorage.getItem("arduenna_pending_role") || "bartender";
+            localStorage.removeItem("arduenna_pending_role");
+            await createUserProfile(firebaseUser.uid, {
+              email: firebaseUser.email,
+              firstName: firebaseUser.displayName?.split(" ")[0] || "",
+              displayName: firebaseUser.displayName || "",
+              role,
+            });
+            p = await getUserProfile(firebaseUser.uid);
+          }
           setProfile(p);
           updateLastLogin(firebaseUser.uid).catch(() => {});
         } catch {
@@ -53,10 +70,11 @@ export const AuthProvider = ({ children }) => {
   const login = (email, password) => { assertAuth(); return signInWithEmailAndPassword(auth, email, password); };
   const signup = (email, password) => { assertAuth(); return createUserWithEmailAndPassword(auth, email, password); };
 
-  const loginWithGoogle = () => {
+  const loginWithGoogle = (pendingRole) => {
     assertAuth();
+    if (pendingRole) localStorage.setItem("arduenna_pending_role", pendingRole);
     const provider = new GoogleAuthProvider();
-    return signInWithPopup(auth, provider);
+    signInWithRedirect(auth, provider);
   };
 
   const logout = async () => {
@@ -72,7 +90,6 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Derived values from profile for backward compatibility
   const role = profile?.role || null;
   const isAdmin = profile?.isAdmin || false;
 
