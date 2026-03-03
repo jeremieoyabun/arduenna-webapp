@@ -15,7 +15,10 @@ export const BadgesRow = ({ earnedBadgeIds = [], onViewAll, newBadgeId }) => {
     <div className="a-card" style={{ marginBottom: 12, padding: "18px 20px" }}>
       {/* Header */}
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
-        <div style={CAP}>Badges</div>
+        <div style={{ ...CAP, display: "flex", alignItems: "center", gap: 6 }}>
+          <img src="/icons/Badges.svg" alt="" width="16" height="16" style={{ objectFit: "contain", display: "block" }} />
+          Badges
+        </div>
         <button
           onClick={onViewAll}
           style={{

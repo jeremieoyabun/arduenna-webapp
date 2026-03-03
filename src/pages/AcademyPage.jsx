@@ -615,9 +615,7 @@ const ThemeToggle = () => {
 // ── XP Diamond icon ───────────────────────────────────────────────────────────
 
 const XPDiamond = () => (
-  <svg width="10" height="10" viewBox="0 0 12 12" fill="#D4A574" aria-hidden="true">
-    <path d="M6 0l2 3.5h4L9 7.5l1.5 4.5L6 9.5l-4.5 2.5L3 7.5 0 3.5h4z" />
-  </svg>
+  <img src="/icons/XP.svg" alt="" width="14" height="14" style={{ objectFit: "contain", display: "block" }} />
 );
 
 // ── XP Float indicator ────────────────────────────────────────────────────────

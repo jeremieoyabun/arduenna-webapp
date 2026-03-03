@@ -2,28 +2,14 @@ import { parcoursData } from "../../../data/academy/parcours";
 import { modulesData } from "../../../data/academy/modules";
 
 const PARCOURS_ICONS = {
-  univers: (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M17 8C8 10 5.9 16.17 3.82 22" /><path d="M9.04 9.01s.38-4.21 4.96-5.01" />
-      <path d="M13.83 14.54s3.75-1.74 5.17.46" /><path d="M16 4s3 0 4 3-2.5 4.5-2.5 4.5" />
-      <path d="M20 9.5c1 .5 2 2 2 4" />
-    </svg>
-  ),
+  univers: <img src="/icons/Univers-Arduenna.webp" alt="" width="30" height="30" style={{ objectFit: "contain", display: "block" }} />,
   gamme: (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
       <path d="M8 2h8l-2 7h4L10 22l2-9H8z" />
     </svg>
   ),
-  cocktail: (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M8 22h8" /><path d="M12 11v11" /><path d="M5 3l7 8 7-8" />
-    </svg>
-  ),
-  vente: (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M20.42 4.58a5.4 5.4 0 00-7.65 0l-.77.78-.77-.78a5.4 5.4 0 00-7.65 7.65l.78.77L12 20.64l7.64-7.64.78-.77a5.4 5.4 0 000-7.65z" />
-    </svg>
-  ),
+  cocktail: <img src="/icons/Cocktails-Lab.svg" alt="" width="30" height="30" style={{ objectFit: "contain", display: "block" }} />,
+  vente: <img src="/icons/Vendre-Arduenna.svg" alt="" width="30" height="30" style={{ objectFit: "contain", display: "block" }} />,
 };
 
 const LockIcon = () => (

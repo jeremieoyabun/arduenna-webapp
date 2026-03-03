@@ -426,6 +426,7 @@ export const HomeDashboard = ({
             borderTop: "1px solid var(--border-subtle)",
             position: "relative",
           }}>
+            <img src="/icons/Streakk.svg" alt="" width="18" height="18" style={{ objectFit: "contain", display: "block" }} />
             <div style={{ ...CAP, whiteSpace: "nowrap" }}>Série</div>
             <StreakTally count={streak} />
             <div style={{
@@ -444,7 +445,10 @@ export const HomeDashboard = ({
           className="a-card"
           style={{ marginBottom: 10, padding: "20px 20px", ...staggerStyle(1, mounted) }}
         >
-          <div style={{ ...CAP, marginBottom: 18 }}>Prochain module</div>
+          <div style={{ ...CAP, marginBottom: 18, display: "flex", alignItems: "center", gap: 6 }}>
+            <img src="/icons/Modules.svg" alt="" width="16" height="16" style={{ objectFit: "contain", display: "block" }} />
+            Prochain module
+          </div>
           {nextModule ? (
             <NextModuleCard
               module={nextModule}
