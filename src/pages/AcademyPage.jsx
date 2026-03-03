@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Navigate, useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../components/auth/AuthProvider";
 import { useProgress } from "../hooks/useProgress";
@@ -10,6 +10,8 @@ import { LeaderboardView } from "../components/academy/leaderboard/LeaderboardVi
 import { BadgeGrid } from "../components/academy/gamification/BadgeGrid";
 import { HomeDashboard } from "../components/academy/home/HomeDashboard";
 import { CertificateCard } from "../components/academy/certificates/CertificateCard";
+import { OfflineIndicator } from "../components/academy/ui/OfflineIndicator";
+import { setupOnlineListener } from "../lib/offlineService";
 import { modulesData } from "../data/academy/modules";
 import { parcoursData } from "../data/academy/parcours";
 
@@ -92,6 +94,12 @@ export const AcademyPage = () => {
   const [selectedModuleId, setSelectedModuleId] = useState(null);
 
   const navigate = useNavigate();
+
+  // Auto-sync offline queue when connection restored
+  useEffect(() => {
+    const cleanup = setupOnlineListener(() => progressHook.refreshProgress());
+    return cleanup;
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (authLoading) {
     return (
@@ -419,6 +427,7 @@ export const AcademyPage = () => {
   // Tabs view
   return (
     <div style={{ minHeight: "100vh", background: "var(--bg-primary)", paddingBottom: 80 }}>
+      <OfflineIndicator />
       <AcademyHeader xp={xp} />
 
       {/* Tab content */}
