@@ -35,10 +35,10 @@ const LockIcon = () => (
 
 export const ParcoursGrid = ({ onSelectParcours, getParcoursCompletedCount }) => {
   const cardStyle = {
-    background: "#ffffff",
+    background: "var(--bg-surface)",
     borderRadius: 12,
     padding: "18px 20px",
-    border: "1px solid rgba(11,54,61,0.08)",
+    border: "1px solid var(--border-light)",
     boxShadow: "0 2px 12px rgba(11,54,61,0.03)",
     marginBottom: 14,
     display: "flex",
@@ -51,13 +51,13 @@ export const ParcoursGrid = ({ onSelectParcours, getParcoursCompletedCount }) =>
       <h2 style={{
         fontFamily: "'Cormorant Garamond', Georgia, serif",
         fontSize: 22, fontWeight: 400, fontStyle: "italic",
-        color: "#0b363d", marginBottom: 6,
+        color: "var(--text-primary)", marginBottom: 6,
       }}>
         Parcours d'apprentissage
       </h2>
       <p style={{
         fontFamily: "'DM Sans', sans-serif", fontSize: 13,
-        color: "rgba(11,54,61,0.45)", marginBottom: 24,
+        color: "var(--text-tertiary)", marginBottom: 24,
       }}>
         Maîtrisez l'univers Arduenna étape par étape
       </p>
@@ -94,13 +94,13 @@ export const ParcoursGrid = ({ onSelectParcours, getParcoursCompletedCount }) =>
             <div style={{ flex: 1, minWidth: 0 }}>
               <div style={{
                 fontFamily: "'DM Sans', sans-serif", fontSize: 15,
-                fontWeight: 600, color: "#0b363d", marginBottom: 3,
+                fontWeight: 600, color: "var(--text-primary)", marginBottom: 3,
               }}>
                 {p.titleFr}
               </div>
               <div style={{
                 fontFamily: "'DM Sans', sans-serif", fontSize: 12,
-                color: "rgba(11,54,61,0.5)", marginBottom: 6,
+                color: "var(--text-tertiary)", marginBottom: 6,
               }}>
                 {p.descFr}
               </div>
@@ -108,7 +108,7 @@ export const ParcoursGrid = ({ onSelectParcours, getParcoursCompletedCount }) =>
                 <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                   <div style={{
                     flex: 1, height: 4, borderRadius: 999,
-                    background: "rgba(11,54,61,0.08)",
+                    background: "var(--border-light)",
                     overflow: "hidden",
                   }}>
                     <div style={{
@@ -120,7 +120,7 @@ export const ParcoursGrid = ({ onSelectParcours, getParcoursCompletedCount }) =>
                   </div>
                   <span style={{
                     fontFamily: "'DM Sans', sans-serif", fontSize: 11,
-                    color: "rgba(11,54,61,0.4)", flexShrink: 0,
+                    color: "var(--text-tertiary)", flexShrink: 0,
                   }}>
                     {completedCount}/{moduleCount}
                   </span>
@@ -128,7 +128,7 @@ export const ParcoursGrid = ({ onSelectParcours, getParcoursCompletedCount }) =>
               ) : (
                 <div style={{
                   fontFamily: "'DM Sans', sans-serif", fontSize: 11,
-                  color: "rgba(11,54,61,0.35)",
+                  color: "var(--text-muted)",
                 }}>
                   {moduleCount} modules
                 </div>
@@ -146,7 +146,7 @@ export const ParcoursGrid = ({ onSelectParcours, getParcoursCompletedCount }) =>
                   <LockIcon />
                   <div style={{
                     fontFamily: "'DM Sans', sans-serif", fontSize: 10,
-                    color: "rgba(11,54,61,0.35)", marginTop: 4,
+                    color: "var(--text-muted)", marginTop: 4,
                     textAlign: "center",
                   }}>
                     Bientôt

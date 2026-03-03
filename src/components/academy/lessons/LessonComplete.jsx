@@ -51,7 +51,7 @@ export const LessonComplete = ({ score, xpGain, onContinue }) => {
       {showConfetti && <Confetti />}
 
       <div style={{
-        minHeight: "100vh", background: "#fef8ec",
+        minHeight: "100vh", background: "var(--bg-primary)",
         display: "flex", flexDirection: "column",
         alignItems: "center", justifyContent: "center",
         padding: "40px 24px", textAlign: "center",
@@ -74,7 +74,7 @@ export const LessonComplete = ({ score, xpGain, onContinue }) => {
         <h2 style={{
           fontFamily: "'Cormorant Garamond', Georgia, serif",
           fontSize: 32, fontWeight: 400, fontStyle: "italic",
-          color: "#0b363d", marginBottom: 8,
+          color: "var(--text-primary)", marginBottom: 8,
         }}>
           {isPerfect ? "Score parfait !" : "Module terminé !"}
         </h2>
@@ -83,7 +83,7 @@ export const LessonComplete = ({ score, xpGain, onContinue }) => {
         {hasScore && (
           <div style={{
             fontFamily: "'DM Sans', sans-serif", fontSize: 15,
-            color: "rgba(11,54,61,0.55)", marginBottom: 28,
+            color: "var(--text-tertiary)", marginBottom: 28,
           }}>
             {score}% de bonnes réponses
           </div>
@@ -91,23 +91,23 @@ export const LessonComplete = ({ score, xpGain, onContinue }) => {
 
         {/* XP */}
         <div style={{
-          background: "#ffffff",
+          background: "var(--bg-surface)",
           borderRadius: 12, padding: "16px 32px",
-          border: "1px solid rgba(11,54,61,0.08)",
+          border: "1px solid var(--border-light)",
           boxShadow: "0 2px 12px rgba(11,54,61,0.04)",
           marginBottom: 36,
           display: "flex", flexDirection: "column", alignItems: "center", gap: 4,
         }}>
           <span style={{ fontSize: 28 }}>⭐</span>
           <div style={{
-            fontFamily: "'DM Sans', sans-serif", fontSize: 22, fontWeight: 700, color: "#0b363d",
+            fontFamily: "'DM Sans', sans-serif", fontSize: 22, fontWeight: 700, color: "var(--text-primary)",
           }}>
             +{xpGain} XP
           </div>
           {isPerfect && (
             <div style={{
               fontFamily: "'DM Sans', sans-serif", fontSize: 12,
-              color: "#c2744a", fontWeight: 600,
+              color: "var(--accent-secondary)", fontWeight: 600,
             }}>
               Dont +25 bonus score parfait !
             </div>
@@ -120,7 +120,7 @@ export const LessonComplete = ({ score, xpGain, onContinue }) => {
           style={{
             width: "100%", maxWidth: 360,
             padding: "16px 24px",
-            background: "#0b363d", color: "#fef8ec",
+            background: "#0b363d", color: "var(--text-on-dark)",
             border: "none", borderRadius: 12,
             fontFamily: "'DM Sans', sans-serif", fontSize: 16, fontWeight: 600,
             cursor: "pointer",

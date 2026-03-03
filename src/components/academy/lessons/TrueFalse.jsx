@@ -29,8 +29,8 @@ export const TrueFalse = ({ lesson, onNext }) => {
 
     if (!answered) {
       return val
-        ? { ...base, background: "rgba(11,54,61,0.06)", color: "#0b363d", border: "2px solid rgba(11,54,61,0.12)" }
-        : { ...base, background: "rgba(194,116,74,0.06)", color: "#c2744a", border: "2px solid rgba(194,116,74,0.2)" };
+        ? { ...base, background: "var(--border-light)", color: "var(--text-primary)", border: "2px solid var(--border-medium)" }
+        : { ...base, background: "rgba(194,116,74,0.06)", color: "var(--accent-secondary)", border: "2px solid rgba(194,116,74,0.2)" };
     }
 
     if (val === lesson.correct) {
@@ -46,22 +46,22 @@ export const TrueFalse = ({ lesson, onNext }) => {
     <div style={{ padding: "24px 20px", display: "flex", flexDirection: "column", gap: 20 }}>
       {/* Statement */}
       <div style={{
-        background: "#ffffff",
+        background: "var(--bg-surface)",
         borderRadius: 14,
         padding: "28px 24px",
-        border: "1px solid rgba(11,54,61,0.08)",
+        border: "1px solid var(--border-light)",
         boxShadow: "0 2px 12px rgba(11,54,61,0.04)",
       }}>
         <div style={{
           fontFamily: "'DM Sans', sans-serif", fontSize: 11,
           fontWeight: 600, textTransform: "uppercase", letterSpacing: 1.5,
-          color: "rgba(11,54,61,0.4)", marginBottom: 14,
+          color: "var(--text-tertiary)", marginBottom: 14,
         }}>
           Vrai ou Faux ?
         </div>
         <p style={{
           fontFamily: "'DM Sans', sans-serif", fontSize: 17, lineHeight: 1.55,
-          color: "#0b363d", margin: 0, fontWeight: 500,
+          color: "var(--text-primary)", margin: 0, fontWeight: 500,
         }}>
           {lesson.statementFr}
         </p>
@@ -98,7 +98,7 @@ export const TrueFalse = ({ lesson, onNext }) => {
           </div>
           <p style={{
             fontFamily: "'DM Sans', sans-serif", fontSize: 13, lineHeight: 1.55,
-            color: "rgba(11,54,61,0.75)", margin: 0,
+            color: "var(--text-secondary)", margin: 0,
           }}>
             {lesson.explanationFr}
           </p>
@@ -110,7 +110,7 @@ export const TrueFalse = ({ lesson, onNext }) => {
         <button
           onClick={handleNext}
           style={{
-            padding: "14px 24px", background: "#0b363d", color: "#fef8ec",
+            padding: "14px 24px", background: "#0b363d", color: "var(--text-on-dark)",
             border: "none", borderRadius: 10,
             fontFamily: "'DM Sans', sans-serif", fontSize: 15, fontWeight: 600,
             cursor: "pointer",

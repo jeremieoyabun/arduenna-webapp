@@ -43,11 +43,11 @@ export const SwipeCards = ({ lesson, onNext }) => {
       {/* Card */}
       <div
         style={{
-          background: "#ffffff",
+          background: "var(--bg-surface)",
           borderRadius: 16,
           padding: "36px 28px",
-          border: "1px solid rgba(11,54,61,0.08)",
-          boxShadow: "0 4px 24px rgba(11,54,61,0.06)",
+          border: "1px solid var(--border-light)",
+          boxShadow: "0 4px 24px var(--border-light)",
           minHeight: 240,
           cursor: "grab",
           userSelect: "none",
@@ -61,14 +61,14 @@ export const SwipeCards = ({ lesson, onNext }) => {
         <div style={{
           fontFamily: "'Cormorant Garamond', Georgia, serif",
           fontSize: 24, fontWeight: 600, fontStyle: "italic",
-          color: "#0b363d", marginBottom: 18, lineHeight: 1.2,
+          color: "var(--text-primary)", marginBottom: 18, lineHeight: 1.2,
         }}>
           {card.titleFr}
         </div>
         <p style={{
           fontFamily: "'DM Sans', sans-serif",
           fontSize: 15, lineHeight: 1.7,
-          color: "rgba(11,54,61,0.8)", margin: 0,
+          color: "var(--text-secondary)", margin: 0,
         }}>
           {card.textFr}
         </p>
@@ -104,7 +104,7 @@ export const SwipeCards = ({ lesson, onNext }) => {
             onClick={goPrev}
             style={{
               padding: "13px 18px", background: "transparent",
-              color: "#0b363d", border: "1px solid rgba(11,54,61,0.15)",
+              color: "var(--text-primary)", border: "1px solid rgba(11,54,61,0.15)",
               borderRadius: 10, fontFamily: "'DM Sans', sans-serif",
               fontSize: 14, cursor: "pointer",
             }}
@@ -116,7 +116,7 @@ export const SwipeCards = ({ lesson, onNext }) => {
           onClick={goNext}
           style={{
             flex: 1, padding: "14px 24px",
-            background: "#0b363d", color: "#fef8ec",
+            background: "#0b363d", color: "var(--text-on-dark)",
             border: "none", borderRadius: 10,
             fontFamily: "'DM Sans', sans-serif", fontSize: 15, fontWeight: 600,
             cursor: "pointer",

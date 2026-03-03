@@ -18,7 +18,7 @@ const tabs = [
 ];
 
 const TabIcon = ({ type, active }) => {
-  const color = active ? "#c2744a" : "rgba(11,54,61,0.35)";
+  const color = active ? "var(--accent-secondary)" : "var(--text-muted)";
   const icons = {
     home: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5">
@@ -51,16 +51,16 @@ const TabIcon = ({ type, active }) => {
 // ── Shared styles ─────────────────────────────────────────────────────────────
 
 const card = {
-  background: "#ffffff",
+  background: "var(--bg-surface)",
   borderRadius: 12,
-  border: "1px solid rgba(11,54,61,0.08)",
+  border: "1px solid var(--border-light)",
   boxShadow: "0 2px 12px rgba(11,54,61,0.03)",
 };
 
 const label = {
   fontFamily: "'DM Sans', sans-serif",
   fontSize: 11,
-  color: "rgba(11,54,61,0.45)",
+  color: "var(--text-tertiary)",
   textTransform: "uppercase",
   letterSpacing: 1.5,
 };
@@ -90,8 +90,8 @@ export const AcademyPage = () => {
 
   if (authLoading) {
     return (
-      <div style={{ minHeight: "100vh", background: "#fef8ec", display: "flex", alignItems: "center", justifyContent: "center" }}>
-        <div style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 22, color: "#c2744a", fontStyle: "italic" }}>
+      <div style={{ minHeight: "100vh", background: "var(--bg-primary)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <div style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 22, color: "var(--accent-secondary)", fontStyle: "italic" }}>
           Chargement...
         </div>
       </div>
@@ -147,7 +147,7 @@ export const AcademyPage = () => {
         <h2 style={{
           fontFamily: "'Cormorant Garamond', Georgia, serif",
           fontSize: 26, fontWeight: 400, fontStyle: "italic",
-          color: "#0b363d", marginBottom: 24,
+          color: "var(--text-primary)", marginBottom: 24,
         }}>
           Bonjour {firstName} 👋
         </h2>
@@ -157,7 +157,7 @@ export const AcademyPage = () => {
           <div style={{ ...card, flex: 1, padding: "16px", display: "flex", alignItems: "center", gap: 10 }}>
             <span style={{ fontSize: 22 }}>🔥</span>
             <div>
-              <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 18, fontWeight: 600, color: "#0b363d" }}>
+              <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 18, fontWeight: 600, color: "var(--text-primary)" }}>
                 {streak} jour{streak !== 1 ? "s" : ""}
               </div>
               <div style={{ ...label }}>Streak</div>
@@ -166,7 +166,7 @@ export const AcademyPage = () => {
           <div style={{ ...card, flex: 1, padding: "16px", display: "flex", alignItems: "center", gap: 10 }}>
             <span style={{ fontSize: 22 }}>⭐</span>
             <div>
-              <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 18, fontWeight: 600, color: "#0b363d" }}>
+              <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 18, fontWeight: 600, color: "var(--text-primary)" }}>
                 {xp} XP
               </div>
               <div style={{ ...label }}>Total</div>
@@ -183,16 +183,16 @@ export const AcademyPage = () => {
             <div style={{ ...label, marginBottom: 10 }}>Prochain module</div>
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
               <div>
-                <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 15, fontWeight: 600, color: "#0b363d", marginBottom: 3 }}>
+                <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 15, fontWeight: 600, color: "var(--text-primary)", marginBottom: 3 }}>
                   {nextModule.titleFr}
                 </div>
-                <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, color: "rgba(11,54,61,0.45)" }}>
+                <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, color: "var(--text-tertiary)" }}>
                   {nextModule.lessonCount} activités · {nextModule.duration}
                 </div>
               </div>
               <button style={{
                 padding: "10px 18px",
-                background: "#0b363d", color: "#fef8ec",
+                background: "#0b363d", color: "var(--text-on-dark)",
                 border: "none", borderRadius: 8,
                 fontFamily: "'DM Sans', sans-serif", fontSize: 13, fontWeight: 600,
                 cursor: "pointer", flexShrink: 0,
@@ -204,7 +204,7 @@ export const AcademyPage = () => {
         ) : (
           <div style={{ ...card, padding: "18px 20px", marginBottom: 16, opacity: 0.6 }}>
             <div style={{ ...label, marginBottom: 10 }}>Prochain module</div>
-            <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 14, color: "rgba(11,54,61,0.5)", fontStyle: "italic" }}>
+            <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 14, color: "var(--text-tertiary)", fontStyle: "italic" }}>
               {progressLoading ? "Chargement..." : "Tous les modules du Parcours 1 sont complétés 🎉"}
             </div>
           </div>
@@ -215,11 +215,11 @@ export const AcademyPage = () => {
           <div style={{ ...card, padding: "16px 20px", marginBottom: 16 }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
               <div style={{ ...label }}>L'Univers Arduenna</div>
-              <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, color: "rgba(11,54,61,0.45)" }}>
+              <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, color: "var(--text-tertiary)" }}>
                 {p1completed}/{p1modules.length}
               </span>
             </div>
-            <div style={{ height: 6, borderRadius: 999, background: "rgba(11,54,61,0.08)", overflow: "hidden" }}>
+            <div style={{ height: 6, borderRadius: 999, background: "var(--border-light)", overflow: "hidden" }}>
               <div style={{
                 height: "100%", borderRadius: 999,
                 width: `${p1percent}%`,
@@ -235,7 +235,7 @@ export const AcademyPage = () => {
           <div style={{ ...label, marginBottom: 16 }}>Top apprenants</div>
           <div style={{
             fontFamily: "'DM Sans', sans-serif", fontSize: 13,
-            color: "rgba(11,54,61,0.4)", textAlign: "center",
+            color: "var(--text-tertiary)", textAlign: "center",
             fontStyle: "italic", padding: "8px 0",
           }}>
             Soyez le premier à compléter un module !
@@ -252,11 +252,11 @@ export const AcademyPage = () => {
       <h2 style={{
         fontFamily: "'Cormorant Garamond', Georgia, serif",
         fontSize: 22, fontWeight: 400, fontStyle: "italic",
-        color: "#0b363d", marginBottom: 8,
+        color: "var(--text-primary)", marginBottom: 8,
       }}>
         Classement
       </h2>
-      <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: "rgba(11,54,61,0.45)", marginBottom: 32 }}>
+      <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: "var(--text-tertiary)", marginBottom: 32 }}>
         Comparez-vous aux autres apprenants
       </p>
 
@@ -270,14 +270,14 @@ export const AcademyPage = () => {
           <div key={pos} style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
             <div style={{
               width: avatarSize, height: avatarSize, borderRadius: 999,
-              background: pos === 1 ? "rgba(194,116,74,0.1)" : "rgba(11,54,61,0.06)",
+              background: pos === 1 ? "rgba(194,116,74,0.1)" : "var(--border-light)",
               marginBottom: 8,
             }} />
             <div style={{
               width: 70, height: h, borderRadius: "8px 8px 0 0", background: color,
               display: "flex", alignItems: "center", justifyContent: "center",
               fontFamily: "'DM Sans', sans-serif", fontSize: 20, fontWeight: 600,
-              color: pos === 1 ? "rgba(194,116,74,0.3)" : "rgba(11,54,61,0.12)",
+              color: pos === 1 ? "rgba(194,116,74,0.3)" : "var(--border-medium)",
             }}>
               {pos}
             </div>
@@ -287,7 +287,7 @@ export const AcademyPage = () => {
 
       <p style={{
         fontFamily: "'DM Sans', sans-serif", fontSize: 14,
-        color: "rgba(11,54,61,0.4)", fontStyle: "italic", lineHeight: 1.6,
+        color: "var(--text-tertiary)", fontStyle: "italic", lineHeight: 1.6,
       }}>
         Le classement sera disponible dès que les premiers modules seront complétés.
         <br />Soyez le premier sur le podium !
@@ -309,7 +309,7 @@ export const AcademyPage = () => {
             width: 80, height: 80, borderRadius: 999,
             background: "#c2744a", margin: "0 auto 16px",
             display: "flex", alignItems: "center", justifyContent: "center",
-            color: "#fef8ec",
+            color: "var(--text-on-dark)",
             fontFamily: "'Cormorant Garamond', Georgia, serif",
             fontSize: 32, fontWeight: 400, fontStyle: "italic",
           }}>
@@ -319,7 +319,7 @@ export const AcademyPage = () => {
           <h2 style={{
             fontFamily: "'Cormorant Garamond', Georgia, serif",
             fontSize: 22, fontWeight: 400, fontStyle: "italic",
-            color: "#0b363d", marginBottom: 6,
+            color: "var(--text-primary)", marginBottom: 6,
           }}>
             {firstName}
           </h2>
@@ -329,14 +329,14 @@ export const AcademyPage = () => {
               display: "inline-block",
               padding: "4px 14px", borderRadius: 999,
               background: "rgba(194,116,74,0.1)",
-              fontFamily: "'DM Sans', sans-serif", fontSize: 12, color: "#c2744a",
+              fontFamily: "'DM Sans', sans-serif", fontSize: 12, color: "var(--accent-secondary)",
               marginBottom: 4,
             }}>
               {ROLE_LABELS[role] || role}
             </div>
           )}
 
-          <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: "rgba(11,54,61,0.4)", marginTop: 6 }}>
+          <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: "var(--text-tertiary)", marginTop: 6 }}>
             {user.email}
           </div>
         </div>
@@ -352,7 +352,7 @@ export const AcademyPage = () => {
             <div key={lbl} style={{ ...card, padding: "14px 16px", display: "flex", alignItems: "center", gap: 10 }}>
               <span style={{ fontSize: 20 }}>{icon}</span>
               <div>
-                <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 16, fontWeight: 600, color: "#0b363d" }}>
+                <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 16, fontWeight: 600, color: "var(--text-primary)" }}>
                   {value}
                 </div>
                 <div style={{ ...label }}>{lbl}</div>
@@ -380,12 +380,12 @@ export const AcademyPage = () => {
                 </span>
                 <span style={{
                   fontFamily: "'DM Sans', sans-serif", fontSize: 12,
-                  color: "rgba(11,54,61,0.4)",
+                  color: "var(--text-tertiary)",
                 }}>
                   {active ? `${c}/${t}` : "Bientôt"}
                 </span>
               </div>
-              <div style={{ height: 5, borderRadius: 999, background: "rgba(11,54,61,0.06)", overflow: "hidden" }}>
+              <div style={{ height: 5, borderRadius: 999, background: "var(--border-light)", overflow: "hidden" }}>
                 <div style={{
                   height: "100%", borderRadius: 999,
                   width: active && t > 0 ? `${Math.round((c / t) * 100)}%` : "0%",
@@ -416,7 +416,7 @@ export const AcademyPage = () => {
           </div>
           <div style={{
             fontFamily: "'DM Sans', sans-serif", fontSize: 12,
-            color: "rgba(11,54,61,0.35)", textAlign: "center",
+            color: "var(--text-muted)", textAlign: "center",
             marginTop: 12, fontStyle: "italic",
           }}>
             Complétez des modules pour débloquer vos badges
@@ -428,7 +428,7 @@ export const AcademyPage = () => {
           onClick={handleLogout}
           style={{
             width: "100%", padding: "14px 24px",
-            background: "transparent", color: "#c2744a",
+            background: "transparent", color: "var(--accent-secondary)",
             border: "1px solid rgba(194,116,74,0.25)",
             borderRadius: 8,
             fontFamily: "'DM Sans', sans-serif", fontSize: 14, fontWeight: 500,
@@ -446,7 +446,7 @@ export const AcademyPage = () => {
   // Full-screen views (no bottom tab bar)
   if (view === "parcours-detail") {
     return (
-      <div style={{ minHeight: "100vh", background: "#fef8ec" }}>
+      <div style={{ minHeight: "100vh", background: "var(--bg-primary)" }}>
         <AcademyHeader />
         <ParcoursDetail
           parcoursId={selectedParcoursId}
@@ -462,7 +462,7 @@ export const AcademyPage = () => {
 
   if (view === "module-detail") {
     return (
-      <div style={{ minHeight: "100vh", background: "#fef8ec" }}>
+      <div style={{ minHeight: "100vh", background: "var(--bg-primary)" }}>
         <AcademyHeader />
         <ModuleDetail
           moduleId={selectedModuleId}
@@ -492,7 +492,7 @@ export const AcademyPage = () => {
 
   // Tabs view
   return (
-    <div style={{ minHeight: "100vh", background: "#fef8ec", paddingBottom: 80 }}>
+    <div style={{ minHeight: "100vh", background: "var(--bg-primary)", paddingBottom: 80 }}>
       <AcademyHeader xp={xp} />
 
       {/* Tab content */}
@@ -509,8 +509,8 @@ export const AcademyPage = () => {
       {/* Bottom tab bar */}
       <nav style={{
         position: "fixed", bottom: 0, left: 0, right: 0,
-        background: "#ffffff",
-        borderTop: "1px solid rgba(11,54,61,0.08)",
+        background: "var(--bg-surface)",
+        borderTop: "1px solid var(--border-light)",
         display: "flex", justifyContent: "space-around",
         padding: "8px 0 env(safe-area-inset-bottom, 8px)",
         zIndex: 1000,
@@ -523,7 +523,7 @@ export const AcademyPage = () => {
               background: "none", border: "none", display: "flex",
               flexDirection: "column", alignItems: "center", gap: 2,
               padding: "8px 12px",
-              color: activeTab === tab.id ? "#c2744a" : "rgba(11,54,61,0.35)",
+              color: activeTab === tab.id ? "var(--accent-secondary)" : "var(--text-muted)",
               fontFamily: "'DM Sans', sans-serif", fontSize: 10,
               letterSpacing: "0.08em", cursor: "pointer",
               transition: "color 0.2s ease-out",
@@ -543,15 +543,15 @@ export const AcademyPage = () => {
 const AcademyHeader = ({ xp }) => (
   <div style={{
     padding: "14px 20px",
-    borderBottom: "1px solid rgba(11,54,61,0.08)",
+    borderBottom: "1px solid var(--border-light)",
     display: "flex", alignItems: "center", justifyContent: "space-between",
-    background: "#ffffff",
+    background: "var(--bg-surface)",
     position: "sticky", top: 0, zIndex: 100,
   }}>
     <Link to="/" style={{ textDecoration: "none" }}>
       <div style={{
         fontFamily: "'Cormorant Garamond', Georgia, serif",
-        fontSize: 18, fontWeight: 600, letterSpacing: 4, color: "#0b363d",
+        fontSize: 18, fontWeight: 600, letterSpacing: 4, color: "var(--text-primary)",
       }}>
         ARDUENNA
       </div>
@@ -560,14 +560,14 @@ const AcademyHeader = ({ xp }) => (
       {xp !== undefined && (
         <div style={{
           fontFamily: "'DM Sans', sans-serif", fontSize: 12,
-          color: "rgba(11,54,61,0.45)",
+          color: "var(--text-tertiary)",
         }}>
           ⭐ {xp} XP
         </div>
       )}
       <div style={{
         fontFamily: "'Cormorant Garamond', Georgia, serif",
-        fontSize: 16, fontStyle: "italic", color: "#c2744a",
+        fontSize: 16, fontStyle: "italic", color: "var(--accent-secondary)",
       }}>
         Academy
       </div>

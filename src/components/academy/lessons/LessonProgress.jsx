@@ -7,8 +7,8 @@ export const LessonProgress = ({ current, total, onExit }) => {
   return (
     <div style={{
       position: "sticky", top: 0, zIndex: 200,
-      background: "#ffffff",
-      borderBottom: "1px solid rgba(11,54,61,0.08)",
+      background: "var(--bg-surface)",
+      borderBottom: "1px solid var(--border-light)",
       padding: "12px 16px 0",
     }}>
       <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 10 }}>
@@ -18,7 +18,7 @@ export const LessonProgress = ({ current, total, onExit }) => {
             onClick={onExit}
             style={{
               background: "none", border: "none", padding: 0,
-              cursor: "pointer", color: "rgba(11,54,61,0.4)", flexShrink: 0,
+              cursor: "pointer", color: "var(--text-tertiary)", flexShrink: 0,
               display: "flex", alignItems: "center",
             }}
           >
@@ -51,7 +51,7 @@ export const LessonProgress = ({ current, total, onExit }) => {
         {/* Count */}
         <div style={{
           fontFamily: "'DM Sans', sans-serif", fontSize: 12,
-          color: "rgba(11,54,61,0.45)", flexShrink: 0,
+          color: "var(--text-tertiary)", flexShrink: 0,
         }}>
           {current + 1}/{total}
         </div>

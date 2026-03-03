@@ -21,15 +21,15 @@ export const ParcoursDetail = ({ parcoursId, onBack, onSelectModule, getModulePe
       {/* Header */}
       <div style={{
         padding: "14px 20px",
-        borderBottom: "1px solid rgba(11,54,61,0.08)",
-        background: "#ffffff",
+        borderBottom: "1px solid var(--border-light)",
+        background: "var(--bg-surface)",
         display: "flex", alignItems: "center", gap: 12,
       }}>
         <button
           onClick={onBack}
           style={{
             background: "none", border: "none", padding: "4px 0",
-            cursor: "pointer", color: "#0b363d", display: "flex",
+            cursor: "pointer", color: "var(--text-primary)", display: "flex",
             alignItems: "center",
           }}
         >
@@ -39,13 +39,13 @@ export const ParcoursDetail = ({ parcoursId, onBack, onSelectModule, getModulePe
           <div style={{
             fontFamily: "'Cormorant Garamond', Georgia, serif",
             fontSize: 18, fontWeight: 600, fontStyle: "italic",
-            color: "#0b363d",
+            color: "var(--text-primary)",
           }}>
             {parcours.titleFr}
           </div>
           <div style={{
             fontFamily: "'DM Sans', sans-serif", fontSize: 12,
-            color: "rgba(11,54,61,0.45)", marginTop: 1,
+            color: "var(--text-tertiary)", marginTop: 1,
           }}>
             {parcours.descFr}
           </div>
@@ -56,7 +56,7 @@ export const ParcoursDetail = ({ parcoursId, onBack, onSelectModule, getModulePe
       <div style={{ padding: "20px 20px 0" }}>
         <div style={{
           fontFamily: "'DM Sans', sans-serif", fontSize: 11,
-          color: "rgba(11,54,61,0.4)", textTransform: "uppercase",
+          color: "var(--text-tertiary)", textTransform: "uppercase",
           letterSpacing: 1.5, marginBottom: 14,
         }}>
           {modules.length} modules

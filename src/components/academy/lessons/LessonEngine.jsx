@@ -50,10 +50,10 @@ export const LessonEngine = ({ moduleId, parcoursId, onComplete, onExit }) => {
     if (saving || !result) {
       return (
         <div style={{
-          minHeight: "100vh", background: "#fef8ec",
+          minHeight: "100vh", background: "var(--bg-primary)",
           display: "flex", alignItems: "center", justifyContent: "center",
         }}>
-          <div style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 20, color: "#c2744a", fontStyle: "italic" }}>
+          <div style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 20, color: "var(--accent-secondary)", fontStyle: "italic" }}>
             Sauvegarde...
           </div>
         </div>
@@ -81,7 +81,7 @@ export const LessonEngine = ({ moduleId, parcoursId, onComplete, onExit }) => {
   };
 
   return (
-    <div style={{ minHeight: "100vh", background: "#fef8ec" }}>
+    <div style={{ minHeight: "100vh", background: "var(--bg-primary)" }}>
       <LessonProgress
         current={currentIndex}
         total={totalSteps}

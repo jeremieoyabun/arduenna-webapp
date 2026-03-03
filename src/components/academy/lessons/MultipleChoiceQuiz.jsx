@@ -21,10 +21,10 @@ export const MultipleChoiceQuiz = ({ lesson, stepIndex, onNext }) => {
   const getOptionStyle = (i) => {
     const base = {
       width: "100%", minHeight: 52, padding: "14px 16px",
-      borderRadius: 10, border: "1.5px solid rgba(11,54,61,0.12)",
-      background: "#ffffff", textAlign: "left",
+      borderRadius: 10, border: "1.5px solid var(--border-medium)",
+      background: "var(--bg-surface)", textAlign: "left",
       fontFamily: "'DM Sans', sans-serif", fontSize: 14,
-      color: "#0b363d", cursor: answered ? "default" : "pointer",
+      color: "var(--text-primary)", cursor: answered ? "default" : "pointer",
       transition: "all 0.15s ease-out",
       display: "flex", alignItems: "center", gap: 10,
     };
@@ -52,7 +52,7 @@ export const MultipleChoiceQuiz = ({ lesson, stepIndex, onNext }) => {
       {/* Question */}
       <div style={{
         fontFamily: "'DM Sans', sans-serif", fontSize: 18, fontWeight: 700,
-        color: "#0b363d", lineHeight: 1.4,
+        color: "var(--text-primary)", lineHeight: 1.4,
       }}>
         {lesson.questionFr}
       </div>
@@ -84,7 +84,7 @@ export const MultipleChoiceQuiz = ({ lesson, stepIndex, onNext }) => {
           </div>
           <p style={{
             fontFamily: "'DM Sans', sans-serif", fontSize: 13, lineHeight: 1.55,
-            color: "rgba(11,54,61,0.75)", margin: 0,
+            color: "var(--text-secondary)", margin: 0,
           }}>
             {lesson.explanationFr}
           </p>
@@ -96,7 +96,7 @@ export const MultipleChoiceQuiz = ({ lesson, stepIndex, onNext }) => {
         <button
           onClick={handleNext}
           style={{
-            padding: "14px 24px", background: "#0b363d", color: "#fef8ec",
+            padding: "14px 24px", background: "#0b363d", color: "var(--text-on-dark)",
             border: "none", borderRadius: 10,
             fontFamily: "'DM Sans', sans-serif", fontSize: 15, fontWeight: 600,
             cursor: "pointer",
