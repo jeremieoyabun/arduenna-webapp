@@ -3,8 +3,7 @@ import {
   onAuthStateChanged,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
-  signInWithRedirect,
-  getRedirectResult,
+  signInWithPopup,
   GoogleAuthProvider,
   signOut,
 } from "firebase/auth";
@@ -29,9 +28,6 @@ export const AuthProvider = ({ children }) => {
       setLoading(false);
       return;
     }
-
-    // Complete any pending Google redirect sign-in
-    getRedirectResult(auth).catch(() => {});
 
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       setUser(firebaseUser);
@@ -74,7 +70,7 @@ export const AuthProvider = ({ children }) => {
     assertAuth();
     if (pendingRole) localStorage.setItem("arduenna_pending_role", pendingRole);
     const provider = new GoogleAuthProvider();
-    return signInWithRedirect(auth, provider);
+    return signInWithPopup(auth, provider);
   };
 
   const logout = async () => {

@@ -1,7 +1,5 @@
 import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { getRedirectResult } from "firebase/auth";
-import { auth } from "../lib/firebase";
 import { useAuth } from "../components/auth/AuthProvider";
 import { createUserProfile } from "../lib/userService";
 
@@ -26,13 +24,17 @@ export const LoginPage = () => {
     if (!loading && user) navigate("/academy", { replace: true });
   }, [user, loading, navigate]);
 
-  // Explicit redirect result handler for new Google accounts
-  useEffect(() => {
-    if (!auth) return;
-    getRedirectResult(auth)
-      .then((result) => { if (result?.user) navigate("/academy", { replace: true }); })
-      .catch((err) => { if (err?.code !== "auth/no-auth-event") setError(err.message); });
-  }, [navigate]);
+  const authErrorMessage = (err) => {
+    const code = err?.code;
+    if (code === "auth/invalid-credential" || code === "auth/user-not-found" || code === "auth/wrong-password")
+      return "Email ou mot de passe incorrect.";
+    if (code === "auth/email-already-in-use") return "Cet email est déjà utilisé.";
+    if (code === "auth/weak-password") return "Mot de passe trop court (6 caractères minimum).";
+    if (code === "auth/invalid-email") return "Adresse email invalide.";
+    if (code === "auth/popup-blocked") return "Popup bloqué — autorisez les popups pour ce site.";
+    if (code === "auth/popup-closed-by-user" || code === "auth/cancelled-popup-request") return null;
+    return err?.message || "Une erreur est survenue.";
+  };
 
   const handleSubmit = async () => {
     setError(null);
@@ -52,7 +54,8 @@ export const LoginPage = () => {
       }
       navigate("/academy");
     } catch (err) {
-      setError(err.message);
+      const msg = authErrorMessage(err);
+      if (msg) setError(msg);
     }
   };
 
@@ -61,7 +64,8 @@ export const LoginPage = () => {
     try {
       await loginWithGoogle(selectedRole);
     } catch (err) {
-      setError(err.message);
+      const msg = authErrorMessage(err);
+      if (msg) setError(msg);
     }
   };
 
