@@ -34,18 +34,18 @@ const tabs = [
 const TabIcon = ({ type }) => {
   const icons = {
     home: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
         <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
         <polyline points="9 22 9 12 15 12 15 22" />
       </svg>
     ),
     book: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
         <path d="M4 19.5A2.5 2.5 0 016.5 17H20" /><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z" />
       </svg>
     ),
     trophy: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
         <path d="M6 9H4.5a2.5 2.5 0 010-5H6" /><path d="M18 9h1.5a2.5 2.5 0 000-5H18" />
         <path d="M4 22h16" /><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20 7 22" />
         <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20 17 22" />
@@ -53,7 +53,7 @@ const TabIcon = ({ type }) => {
       </svg>
     ),
     user: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
         <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" /><circle cx="12" cy="7" r="4" />
       </svg>
     ),
@@ -510,9 +510,9 @@ export const AcademyPage = () => {
           backdropFilter: "blur(24px)",
           WebkitBackdropFilter: "blur(24px)",
           borderRadius: 999,
-          padding: "6px",
+          padding: "8px",
           display: "flex",
-          gap: 4,
+          gap: 6,
           boxShadow: "0 4px 20px rgba(0,0,0,0.12)",
           border: "1px solid var(--tabbar-border)",
         }}>
@@ -525,7 +525,7 @@ export const AcademyPage = () => {
                 style={{
                   background: active ? "var(--tab-active-bg)" : "transparent",
                   borderRadius: 999,
-                  padding: active ? "9px 18px" : "9px 13px",
+                  padding: active ? "10px 20px" : "10px 14px",
                   display: "flex",
                   alignItems: "center",
                   gap: active ? 7 : 0,
@@ -542,7 +542,7 @@ export const AcademyPage = () => {
                 {active && (
                   <span style={{
                     fontFamily: "'DM Sans', sans-serif",
-                    fontSize: 12, fontWeight: 700,
+                    fontSize: 13, fontWeight: 700,
                     color: "var(--tab-active-text)",
                     letterSpacing: 0.1,
                   }}>

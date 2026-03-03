@@ -123,7 +123,7 @@
   --tabbar-border:    rgba(11, 54, 61, 0.10);
   --tab-active-bg:    #0b363d;
   --tab-active-text:  #fef8ec;
-  --tab-icon:         rgba(11, 54, 61, 0.40);
+  --tab-icon:         rgba(11, 54, 61, 0.55);
   --module-tint:      #fdf5e4;
   --font-seasons:     'The Seasons', 'Cormorant Garamond', Georgia, serif;
 }
@@ -173,7 +173,7 @@
   --tabbar-border:    rgba(194, 116, 74, 0.15);
   --tab-active-bg:    #fef8ec;
   --tab-active-text:  #0b363d;
-  --tab-icon:         rgba(254, 248, 236, 0.42);
+  --tab-icon:         rgba(254, 248, 236, 0.55);
   --module-tint:      #091e26;
 }
 
@@ -637,12 +637,12 @@ a {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 3px;
+  gap: 4px;
   background: none;
   border: none;
-  color: var(--text-muted);
+  color: var(--text-secondary);
   font-family: var(--font-body);
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: var(--tracking-wide);
   text-transform: uppercase;
   cursor: pointer;
@@ -655,8 +655,8 @@ a {
 }
 
 .bottom-nav__icon {
-  width: 22px;
-  height: 22px;
+  width: 26px;
+  height: 26px;
   display: flex;
   align-items: center;
   justify-content: center;

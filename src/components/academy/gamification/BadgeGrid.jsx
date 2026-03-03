@@ -9,13 +9,13 @@ export const BadgeGrid = ({ earnedBadges = [] }) => {
   const earnedIds = earnedBadges.map(b => (typeof b === "string" ? b : b.id));
 
   return (
-    <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 12 }}>
+    <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 14, justifyItems: "center" }}>
       {badgesData.map(badge => {
         const earned = earnedIds.includes(badge.id);
         return (
-          <div key={badge.id} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 5 }}>
+          <div key={badge.id} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 6 }}>
             <div style={{
-              width: 56, height: 56, borderRadius: 999,
+              width: 64, height: 64, borderRadius: 999,
               background: earned ? "rgba(194,116,74,0.12)" : "var(--elevated)",
               border: earned
                 ? "2px solid rgba(194,116,74,0.3)"
@@ -25,14 +25,14 @@ export const BadgeGrid = ({ earnedBadges = [] }) => {
               opacity: earned ? 1 : 0.45,
               transition: "all 0.2s ease-out",
             }}>
-              {earned ? <BadgeGlyph id={badge.id} size={34} /> : <PadlockSVG size={38} />}
+              {earned ? <BadgeGlyph id={badge.id} size={38} /> : <PadlockSVG size={42} />}
             </div>
             <span style={{
               fontFamily: "'DM Sans', sans-serif",
-              fontSize: 9, textAlign: "center",
+              fontSize: 11, textAlign: "center",
               color: earned ? "#c2744a" : "var(--text-4)",
-              lineHeight: 1.2,
-              maxWidth: 56,
+              lineHeight: 1.25,
+              maxWidth: 72,
               display: "-webkit-box",
               WebkitLineClamp: 2,
               WebkitBoxOrient: "vertical",
