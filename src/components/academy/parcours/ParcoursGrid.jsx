@@ -2,14 +2,10 @@ import { parcoursData } from "../../../data/academy/parcours";
 import { modulesData } from "../../../data/academy/modules";
 
 const PARCOURS_ICONS = {
-  univers: <img src="/icons/Univers-Arduenna.webp" alt="" width="30" height="30" style={{ objectFit: "contain", display: "block" }} />,
-  gamme: (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M8 2h8l-2 7h4L10 22l2-9H8z" />
-    </svg>
-  ),
-  cocktail: <img src="/icons/Cocktails-Lab.svg" alt="" width="30" height="30" style={{ objectFit: "contain", display: "block" }} />,
-  vente: <img src="/icons/Vendre-Arduenna.svg" alt="" width="30" height="30" style={{ objectFit: "contain", display: "block" }} />,
+  univers: <img src="/icons/Univers-Arduenna.webp" alt="" width="42" height="42" style={{ objectFit: "contain", display: "block" }} />,
+  gamme: <img src="/icons/Vendre-Arduenna.svg" alt="" width="42" height="42" style={{ objectFit: "contain", display: "block" }} />,
+  cocktail: <img src="/icons/Cocktails-Lab.svg" alt="" width="42" height="42" style={{ objectFit: "contain", display: "block" }} />,
+  vente: <img src="/icons/Vendre-Arduenna.svg" alt="" width="42" height="42" style={{ objectFit: "contain", display: "block" }} />,
 };
 
 const LockIcon = () => (

@@ -9,7 +9,6 @@ export const Teasers = ({ t, teaserNotifs, setTeaserNotifs }) => (
 
     <div className="grid-4 reveal">
       {[
-        { key: "academy", title: t.teasers.academyTitle, desc: t.teasers.academyDesc },
         { key: "finder", title: t.teasers.finderTitle, desc: t.teasers.finderDesc },
         { key: "cellar", title: t.teasers.cellarTitle, desc: t.teasers.cellarDesc },
         { key: "events", title: t.teasers.eventsTitle, desc: t.teasers.eventsDesc },

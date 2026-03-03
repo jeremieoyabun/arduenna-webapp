@@ -36,11 +36,11 @@ export const Awards = ({ t }) => (
               alt=""
               style={{
                 position: "absolute",
-                left: -4, top: "50%",
+                left: 6, top: "50%",
                 transform: "translateY(-50%)",
-                height: "80%",
+                height: "50%",
                 width: "auto",
-                opacity: 0.12,
+                opacity: 0.22,
                 pointerEvents: "none",
               }}
             />
@@ -49,11 +49,11 @@ export const Awards = ({ t }) => (
               alt=""
               style={{
                 position: "absolute",
-                right: -4, top: "50%",
+                right: 6, top: "50%",
                 transform: "translateY(-50%)",
-                height: "80%",
+                height: "50%",
                 width: "auto",
-                opacity: 0.12,
+                opacity: 0.22,
                 pointerEvents: "none",
               }}
             />

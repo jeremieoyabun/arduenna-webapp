@@ -293,13 +293,13 @@ export const AcademyPage = () => {
         {/* Stats 2×2 */}
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 16 }}>
           {[
-            { icon: "⭐", value: xp, lbl: "XP total" },
-            { icon: "🔥", value: `${streak}j`, lbl: "Streak" },
-            { icon: "📚", value: p1completed, lbl: "Modules faits" },
-            { icon: "🏅", value: earnedBadges.length, lbl: "Badges" },
-          ].map(({ icon, value, lbl }) => (
+            { img: "/icons/XP.svg", value: xp, lbl: "XP total" },
+            { img: "/icons/Streakk.svg", value: `${streak}j`, lbl: "Streak" },
+            { img: "/icons/Modules.svg", value: p1completed, lbl: "Modules faits" },
+            { img: "/icons/Badges.svg", value: earnedBadges.length, lbl: "Badges" },
+          ].map(({ img, value, lbl }) => (
             <div key={lbl} style={{ ...card, padding: "14px 16px", display: "flex", alignItems: "center", gap: 10 }}>
-              <span style={{ fontSize: 20 }}>{icon}</span>
+              <img src={img} alt="" width="22" height="22" style={{ objectFit: "contain", display: "block", flexShrink: 0 }} />
               <div>
                 <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 18, fontWeight: 700, color: "var(--text-1)" }}>
                   {value}
