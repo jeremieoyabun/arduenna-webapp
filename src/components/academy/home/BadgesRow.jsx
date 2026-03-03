@@ -59,7 +59,7 @@ export const BadgesRow = ({ earnedBadgeIds = [], onViewAll, newBadgeId }) => {
                 flexShrink: 0,
                 overflow: "hidden",
               }}>
-                {earned ? <BadgeGlyph id={badge.id} size={32} /> : <PadlockSVG size={16} />}
+                {earned ? <BadgeGlyph id={badge.id} size={32} /> : <PadlockSVG size={44} />}
               </div>
 
               {/* Badge label */}
