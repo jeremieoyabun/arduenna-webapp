@@ -23,6 +23,8 @@ export const Hero = ({ t, sectionRefs, scrollTo }) => {
             src="/Arduenna_Bouteille_50CL-V2.avif"
             alt="Arduenna Gin bottle"
             className="hero__bottle"
+            width="260"
+            height="780"
           />
         </div>
       </div>

@@ -110,7 +110,6 @@ export const HomePage = ({ lang, setLang, theme, toggleTheme, t }) => {
   }, [toast]);
 
   const scrollTo = useCallback((id) => {
-    setMenuOpen(false);
     const el = sectionRefs.current[id];
     if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
   }, []);

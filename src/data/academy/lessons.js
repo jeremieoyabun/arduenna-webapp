@@ -140,14 +140,14 @@ const univers2 = [
         titleEn: "🍑 Mirabelle Plum",
         textFr: "Petite prune dorée des Ardennes. Apporte rondeur et douceur fruitée-acidulée au gin. Récoltée à la main en fin d'été quand les fruits sont à parfaite maturité.",
         textEn: "Small golden plum from the Ardennes. Brings roundness and sweet-tart fruitiness to the gin. Hand-harvested in late summer when the fruits are at perfect ripeness.",
-        img: "/Mirabelle.svg", imgContain: true,
+        img: "/Mirabelle.webp", imgContain: true,
       },
       {
         titleFr: "🌲 Sapin",
         titleEn: "🌲 Fir",
         textFr: "Bourgeons de sapin cueillis au printemps dans les forêts ardennaises. Confèrent une fraîcheur résineuse unique et des notes boisées. La signature aromatique d'Arduenna.",
         textEn: "Fir buds picked in spring from the Ardennais forests. Give a unique resinous freshness and woody notes. The aromatic signature of Arduenna.",
-        img: "/Sapin.svg", imgContain: true,
+        img: "/Sapin.webp", imgContain: true,
       },
       {
         titleFr: "🌸 Sureau",

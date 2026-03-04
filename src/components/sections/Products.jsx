@@ -16,7 +16,7 @@ export const Products = ({ t, lang, theme, sectionRefs, productsData, selectedPr
       <div className="grid-2 reveal">
         {productsData.map((p) => (
           <div key={p.id} className="card card--interactive product-card" onClick={() => setSelectedProduct(p)} role="button" tabIndex={0} onKeyDown={(e) => e.key === "Enter" && setSelectedProduct(p)}>
-            <img src={p.img} alt={lang === "fr" ? p.nameFr : p.nameEn} className="product-card__img" />
+            <img src={p.img} alt={lang === "fr" ? p.nameFr : p.nameEn} className="product-card__img" width="160" height="200" loading="lazy" />
             <h3 className="product-card__name">{lang === "fr" ? p.nameFr : p.nameEn}</h3>
             <div className="product-card__meta">{p.volume} · {p.abv}</div>
             <div className="product-card__price">{p.price}</div>

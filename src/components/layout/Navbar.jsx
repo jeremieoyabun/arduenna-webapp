@@ -24,6 +24,8 @@ export const Navbar = ({ t, lang, theme, scrolled, activeSection, navSections, s
           src="/Arduennagin_logo_vert_.webp"
           alt="Arduenna — Retour à l'accueil"
           className="top-nav__logo"
+          width="120"
+          height="40"
           onClick={() => scrollTo("hero")}
           role="button"
           tabIndex={0}

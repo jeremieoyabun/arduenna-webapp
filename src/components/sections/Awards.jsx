@@ -34,6 +34,7 @@ export const Awards = ({ t }) => (
             <img
               src="/icons/leaf-left.svg"
               alt=""
+              loading="lazy"
               style={{
                 position: "absolute",
                 left: 6, top: "50%",
@@ -47,6 +48,7 @@ export const Awards = ({ t }) => (
             <img
               src="/icons/leaf-right.svg"
               alt=""
+              loading="lazy"
               style={{
                 position: "absolute",
                 right: 6, top: "50%",

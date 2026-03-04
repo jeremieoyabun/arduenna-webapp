@@ -3,8 +3,7 @@
    Premium organic gin from the Belgian Ardennes
    ═══════════════════════════════════════════════════════ */
 
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap');
-@import url('https://api.fontshare.com/v2/css?f[]=the-seasons@700&display=swap');
+/* Fonts loaded via <link> in index.html for faster rendering */
 
 /* ─── Design Tokens ─── */
 :root {
@@ -1177,30 +1176,6 @@ a {
   padding: var(--space-5);
 }
 
-.award-card__year {
-  font-family: var(--font-body);
-  font-size: var(--text-xs);
-  color: var(--text-muted);
-  margin-bottom: var(--space-2);
-}
-
-.award-card__title {
-  font-family: var(--font-display);
-  font-size: var(--text-base);
-  font-weight: 500;
-  font-style: italic;
-  margin-bottom: var(--space-1);
-  color: var(--text-primary);
-}
-
-.award-card__detail {
-  font-family: var(--font-body);
-  font-size: var(--text-xs);
-  color: var(--accent-secondary);
-  font-weight: 500;
-  letter-spacing: var(--tracking-wide);
-  text-transform: uppercase;
-}
 
 /* Product cards */
 .product-card {
