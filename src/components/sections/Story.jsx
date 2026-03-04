@@ -30,7 +30,7 @@ export const Story = ({ t, sectionRefs, theme }) => {
         <h2 className="section-title">{t.story.title}</h2>
       </div>
 
-      <div className="body-text reveal" style={{ textAlign: "center", maxWidth: "var(--max-width-text)", margin: "0 auto var(--space-14)" }}>
+      <div className="body-text reveal" style={{ textAlign: "center", maxWidth: "var(--max-width-text)", margin: "0 auto var(--space-10)" }}>
         <p style={{ marginBottom: "var(--space-5)" }}>{t.story.p1}</p>
         <p style={{ marginBottom: "var(--space-5)" }}>{t.story.p2}</p>
         <p>{t.story.p3}</p>

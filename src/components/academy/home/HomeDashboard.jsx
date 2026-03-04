@@ -277,12 +277,13 @@ export const HomeDashboard = ({
     if (nextModule) break;
   }
 
-  // ── Parcours progress ────────────────────────────────────────────────────
-  const parcoursProgress = eligibleParcours.map(p => {
+  // ── Parcours progress (all parcours — coming soon shown too) ────────────
+  const parcoursProgress = parcoursData.map(p => {
+    const isPlayable = p.id === "univers";
     const total = modulesData.filter(m => m.parcoursId === p.id).length;
-    const done = getParcoursCompletedCount(p.id);
-    const started = done > 0 || !!progress?.parcours?.[p.id]?.started;
-    return { ...p, total, done, started, percent: total > 0 ? Math.round((done / total) * 100) : 0 };
+    const done = isPlayable ? getParcoursCompletedCount(p.id) : 0;
+    const started = isPlayable && (done > 0 || !!progress?.parcours?.[p.id]?.started);
+    return { ...p, total, done, started, isPlayable, percent: total > 0 ? Math.round((done / total) * 100) : 0 };
   });
 
   const totalModules = modulesData.length;
@@ -566,52 +567,63 @@ export const HomeDashboard = ({
         </div>
 
         {/* ── PARCOURS PROGRESS ────────────────────────────────────────────── */}
-        {parcoursProgress.some(p => p.done > 0) && (
-          <div
-            className="a-card"
-            style={{ marginBottom: 10, padding: "18px 20px", ...staggerStyle(3, mounted) }}
-          >
-            <div style={{ ...CAP, marginBottom: 18 }}>Ma progression</div>
-            {parcoursProgress.map(({ id, titleFr, done, total, percent, started, color }) => (
-              <div key={id} style={{ marginBottom: 18 }}>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 8 }}>
-                  <span style={{
-                    fontFamily: "'DM Sans', sans-serif", fontSize: 13,
-                    color: started ? "var(--text-2)" : "var(--text-4)",
-                    fontWeight: started ? 500 : 400,
-                  }}>
-                    {titleFr}
-                  </span>
+        <div
+          className="a-card"
+          style={{ marginBottom: 10, padding: "18px 20px", ...staggerStyle(3, mounted) }}
+        >
+          <div style={{ ...CAP, marginBottom: 18 }}>Parcours</div>
+          {parcoursProgress.map(({ id, titleFr, done, total, percent, started, isPlayable, color }) => (
+            <div key={id} style={{ marginBottom: 14, opacity: isPlayable ? 1 : 0.55 }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 6 }}>
+                <span style={{
+                  fontFamily: "'DM Sans', sans-serif", fontSize: 13,
+                  color: started ? "var(--text-2)" : "var(--text-4)",
+                  fontWeight: started ? 500 : 400,
+                }}>
+                  {titleFr}
+                </span>
+                {isPlayable ? (
                   <span style={{
                     fontFamily: "'DM Sans', sans-serif", fontSize: 11, fontWeight: 600,
                     color: percent === 100 ? color : "var(--text-4)",
                   }}>
                     {done}/{total}
                   </span>
-                </div>
-                <div style={{ position: "relative", height: 2, borderRadius: 999, background: "var(--border-subtle)" }}>
-                  <div style={{
-                    position: "absolute", top: 0, left: 0,
-                    height: "100%", borderRadius: 999,
-                    width: `${percent}%`,
-                    background: percent === 100 ? color : "rgba(194,116,74,0.55)",
-                    transition: "width 0.5s ease-out",
-                  }} />
-                  {percent > 3 && percent < 100 && (
-                    <div style={{
-                      position: "absolute", left: `${percent}%`, top: "50%",
-                      transform: "translate(-50%, -50%) rotate(45deg)",
-                      width: 7, height: 7,
-                      background: "rgba(194,116,74,0.65)",
-                      borderRadius: "0 2px 0 2px",
-                      transition: "left 0.5s ease-out",
-                    }} />
-                  )}
-                </div>
+                ) : (
+                  <span style={{
+                    fontFamily: "'DM Sans', sans-serif", fontSize: 9, fontWeight: 600,
+                    color: "var(--text-4)", textTransform: "uppercase", letterSpacing: "1px",
+                  }}>
+                    Bientôt
+                  </span>
+                )}
               </div>
-            ))}
-          </div>
-        )}
+              <div style={{ position: "relative", height: 2, borderRadius: 999, background: "var(--border-subtle)" }}>
+                {isPlayable && (
+                  <>
+                    <div style={{
+                      position: "absolute", top: 0, left: 0,
+                      height: "100%", borderRadius: 999,
+                      width: `${percent}%`,
+                      background: percent === 100 ? color : "rgba(194,116,74,0.55)",
+                      transition: "width 0.5s ease-out",
+                    }} />
+                    {percent > 3 && percent < 100 && (
+                      <div style={{
+                        position: "absolute", left: `${percent}%`, top: "50%",
+                        transform: "translate(-50%, -50%) rotate(45deg)",
+                        width: 7, height: 7,
+                        background: "rgba(194,116,74,0.65)",
+                        borderRadius: "0 2px 0 2px",
+                        transition: "left 0.5s ease-out",
+                      }} />
+                    )}
+                  </>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
 
         {/* ── RECENT ACTIVITY ──────────────────────────────────────────────── */}
         <div style={staggerStyle(4, mounted)}>

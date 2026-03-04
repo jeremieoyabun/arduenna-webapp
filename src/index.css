@@ -383,7 +383,7 @@ a {
 
 /* ─── Layout ─── */
 .section {
-  padding: var(--space-20) var(--space-6);
+  padding: var(--space-14) var(--space-6);
   max-width: var(--max-width-narrow);
   margin: 0 auto;
 }
@@ -394,7 +394,7 @@ a {
 
 .section-header {
   text-align: center;
-  margin-bottom: var(--space-12);
+  margin-bottom: var(--space-10);
 }
 
 .divider {
@@ -1131,7 +1131,6 @@ a {
 .hero__bottle {
   width: 260px;
   height: auto;
-  filter: drop-shadow(0 30px 60px rgba(11, 54, 61, 0.15));
   animation: floatIn 1.2s var(--ease-out) 0.3s both,
              gentleFloat 4s ease-in-out 1.5s infinite;
 }
@@ -1139,7 +1138,7 @@ a {
 /* Botanical cards */
 .botanical-card {
   text-align: center;
-  padding: var(--space-8);
+  padding: var(--space-6);
 }
 
 .botanical-card__img {
@@ -1175,7 +1174,7 @@ a {
 /* Award cards */
 .award-card {
   text-align: center;
-  padding: var(--space-6);
+  padding: var(--space-5);
 }
 
 .award-card__year {
@@ -1207,16 +1206,15 @@ a {
 .product-card {
   cursor: pointer;
   text-align: center;
-  padding: var(--space-10) var(--space-8);
+  padding: var(--space-8) var(--space-6);
 }
 
 .product-card__img {
   width: 160px;
-  height: 220px;
+  height: 200px;
   object-fit: contain;
-  margin: 0 auto var(--space-6);
+  margin: 0 auto var(--space-4);
   transition: transform var(--duration-slow) var(--ease-out);
-  filter: drop-shadow(0 8px 24px rgba(11, 54, 61, 0.1));
 }
 
 .product-card:hover .product-card__img {
@@ -1737,18 +1735,18 @@ a {
   }
 
   .section {
-    padding: var(--space-16) var(--space-5);
+    padding: var(--space-12) var(--space-5);
   }
 
   .hero {
     min-height: 100vh;
     min-height: 100dvh;
-    padding: calc(var(--nav-height) + var(--space-6)) var(--space-5) var(--space-12);
+    padding: calc(var(--nav-height) + var(--space-6)) var(--space-5) var(--space-8);
   }
 
   .hero__content {
     flex-direction: column;
-    gap: var(--space-10);
+    gap: var(--space-6);
   }
 
   .hero__text {
