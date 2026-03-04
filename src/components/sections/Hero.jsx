@@ -6,7 +6,9 @@ export const Hero = ({ t, sectionRefs, scrollTo }) => {
           <h1 className="hero__heading">
             <span className="hero__heading-main">{t.hero.tagline}</span>
             <span className="hero__heading-italic">
+              <span className="hero__dash" aria-hidden="true">—</span>
               <em>{t.hero.tagline2}</em>
+              <span className="hero__dash" aria-hidden="true">—</span>
             </span>
           </h1>
           <p className="hero__subtitle">{t.hero.subtitle}</p>

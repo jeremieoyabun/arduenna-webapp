@@ -398,7 +398,7 @@ a {
 
 .divider {
   height: 1px;
-  margin: 0 0 var(--space-16);
+  margin: 0 0 var(--space-10);
   background: linear-gradient(90deg, transparent, var(--border-medium), transparent);
 }
 
@@ -1017,7 +1017,7 @@ a {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: calc(var(--nav-height) + var(--space-10)) var(--space-8) var(--space-16);
+  padding: calc(var(--nav-height) + var(--space-4)) var(--space-8) var(--space-10);
   position: relative;
   overflow: hidden;
 }
@@ -1070,7 +1070,7 @@ a {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: var(--space-6);
+  gap: var(--space-3);
   max-width: var(--max-width);
   width: 100%;
 }
@@ -1096,8 +1096,8 @@ a {
   font-family: var(--font-display);
   font-size: var(--text-hero);
   font-weight: 400;
-  line-height: 1.05;
-  margin-bottom: var(--space-6);
+  line-height: 1.0;
+  margin-bottom: var(--space-4);
   color: var(--text-primary);
   animation: fadeSlideUp 0.8s var(--ease-out) both;
 }
@@ -1105,20 +1105,29 @@ a {
 .hero__heading-main {
   display: block;
   font-weight: 600;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
 }
 
 .hero__heading-italic {
   display: block;
   font-style: italic;
-  font-weight: 400;
-  color: var(--accent-secondary);
+  font-weight: 300;
+  color: var(--text-primary);
   font-size: 1.15em;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.01em;
 }
 
 .hero__heading em {
   font-style: italic;
+}
+
+.hero__dash {
+  display: inline-block;
+  width: 32px;
+  vertical-align: middle;
+  opacity: 0.3;
+  margin: 0 var(--space-3);
+  font-weight: 300;
 }
 
 .hero__subtitle {
@@ -1126,7 +1135,7 @@ a {
   font-size: var(--text-lg);
   color: var(--text-tertiary);
   max-width: 420px;
-  margin: 0 auto var(--space-10);
+  margin: 0 auto var(--space-4);
   line-height: var(--leading-normal);
   letter-spacing: var(--tracking-normal);
   animation: fadeSlideUp 0.9s var(--ease-out) 0.2s both;
@@ -1729,12 +1738,12 @@ a {
   animation: revealWidth 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-/* Card hover lift */
-.card {
+/* Card hover lift — text cards only, not image containers */
+.card:not(.product-card):not(.botanical-card) {
   transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
               box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1);
 }
-.card:hover {
+.card:not(.product-card):not(.botanical-card):hover {
   transform: translateY(-4px);
   box-shadow: 0 8px 24px rgba(11,54,61,0.06);
 }
