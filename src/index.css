@@ -1320,13 +1320,20 @@ a {
 
 /* Cocktail modal hero image */
 .cocktail-modal__img {
-  width: calc(100% + 2 * var(--space-6));
-  margin: calc(-1 * var(--space-6)) calc(-1 * var(--space-6)) var(--space-4);
+  width: calc(100% + 2 * var(--space-10));
+  margin: calc(-1 * var(--space-10)) calc(-1 * var(--space-10)) var(--space-4);
   aspect-ratio: 16 / 9;
   object-fit: cover;
   object-position: center;
   display: block;
   border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+
+@media (max-width: 768px) {
+  .cocktail-modal__img {
+    width: calc(100% + 2 * var(--space-6));
+    margin: calc(-1 * var(--space-6)) calc(-1 * var(--space-6)) var(--space-4);
+  }
 }
 
 .cocktail-card__header {
