@@ -259,10 +259,8 @@ export const HomeDashboard = ({
   const nextLevel = LEVELS.find(l => l.level === currentLevel.level + 1);
   const xpToNext = currentLevel.xpNeeded ? currentLevel.xpNeeded - xpInLevel : null;
 
-  // ── Next module ──────────────────────────────────────────────────────────
-  const eligibleParcours = parcoursData.filter(p =>
-    p.targetRoles === "all" || (Array.isArray(p.targetRoles) && p.targetRoles.includes(role))
-  );
+  // ── Next module — all parcours accessible regardless of role ─────────────
+  const eligibleParcours = parcoursData;
 
   let nextModule = null;
   let nextParcoursId = null;

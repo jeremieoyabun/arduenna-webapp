@@ -8,13 +8,6 @@ const PARCOURS_ICONS = {
   vente: <img src="/icons/Vendre-Arduenna.svg" alt="" width="56" height="56" style={{ objectFit: "contain", display: "block" }} />,
 };
 
-const LockIcon = () => (
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(11,54,61,0.3)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
-    <path d="M7 11V7a5 5 0 0110 0v4" />
-  </svg>
-);
-
 export const ParcoursGrid = ({ onSelectParcours, getParcoursCompletedCount }) => {
   const cardStyle = {
     background: "var(--bg-surface)",
@@ -45,19 +38,17 @@ export const ParcoursGrid = ({ onSelectParcours, getParcoursCompletedCount }) =>
       </p>
 
       {parcoursData.map((p, i) => {
-        const isPlayable = p.id === "univers";
         const moduleCount = modulesData.filter(m => m.parcoursId === p.id).length;
-        const completedCount = isPlayable ? (getParcoursCompletedCount?.(p.id) || 0) : 0;
+        const completedCount = getParcoursCompletedCount?.(p.id) || 0;
         const percent = moduleCount > 0 ? Math.round((completedCount / moduleCount) * 100) : 0;
 
         return (
           <div
             key={p.id}
-            onClick={isPlayable ? () => onSelectParcours(p.id) : undefined}
+            onClick={() => onSelectParcours(p.id)}
             style={{
               ...cardStyle,
-              opacity: isPlayable ? 1 : 0.6,
-              cursor: isPlayable ? "pointer" : "default",
+              cursor: "pointer",
               position: "relative",
               overflow: "hidden",
             }}
@@ -65,9 +56,9 @@ export const ParcoursGrid = ({ onSelectParcours, getParcoursCompletedCount }) =>
             {/* Icon */}
             <div style={{
               width: 60, height: 60, borderRadius: 14, flexShrink: 0,
-              background: isPlayable ? "rgba(194,116,74,0.08)" : "rgba(11,54,61,0.04)",
+              background: "rgba(194,116,74,0.08)",
               display: "flex", alignItems: "center", justifyContent: "center",
-              color: isPlayable ? "#c2744a" : "rgba(11,54,61,0.25)",
+              color: "#c2744a",
             }}>
               {PARCOURS_ICONS[p.id]}
             </div>
@@ -86,7 +77,7 @@ export const ParcoursGrid = ({ onSelectParcours, getParcoursCompletedCount }) =>
               }}>
                 {p.descFr}
               </div>
-              {isPlayable && percent > 0 ? (
+              {percent > 0 ? (
                 <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                   <div style={{
                     flex: 1, height: 4, borderRadius: 999,
@@ -119,22 +110,9 @@ export const ParcoursGrid = ({ onSelectParcours, getParcoursCompletedCount }) =>
 
             {/* Right side */}
             <div style={{ flexShrink: 0 }}>
-              {isPlayable ? (
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(11,54,61,0.3)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <polyline points="9 18 15 12 9 6" />
-                </svg>
-              ) : (
-                <div>
-                  <LockIcon />
-                  <div style={{
-                    fontFamily: "'DM Sans', sans-serif", fontSize: 10,
-                    color: "var(--text-muted)", marginTop: 4,
-                    textAlign: "center",
-                  }}>
-                    Bientôt
-                  </div>
-                </div>
-              )}
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(11,54,61,0.3)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="9 18 15 12 9 6" />
+              </svg>
             </div>
           </div>
         );

@@ -8,9 +8,9 @@ export const NextModuleCard = ({ module, parcoursId, percent, onStart }) => {
 
   const PARCOURS_META = {
     univers:  { label: "L'Univers Arduenna", color: "#4a9b8a", bg: "/Les3botanniques.webp" },
-    gamme:    { label: "La Gamme",           color: "#c2744a", bg: "/Les3botanniques.webp" },
-    cocktail: { label: "Le Cocktail Lab",    color: "#7ab8c4", bg: "/Les3botanniques.webp" },
-    vente:    { label: "Vendre Arduenna",    color: "#c9a84c", bg: null                    },
+    gamme:    { label: "La Gamme",           color: "#c2744a", bg: "/Lagamme.webp" },
+    cocktail: { label: "Le Cocktail Lab",    color: "#7ab8c4", bg: "/5cocktails-signatures.webp" },
+    vente:    { label: "Vendre Arduenna",    color: "#c9a84c", bg: "/vendre-arduenna.webp" },
   };
 
   const CAP = {
