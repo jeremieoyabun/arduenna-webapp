@@ -2,6 +2,7 @@ import { lazy, Suspense, useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import { translations } from "./data/translations";
 import { AgeGate } from "./components/layout/AgeGate";
+import { useAuth } from "./components/auth/AuthProvider";
 
 // Lazy-load heavy pages to reduce initial bundle
 const HomePage = lazy(() => import("./pages/HomePage").then(m => ({ default: m.HomePage })));
@@ -26,7 +27,10 @@ const PageLoader = () => (
 export default function ArduennaWebapp() {
   const [lang, setLang] = useState("fr");
   const [theme, setTheme] = useState("light");
-  const [ageVerified, setAgeVerified] = useState(false);
+  const { user } = useAuth();
+  const [ageVerified, setAgeVerified] = useState(() => {
+    try { return localStorage.getItem("arduenna_age_ok") === "1"; } catch { return false; }
+  });
   const [ageDenied, setAgeDenied] = useState(false);
 
   const t = translations[lang];
@@ -37,12 +41,12 @@ export default function ArduennaWebapp() {
 
   const toggleTheme = () => setTheme((prev) => (prev === "light" ? "dark" : "light"));
 
-  if (!ageVerified) {
+  if (!ageVerified && !user) {
     return (
       <AgeGate
         t={t}
         ageDenied={ageDenied}
-        onVerify={() => setAgeVerified(true)}
+        onVerify={() => { localStorage.setItem("arduenna_age_ok", "1"); setAgeVerified(true); }}
         onDeny={() => setAgeDenied(true)}
       />
     );
