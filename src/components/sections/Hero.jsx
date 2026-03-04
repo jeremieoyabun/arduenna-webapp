@@ -1,8 +1,7 @@
 export const Hero = ({ t, sectionRefs, scrollTo }) => {
   return (
     <section id="hero" ref={(el) => (sectionRefs.current.hero = el)} className="hero">
-
-      <div className="hero__content">
+      <div className="hero__inner">
         <div className="hero__text">
           <h1 className="hero__heading">
             <span className="hero__heading-main">{t.hero.tagline}</span>
@@ -10,7 +9,6 @@ export const Hero = ({ t, sectionRefs, scrollTo }) => {
               <em>{t.hero.tagline2}</em>
             </span>
           </h1>
-
           <p className="hero__subtitle">{t.hero.subtitle}</p>
         </div>
 
@@ -23,10 +21,8 @@ export const Hero = ({ t, sectionRefs, scrollTo }) => {
             height="780"
           />
         </div>
-      </div>
 
-      <div style={{ textAlign: "center", marginTop: "var(--space-6)" }}>
-        <button className="btn-primary" onClick={() => scrollTo("products")} style={{ padding: "16px 40px" }}>
+        <button className="hero__cta btn-primary" onClick={() => scrollTo("products")}>
           {t.hero.cta}
         </button>
       </div>
