@@ -1,7 +1,10 @@
 import { RadarChart } from "../ui/RadarChart";
 import { IconX } from "../ui/Icons";
 
-export const Products = ({ t, lang, sectionRefs, productsData, selectedProduct, setSelectedProduct }) => (
+export const Products = ({ t, lang, theme, sectionRefs, productsData, selectedProduct, setSelectedProduct }) => {
+  const isDark = theme === "dark";
+  const getColor = (p) => (isDark && p.colorDark) ? p.colorDark : p.color;
+  return (
   <>
     <section id="products" ref={(el) => (sectionRefs.current.products = el)} className="section section--wide">
       <div className="divider" />
@@ -18,7 +21,7 @@ export const Products = ({ t, lang, sectionRefs, productsData, selectedProduct, 
             <div className="product-card__meta">{p.volume} · {p.abv}</div>
             <div className="product-card__price">{p.price}</div>
             <div className="product-card__radar">
-              <RadarChart data={p.profile} color={p.color} size={440} />
+              <RadarChart data={p.profile} color={getColor(p)} size={440} />
             </div>
             <div className="product-card__serve">
               <strong>{t.products.perfectServe}</strong> · {lang === "fr" ? p.perfectServeFr : p.perfectServeEn}
@@ -64,7 +67,7 @@ export const Products = ({ t, lang, sectionRefs, productsData, selectedProduct, 
           <div className="modal__block">
             <div className="modal__block-title">{t.products.profile}</div>
             <div style={{ maxWidth: 320, margin: "0 auto" }}>
-              <RadarChart data={selectedProduct.profile} color={selectedProduct.color} size={320} />
+              <RadarChart data={selectedProduct.profile} color={getColor(selectedProduct)} size={320} />
             </div>
           </div>
 
@@ -87,4 +90,5 @@ export const Products = ({ t, lang, sectionRefs, productsData, selectedProduct, 
       </div>
     )}
   </>
-);
+  );
+};

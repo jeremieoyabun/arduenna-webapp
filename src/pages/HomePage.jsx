@@ -236,7 +236,7 @@ export const HomePage = ({ lang, setLang, theme, toggleTheme, t }) => {
       <Story t={t} sectionRefs={sectionRefs} theme={theme} />
       <Awards t={t} />
       <Products
-        t={t} lang={lang} sectionRefs={sectionRefs}
+        t={t} lang={lang} theme={theme} sectionRefs={sectionRefs}
         productsData={productsData}
         selectedProduct={selectedProduct} setSelectedProduct={setSelectedProduct}
       />

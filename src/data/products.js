@@ -4,7 +4,7 @@ export const productsData = [
     volume: "50cl", abv: "44%", price: "40.95 €",
     descFr: "Un gin de première qualité, 100% bio, qui capture l'essence des forêts ardennaises. Notes de sapin, mirabelle et fleur de sureau pour une expérience gustative unique.",
     descEn: "A premium gin, 100% organic, capturing the essence of the Ardennes forests. Notes of fir, mirabelle plum and elderflower for a unique taste experience.",
-    color: "#0b363d",
+    color: "#0b363d", colorDark: "#6ec4b8",
     profile: { juniper: 85, citrus: 40, floral: 70, herbal: 60, spice: 30, fruit: 75 },
     pairingsFr: ["Tonic premium", "Agrumes frais", "Fruits de mer", "Fromages affinés"],
     pairingsEn: ["Premium tonic", "Fresh citrus", "Seafood", "Aged cheeses"],

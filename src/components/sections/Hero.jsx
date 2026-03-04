@@ -5,19 +5,19 @@ export const Hero = ({ t, sectionRefs, scrollTo, theme }) => {
     <section id="hero" ref={(el) => (sectionRefs.current.hero = el)} className="hero">
       {/* Pine illustrations — claire pour fond clair, standard pour dark */}
       <img
-        src={isDark ? "/Sapin-illu.webp" : "/Sapin-illu-claire.webp"}
+        src={isDark ? "/Sapin-dark.webp" : "/Sapin-illu-claire.webp"}
         alt=""
         aria-hidden="true"
         className="hero__pine hero__pine--left"
       />
       <img
-        src={isDark ? "/Sapin-illu-02.webp" : "/Sapin-illu-claire-02.webp"}
+        src={isDark ? "/Mirabelle-dark.webp" : "/Sapin-illu-claire-02.webp"}
         alt=""
         aria-hidden="true"
         className="hero__pine hero__pine--right"
       />
       <img
-        src={isDark ? "/pin-illu-01.webp" : "/pin-illu-claire-01.webp"}
+        src={isDark ? "/Sapin-dark.webp" : "/pin-illu-claire-01.webp"}
         alt=""
         aria-hidden="true"
         className="hero__pine hero__pine--topleft"

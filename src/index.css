@@ -181,6 +181,9 @@
 .academy-logo { filter: brightness(0) invert(1); }
 [data-theme="light"] .academy-logo { filter: none; }
 
+/* Award leaf decorations — invert in dark mode */
+[data-theme="dark"] .award-card img[src*="leaf-"] { filter: invert(1) brightness(0.8); }
+
 /* ─── Academy Cards ─── */
 .a-card {
   background: var(--surface);
