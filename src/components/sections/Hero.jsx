@@ -12,10 +12,6 @@ export const Hero = ({ t, sectionRefs, scrollTo }) => {
           </h1>
 
           <p className="hero__subtitle">{t.hero.subtitle}</p>
-
-          <button className="btn-primary" onClick={() => scrollTo("products")} style={{ padding: "16px 40px" }}>
-            {t.hero.cta}
-          </button>
         </div>
 
         <div className="hero__visual">
@@ -27,6 +23,12 @@ export const Hero = ({ t, sectionRefs, scrollTo }) => {
             height="780"
           />
         </div>
+      </div>
+
+      <div style={{ textAlign: "center", marginTop: "var(--space-6)" }}>
+        <button className="btn-primary" onClick={() => scrollTo("products")} style={{ padding: "16px 40px" }}>
+          {t.hero.cta}
+        </button>
       </div>
     </section>
   );

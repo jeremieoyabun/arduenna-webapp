@@ -87,14 +87,22 @@ export const AcademyPromo = ({ t }) => {
 
       <div className="reveal" style={{ textAlign: "center", marginTop: "var(--space-10)" }}>
         <button
-          className="btn-primary"
           onClick={() => navigate(user ? "/academy" : "/login")}
-          style={{ padding: "14px 36px" }}
+          style={{
+            display: "inline-flex", alignItems: "center", gap: 8,
+            padding: "14px 36px",
+            background: "#c2744a", color: "#fef8ec",
+            border: "none", borderRadius: 12, cursor: "pointer",
+            fontFamily: "var(--font-body)", fontSize: "var(--text-sm)",
+            fontWeight: 500, letterSpacing: "0.04em",
+            boxShadow: "0 2px 8px rgba(194,116,74,0.3)",
+          }}
         >
-          {t.academyPromo.cta}
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ marginLeft: 8, verticalAlign: "middle" }}>
-            <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+            <path d="M6 12v5c0 1.66 2.69 3 6 3s6-1.34 6-3v-5" />
           </svg>
+          {t.academyPromo.cta}
         </button>
       </div>
     </section>
