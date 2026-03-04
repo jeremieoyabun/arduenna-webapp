@@ -121,16 +121,24 @@ export const MiniLeaderboard = ({ onViewAll }) => {
                   </div>
 
                   {/* Avatar */}
-                  <div style={{
-                    width: 30, height: 30, borderRadius: "50%", flexShrink: 0,
-                    background: isMe ? "rgba(194,116,74,0.12)" : `${color}20`,
-                    border: `1.5px solid ${isMe ? "rgba(194,116,74,0.4)" : color + "60"}`,
-                    display: "flex", alignItems: "center", justifyContent: "center",
-                    fontFamily: "'DM Sans', sans-serif", fontWeight: 700, fontSize: 12,
-                    color: isMe ? "#c2744a" : color,
-                  }}>
-                    {initial}
-                  </div>
+                  {entry.avatarUrl ? (
+                    <img src={entry.avatarUrl} alt="" style={{
+                      width: 30, height: 30, borderRadius: "50%", flexShrink: 0,
+                      objectFit: "cover",
+                      border: `1.5px solid ${isMe ? "rgba(194,116,74,0.4)" : color + "60"}`,
+                    }} />
+                  ) : (
+                    <div style={{
+                      width: 30, height: 30, borderRadius: "50%", flexShrink: 0,
+                      background: isMe ? "rgba(194,116,74,0.12)" : `${color}20`,
+                      border: `1.5px solid ${isMe ? "rgba(194,116,74,0.4)" : color + "60"}`,
+                      display: "flex", alignItems: "center", justifyContent: "center",
+                      fontFamily: "'DM Sans', sans-serif", fontWeight: 700, fontSize: 12,
+                      color: isMe ? "#c2744a" : color,
+                    }}>
+                      {initial}
+                    </div>
+                  )}
 
                   {/* Name + level chip + mini XP bar */}
                   <div style={{ flex: 1, minWidth: 0 }}>

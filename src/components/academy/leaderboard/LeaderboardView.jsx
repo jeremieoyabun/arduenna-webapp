@@ -95,10 +95,16 @@ export const LeaderboardView = () => {
       <h2 style={{
         fontFamily: "'Cormorant Garamond', Georgia, serif",
         fontSize: 22, fontWeight: 400, fontStyle: "italic",
-        color: "var(--text-primary)", marginBottom: 24, textAlign: "center",
+        color: "var(--text-primary)", marginBottom: 8, textAlign: "center",
       }}>
         Classement
       </h2>
+      <p style={{
+        fontFamily: "'DM Sans', sans-serif", fontSize: 12,
+        color: "var(--text-tertiary)", textAlign: "center", marginBottom: 24,
+      }}>
+        Les meilleurs apprentis Arduenna
+      </p>
 
       {/* Podium */}
       <div style={{
@@ -112,22 +118,30 @@ export const LeaderboardView = () => {
           const color = MEDAL[rank - 1];
           const isMe = entry.uid === user?.uid;
           const initial = (entry.displayName || "?")[0].toUpperCase();
+          const size = rank === 1 ? 44 : 36;
 
           return (
             <div key={entry.uid} style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-              <div style={{
-                width: rank === 1 ? 44 : 36, height: rank === 1 ? 44 : 36,
-                borderRadius: 999,
-                background: isMe ? "rgba(194,116,74,0.15)" : `${color}22`,
-                border: `2px solid ${isMe ? "rgba(194,116,74,0.5)" : color}`,
-                display: "flex", alignItems: "center", justifyContent: "center",
-                fontFamily: "'DM Sans', sans-serif",
-                fontWeight: 600, fontSize: rank === 1 ? 16 : 13,
-                color: isMe ? "var(--accent-secondary)" : color,
-                marginBottom: 6,
-              }}>
-                {initial}
-              </div>
+              {entry.avatarUrl ? (
+                <img src={entry.avatarUrl} alt="" style={{
+                  width: size, height: size, borderRadius: 999, objectFit: "cover",
+                  border: `2px solid ${isMe ? "rgba(194,116,74,0.5)" : color}`,
+                  marginBottom: 6,
+                }} />
+              ) : (
+                <div style={{
+                  width: size, height: size, borderRadius: 999,
+                  background: isMe ? "rgba(194,116,74,0.15)" : `${color}22`,
+                  border: `2px solid ${isMe ? "rgba(194,116,74,0.5)" : color}`,
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  fontFamily: "'DM Sans', sans-serif",
+                  fontWeight: 600, fontSize: rank === 1 ? 16 : 13,
+                  color: isMe ? "var(--accent-secondary)" : color,
+                  marginBottom: 6,
+                }}>
+                  {initial}
+                </div>
+              )}
               <div style={{
                 fontFamily: "'DM Sans', sans-serif", fontSize: 10,
                 color: "var(--text-secondary)", marginBottom: 4,
@@ -177,15 +191,23 @@ export const LeaderboardView = () => {
               </div>
 
               {/* Avatar */}
-              <div style={{
-                width: 32, height: 32, borderRadius: 999, flexShrink: 0,
-                background: isMe ? "rgba(194,116,74,0.12)" : "var(--border-light)",
-                display: "flex", alignItems: "center", justifyContent: "center",
-                fontFamily: "'DM Sans', sans-serif", fontWeight: 600, fontSize: 13,
-                color: isMe ? "var(--accent-secondary)" : "var(--text-secondary)",
-              }}>
-                {initial}
-              </div>
+              {entry.avatarUrl ? (
+                <img src={entry.avatarUrl} alt="" style={{
+                  width: 32, height: 32, borderRadius: 999, flexShrink: 0,
+                  objectFit: "cover",
+                  border: isMe ? "2px solid rgba(194,116,74,0.4)" : "none",
+                }} />
+              ) : (
+                <div style={{
+                  width: 32, height: 32, borderRadius: 999, flexShrink: 0,
+                  background: isMe ? "rgba(194,116,74,0.12)" : "var(--border-light)",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  fontFamily: "'DM Sans', sans-serif", fontWeight: 600, fontSize: 13,
+                  color: isMe ? "var(--accent-secondary)" : "var(--text-secondary)",
+                }}>
+                  {initial}
+                </div>
+              )}
 
               {/* Name + role */}
               <div style={{ flex: 1, minWidth: 0 }}>

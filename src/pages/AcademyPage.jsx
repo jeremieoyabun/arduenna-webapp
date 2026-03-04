@@ -20,6 +20,7 @@ import {
   cancelStreakReminder,
 } from "../lib/notificationService";
 import { updateLeaderboardEntry } from "../lib/gamificationService";
+import { updateUserProfile } from "../lib/userService";
 import { modulesData } from "../data/academy/modules";
 import { parcoursData } from "../data/academy/parcours";
 
@@ -91,7 +92,7 @@ const ROLE_LABELS = {
 // ── Academy Page ──────────────────────────────────────────────────────────────
 
 export const AcademyPage = () => {
-  const { user, profile, loading: authLoading, logout } = useAuth();
+  const { user, profile, loading: authLoading, logout, refreshProfile } = useAuth();
   const progressHook = useProgress();
   const { xp, streak, getModulePercent, isLocked, isCompleted, getNextModule, getParcoursCompletedCount, loading: progressLoading } = progressHook;
 
@@ -242,60 +243,15 @@ export const AcademyPage = () => {
     return (
       <div style={{ padding: "24px 18px" }}>
 
-        {/* Avatar block */}
-        <div style={{ textAlign: "center", marginBottom: 28 }}>
-          {photoURL ? (
-            <img
-              src={photoURL}
-              alt={firstName}
-              style={{
-                width: 84, height: 84, borderRadius: 999,
-                objectFit: "cover", display: "block",
-                margin: "0 auto 14px",
-                boxShadow: "0 4px 16px rgba(194,116,74,0.18)",
-                border: "3px solid rgba(194,116,74,0.25)",
-              }}
-            />
-          ) : (
-            <div style={{
-              width: 84, height: 84, borderRadius: 999,
-              background: "linear-gradient(135deg, #7a2e00, #c2744a)",
-              margin: "0 auto 14px",
-              display: "flex", alignItems: "center", justifyContent: "center",
-              color: "#fef8ec",
-              fontFamily: "'Cormorant Garamond', Georgia, serif",
-              fontSize: 34, fontWeight: 600, fontStyle: "italic",
-              boxShadow: "0 4px 16px rgba(194,116,74,0.18)",
-            }}>
-              {firstName[0].toUpperCase()}
-            </div>
-          )}
-
-          <h2 style={{
-            fontFamily: "'Cormorant Garamond', Georgia, serif",
-            fontSize: 24, fontWeight: 600, fontStyle: "italic",
-            color: "var(--text-1)", marginBottom: 6,
-          }}>
-            {firstName}
-          </h2>
-
-          {role && (
-            <div style={{
-              display: "inline-block",
-              padding: "4px 14px", borderRadius: 999,
-              background: "rgba(194,116,74,0.13)",
-              border: "1px solid rgba(194,116,74,0.22)",
-              fontFamily: "'DM Sans', sans-serif", fontSize: 12, color: "var(--accent-secondary)",
-              marginBottom: 6,
-            }}>
-              {ROLE_LABELS[role] || role}
-            </div>
-          )}
-
-          <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, color: "var(--text-3)", marginTop: 4 }}>
-            {user.email}
-          </div>
-        </div>
+        {/* Avatar block — editable */}
+        <ProfileHeader
+          user={user}
+          profile={profile}
+          photoURL={photoURL}
+          firstName={firstName}
+          role={role}
+          refreshProfile={refreshProfile}
+        />
 
         {/* Stats 2×2 */}
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 16 }}>
@@ -564,6 +520,190 @@ export const AcademyPage = () => {
             );
           })}
         </nav>
+      </div>
+    </div>
+  );
+};
+
+// ── Profile Header with edit ─────────────────────────────────────────────────
+
+const ROLE_LABELS_PROFILE = {
+  bartender: "Bartender",
+  commercial: "Commercial",
+  caviste: "Caviste / Distributeur",
+};
+
+const resizeImage = (file, maxSize = 150) =>
+  new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement("canvas");
+        const scale = Math.min(maxSize / img.width, maxSize / img.height, 1);
+        canvas.width = img.width * scale;
+        canvas.height = img.height * scale;
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        resolve(canvas.toDataURL("image/jpeg", 0.8));
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  });
+
+const ProfileHeader = ({ user, profile, photoURL, firstName, role, refreshProfile }) => {
+  const [editingName, setEditingName] = useState(false);
+  const [nameValue, setNameValue] = useState(firstName);
+  const [saving, setSaving] = useState(false);
+  const fileRef = useRef(null);
+
+  const handlePhotoChange = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setSaving(true);
+    try {
+      const dataUrl = await resizeImage(file);
+      await updateUserProfile(user.uid, { avatarUrl: dataUrl });
+      await refreshProfile();
+    } catch { /* ignore */ }
+    setSaving(false);
+  };
+
+  const handleNameSave = async () => {
+    const trimmed = nameValue.trim();
+    if (!trimmed || trimmed === firstName) { setEditingName(false); return; }
+    setSaving(true);
+    try {
+      await updateUserProfile(user.uid, { firstName: trimmed, displayName: trimmed });
+      await refreshProfile();
+    } catch { /* ignore */ }
+    setSaving(false);
+    setEditingName(false);
+  };
+
+  const avatarStyle = {
+    width: 84, height: 84, borderRadius: 999,
+    objectFit: "cover", display: "block",
+    margin: "0 auto",
+    boxShadow: "0 4px 16px rgba(194,116,74,0.18)",
+    border: "3px solid rgba(194,116,74,0.25)",
+  };
+
+  return (
+    <div style={{ textAlign: "center", marginBottom: 28 }}>
+      {/* Tappable avatar */}
+      <div
+        onClick={() => fileRef.current?.click()}
+        style={{ position: "relative", display: "inline-block", cursor: "pointer", marginBottom: 14 }}
+      >
+        {photoURL ? (
+          <img src={photoURL} alt={firstName} style={avatarStyle} />
+        ) : (
+          <div style={{
+            ...avatarStyle, objectFit: undefined, display: "flex",
+            background: "linear-gradient(135deg, #7a2e00, #c2744a)",
+            alignItems: "center", justifyContent: "center",
+            color: "#fef8ec",
+            fontFamily: "'Cormorant Garamond', Georgia, serif",
+            fontSize: 34, fontWeight: 600, fontStyle: "italic",
+          }}>
+            {firstName[0].toUpperCase()}
+          </div>
+        )}
+        {/* Camera overlay */}
+        <div style={{
+          position: "absolute", bottom: 0, right: 0,
+          width: 28, height: 28, borderRadius: 999,
+          background: "#c2744a", display: "flex",
+          alignItems: "center", justifyContent: "center",
+          border: "2px solid var(--surface)",
+        }}>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fef8ec" strokeWidth="2" strokeLinecap="round">
+            <path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z" />
+            <circle cx="12" cy="13" r="4" />
+          </svg>
+        </div>
+        {saving && (
+          <div style={{
+            position: "absolute", inset: 0, borderRadius: 999,
+            background: "rgba(0,0,0,0.4)", display: "flex",
+            alignItems: "center", justifyContent: "center",
+            color: "#fef8ec", fontSize: 11, fontFamily: "'DM Sans', sans-serif",
+          }}>
+            ...
+          </div>
+        )}
+      </div>
+      <input
+        ref={fileRef}
+        type="file"
+        accept="image/*"
+        style={{ display: "none" }}
+        onChange={handlePhotoChange}
+      />
+
+      {/* Editable name */}
+      {editingName ? (
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8, marginBottom: 6 }}>
+          <input
+            autoFocus
+            value={nameValue}
+            onChange={(e) => setNameValue(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && handleNameSave()}
+            style={{
+              fontFamily: "'Cormorant Garamond', Georgia, serif",
+              fontSize: 22, fontWeight: 600, fontStyle: "italic",
+              color: "var(--text-1)", background: "transparent",
+              border: "none", borderBottom: "2px solid #c2744a",
+              textAlign: "center", outline: "none", width: 160,
+            }}
+          />
+          <button
+            onClick={handleNameSave}
+            style={{
+              background: "#c2744a", color: "#fef8ec", border: "none",
+              borderRadius: 6, padding: "4px 10px", cursor: "pointer",
+              fontFamily: "'DM Sans', sans-serif", fontSize: 11, fontWeight: 600,
+            }}
+          >
+            OK
+          </button>
+        </div>
+      ) : (
+        <div
+          onClick={() => { setNameValue(firstName); setEditingName(true); }}
+          style={{ cursor: "pointer", display: "inline-flex", alignItems: "center", gap: 6, marginBottom: 6 }}
+        >
+          <h2 style={{
+            fontFamily: "'Cormorant Garamond', Georgia, serif",
+            fontSize: 24, fontWeight: 600, fontStyle: "italic",
+            color: "var(--text-1)", margin: 0,
+          }}>
+            {firstName}
+          </h2>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" strokeWidth="2" strokeLinecap="round">
+            <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" />
+            <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" />
+          </svg>
+        </div>
+      )}
+
+      {role && (
+        <div style={{
+          display: "inline-block",
+          padding: "4px 14px", borderRadius: 999,
+          background: "rgba(194,116,74,0.13)",
+          border: "1px solid rgba(194,116,74,0.22)",
+          fontFamily: "'DM Sans', sans-serif", fontSize: 12, color: "var(--accent-secondary)",
+          marginBottom: 6,
+        }}>
+          {ROLE_LABELS_PROFILE[role] || role}
+        </div>
+      )}
+
+      <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, color: "var(--text-3)", marginTop: 4 }}>
+        {user.email}
       </div>
     </div>
   );

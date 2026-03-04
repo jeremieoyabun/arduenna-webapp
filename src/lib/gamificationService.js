@@ -178,6 +178,7 @@ export async function updateLeaderboardEntry(uid, xp) {
     await setDoc(ref, {
       uid,
       displayName: userData.displayName || userData.firstName || "Anonyme",
+      avatarUrl: userData.avatarUrl || null,
       role: userData.role || "bartender",
       xp: xp || 0,
       weeklyXp,
