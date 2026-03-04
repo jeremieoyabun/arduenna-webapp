@@ -1318,19 +1318,24 @@ a {
   margin-top: var(--space-1);
 }
 
-/* Cocktail modal hero image */
-.cocktail-modal__img {
+/* Cocktail modal hero image wrapper */
+.cocktail-modal__img-wrap {
   width: calc(100% + 2 * var(--space-10));
   margin: calc(-1 * var(--space-10)) calc(-1 * var(--space-10)) var(--space-4);
+  overflow: hidden;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+
+.cocktail-modal__img {
+  width: 100%;
   aspect-ratio: 16 / 9;
   object-fit: cover;
   object-position: center;
   display: block;
-  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
 }
 
 @media (max-width: 768px) {
-  .cocktail-modal__img {
+  .cocktail-modal__img-wrap {
     width: calc(100% + 2 * var(--space-6));
     margin: calc(-1 * var(--space-6)) calc(-1 * var(--space-6)) var(--space-4);
   }

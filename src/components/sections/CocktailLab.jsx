@@ -99,14 +99,30 @@ export const CocktailLab = ({
       <div className="overlay" onClick={() => setSelectedCocktail(null)} role="dialog" aria-label={lang === "fr" ? selectedCocktail.nameFr : selectedCocktail.nameEn}>
         <div className="modal" onClick={(e) => e.stopPropagation()}>
 
-          {/* Hero image */}
-          {selectedCocktail.img && (
-            <img
-              src={selectedCocktail.img}
-              alt={lang === "fr" ? selectedCocktail.nameFr : selectedCocktail.nameEn}
-              className="cocktail-modal__img"
-            />
-          )}
+          {/* Hero image + close button */}
+          <div className="cocktail-modal__img-wrap" style={{ position: "relative" }}>
+            {selectedCocktail.img && (
+              <img
+                src={selectedCocktail.img}
+                alt={lang === "fr" ? selectedCocktail.nameFr : selectedCocktail.nameEn}
+                className="cocktail-modal__img"
+              />
+            )}
+            <button
+              className="modal__close"
+              onClick={() => setSelectedCocktail(null)}
+              aria-label="Close"
+              style={{
+                position: "absolute", top: 12, right: 12,
+                background: "rgba(0,0,0,0.45)", borderRadius: 999,
+                width: 36, height: 36,
+                display: "flex", alignItems: "center", justifyContent: "center",
+                color: "#fff", backdropFilter: "blur(8px)",
+              }}
+            >
+              <IconX />
+            </button>
+          </div>
 
           <div className="modal__header">
             <div>
@@ -125,7 +141,6 @@ export const CocktailLab = ({
                 <span className="tag">{seasonEmojis[selectedCocktail.season]} {t.cocktails[selectedCocktail.season] || t.cocktails.allYear}</span>
               </div>
             </div>
-            <button className="modal__close" onClick={() => setSelectedCocktail(null)} aria-label="Close"><IconX /></button>
           </div>
 
           {/* Narrative hook */}

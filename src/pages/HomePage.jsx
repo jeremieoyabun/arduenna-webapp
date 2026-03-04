@@ -13,6 +13,8 @@ import { Teasers } from "../components/sections/Teasers";
 import { Newsletter } from "../components/sections/Newsletter";
 import { Footer } from "../components/layout/Footer";
 import { IconHome, IconGlass, IconLeafNav, IconBriefcase } from "../components/ui/Icons";
+import { useAuth } from "../components/auth/AuthProvider";
+import { updateUserProfile, getUserProfile } from "../lib/userService";
 
 const IconGradCapNav = () => (
   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -22,6 +24,7 @@ const IconGradCapNav = () => (
 );
 
 export const HomePage = ({ lang, setLang, theme, toggleTheme, t }) => {
+  const { user } = useAuth();
   const [activeSection, setActiveSection] = useState("hero");
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [selectedCocktail, setSelectedCocktail] = useState(null);
@@ -39,8 +42,21 @@ export const HomePage = ({ lang, setLang, theme, toggleTheme, t }) => {
 
   const sectionRefs = useRef({});
 
-  // Persist favorites & teaser notifs to localStorage
-  useEffect(() => { localStorage.setItem("arduenna_fav_cocktails", JSON.stringify(savedCocktails)); }, [savedCocktails]);
+  // Load favorites from Firestore when logged in
+  useEffect(() => {
+    if (!user) return;
+    getUserProfile(user.uid).then((p) => {
+      if (p?.savedCocktails) setSavedCocktails(p.savedCocktails);
+    }).catch(() => {});
+  }, [user]);
+
+  // Persist favorites — Firestore if logged in, always localStorage
+  useEffect(() => {
+    localStorage.setItem("arduenna_fav_cocktails", JSON.stringify(savedCocktails));
+    if (user) {
+      updateUserProfile(user.uid, { savedCocktails }).catch(() => {});
+    }
+  }, [savedCocktails]); // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => { localStorage.setItem("arduenna_teaser_notifs", JSON.stringify(teaserNotifs)); }, [teaserNotifs]);
 
   // Scroll detection for nav glass effect
