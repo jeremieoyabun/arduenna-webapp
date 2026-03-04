@@ -53,7 +53,7 @@ export const NextModuleCard = ({ module, parcoursId, percent, onStart }) => {
           left: 0, top: 0, bottom: 0,
           width: "100%",
           zIndex: -1,
-          opacity: 0.14,
+          opacity: 0.25,
           WebkitMaskImage: "linear-gradient(to right, black 0%, black 30%, transparent 85%)",
           maskImage: "linear-gradient(to right, black 0%, black 30%, transparent 85%)",
           pointerEvents: "none",

@@ -530,13 +530,15 @@ export const AcademyPage = () => {
                   padding: active ? "9px 16px" : "9px 12px",
                   display: "flex",
                   alignItems: "center",
+                  justifyContent: "center",
                   gap: active ? 6 : 0,
                   border: "none",
                   cursor: "pointer",
                   transition: "all 0.25s cubic-bezier(0.25,0.46,0.45,0.94)",
                   overflow: "hidden",
                   whiteSpace: "nowrap",
-                  flexShrink: active ? 0 : 1,
+                  flex: active ? "0 0 auto" : "1 1 0",
+                  minWidth: 0,
                   color: active ? "var(--tab-active-text)" : "var(--tab-icon)",
                 }}
               >

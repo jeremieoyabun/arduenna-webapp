@@ -107,25 +107,22 @@ export const LoginPage = () => {
         border: "1px solid rgba(11,54,61,0.08)",
         boxShadow: "0 2px 12px rgba(11,54,61,0.03)",
       }}>
-        {/* Logo */}
-        <div style={{ textAlign: "center", marginBottom: "var(--space-6)" }}>
+        {/* Logo + Academy */}
+        <div style={{ textAlign: "center", marginBottom: "var(--space-8)" }}>
           <img
             src="/Arduennagin_logo_vert_.webp"
             alt="Arduenna"
             style={{ maxWidth: 140, height: "auto", display: "inline-block" }}
           />
-        </div>
-
-        {/* Sous-titre Academy */}
-        <div style={{
-          fontFamily: "'Cormorant Garamond', Georgia, serif",
-          fontSize: 18,
-          fontStyle: "italic",
-          textAlign: "center",
-          color: "#c2744a",
-          marginBottom: "var(--space-8)",
-        }}>
-          Academy
+          <div style={{
+            fontFamily: "'Cormorant Garamond', Georgia, serif",
+            fontSize: 18,
+            fontStyle: "italic",
+            color: "#c2744a",
+            marginTop: 2,
+          }}>
+            Academy
+          </div>
         </div>
 
         {/* Toggle Connexion / Créer un compte */}

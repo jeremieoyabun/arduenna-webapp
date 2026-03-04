@@ -895,21 +895,15 @@ a {
 
 @media (max-width: 768px) {
   .modal {
-    max-width: 100%;
-    max-height: 90vh;
-    margin: 0;
-    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    animation: slideUp var(--duration-normal) var(--ease-out);
-    padding: var(--space-8) var(--space-6) calc(var(--space-8) + var(--bottom-nav-height));
+    max-width: calc(100% - 24px);
+    max-height: 88vh;
+    border-radius: var(--radius-lg);
+    animation: modalIn var(--duration-normal) var(--ease-out);
+    padding: var(--space-6);
   }
 
   .overlay {
-    align-items: flex-end;
-    padding: 0;
+    padding: 12px;
   }
 }
 
@@ -1115,7 +1109,8 @@ a {
   font-style: italic;
   font-weight: 400;
   color: var(--accent-secondary);
-  opacity: 0.9;
+  font-size: 1.15em;
+  letter-spacing: 0.02em;
 }
 
 .hero__heading em {
@@ -1329,7 +1324,9 @@ a {
   margin: calc(-1 * var(--space-6)) calc(-1 * var(--space-6)) var(--space-4);
   aspect-ratio: 16 / 9;
   object-fit: cover;
+  object-position: center;
   display: block;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
 }
 
 .cocktail-card__header {
