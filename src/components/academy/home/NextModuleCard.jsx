@@ -63,11 +63,10 @@ export const NextModuleCard = ({ module, parcoursId, percent, onStart }) => {
             src={meta.bg}
             alt=""
             style={{
-              position: "absolute",
-              left: 0, top: "50%",
-              transform: "translateY(-50%)",
-              height: "200%",
-              width: "auto",
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              objectPosition: "left center",
               display: "block",
             }}
           />
