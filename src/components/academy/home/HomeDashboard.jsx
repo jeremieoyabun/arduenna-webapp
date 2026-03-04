@@ -259,8 +259,8 @@ export const HomeDashboard = ({
   const nextLevel = LEVELS.find(l => l.level === currentLevel.level + 1);
   const xpToNext = currentLevel.xpNeeded ? currentLevel.xpNeeded - xpInLevel : null;
 
-  // ── Next module — all parcours accessible regardless of role ─────────────
-  const eligibleParcours = parcoursData;
+  // ── Next module — MVP: only "univers" parcours ─────────────────────────
+  const eligibleParcours = parcoursData.filter(p => p.id === "univers");
 
   let nextModule = null;
   let nextParcoursId = null;

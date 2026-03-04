@@ -1,7 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { useAuth } from "../components/auth/AuthProvider";
 import { getProgress, initProgress, isModuleUnlocked } from "../lib/progressService";
-import { parcoursData } from "../data/academy/parcours";
 import { modulesData } from "../data/academy/modules";
 import { lessonsData } from "../data/academy/lessons";
 
@@ -44,16 +43,14 @@ export function useProgress() {
     return !!progress?.parcours?.[parcoursId]?.modules?.[moduleId]?.completedAt;
   }
 
-  /** Returns next unlocked + not-completed module across all parcours in order. */
+  /** Returns next unlocked + not-completed module (MVP: univers only). */
   function getNextModule() {
-    for (const parcours of parcoursData) {
-      const modules = modulesData
-        .filter(m => m.parcoursId === parcours.id)
-        .sort((a, b) => a.order - b.order);
-      for (const m of modules) {
-        if (!isLocked(parcours.id, m.order) && !isCompleted(parcours.id, m.id)) {
-          return m;
-        }
+    const modules = modulesData
+      .filter(m => m.parcoursId === "univers")
+      .sort((a, b) => a.order - b.order);
+    for (const m of modules) {
+      if (!isLocked("univers", m.order) && !isCompleted("univers", m.id)) {
+        return m;
       }
     }
     return null; // all completed

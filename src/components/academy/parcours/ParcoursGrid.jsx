@@ -38,17 +38,19 @@ export const ParcoursGrid = ({ onSelectParcours, getParcoursCompletedCount }) =>
       </p>
 
       {parcoursData.map((p, i) => {
+        const isPlayable = p.id === "univers";
         const moduleCount = modulesData.filter(m => m.parcoursId === p.id).length;
-        const completedCount = getParcoursCompletedCount?.(p.id) || 0;
+        const completedCount = isPlayable ? (getParcoursCompletedCount?.(p.id) || 0) : 0;
         const percent = moduleCount > 0 ? Math.round((completedCount / moduleCount) * 100) : 0;
 
         return (
           <div
             key={p.id}
-            onClick={() => onSelectParcours(p.id)}
+            onClick={isPlayable ? () => onSelectParcours(p.id) : undefined}
             style={{
               ...cardStyle,
-              cursor: "pointer",
+              opacity: isPlayable ? 1 : 0.6,
+              cursor: isPlayable ? "pointer" : "default",
               position: "relative",
               overflow: "hidden",
             }}
@@ -56,9 +58,9 @@ export const ParcoursGrid = ({ onSelectParcours, getParcoursCompletedCount }) =>
             {/* Icon */}
             <div style={{
               width: 60, height: 60, borderRadius: 14, flexShrink: 0,
-              background: "rgba(194,116,74,0.08)",
+              background: isPlayable ? "rgba(194,116,74,0.08)" : "rgba(11,54,61,0.04)",
               display: "flex", alignItems: "center", justifyContent: "center",
-              color: "#c2744a",
+              color: isPlayable ? "#c2744a" : "rgba(11,54,61,0.25)",
             }}>
               {PARCOURS_ICONS[p.id]}
             </div>
@@ -77,7 +79,7 @@ export const ParcoursGrid = ({ onSelectParcours, getParcoursCompletedCount }) =>
               }}>
                 {p.descFr}
               </div>
-              {percent > 0 ? (
+              {isPlayable && percent > 0 ? (
                 <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                   <div style={{
                     flex: 1, height: 4, borderRadius: 999,
@@ -110,9 +112,18 @@ export const ParcoursGrid = ({ onSelectParcours, getParcoursCompletedCount }) =>
 
             {/* Right side */}
             <div style={{ flexShrink: 0 }}>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(11,54,61,0.3)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <polyline points="9 18 15 12 9 6" />
-              </svg>
+              {isPlayable ? (
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(11,54,61,0.3)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="9 18 15 12 9 6" />
+                </svg>
+              ) : (
+                <div style={{
+                  fontFamily: "'DM Sans', sans-serif", fontSize: 10,
+                  color: "var(--text-muted)", textAlign: "center",
+                }}>
+                  Bientôt
+                </div>
+              )}
             </div>
           </div>
         );
