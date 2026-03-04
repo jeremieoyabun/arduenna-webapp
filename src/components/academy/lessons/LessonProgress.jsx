@@ -41,10 +41,10 @@ export const LessonProgress = ({ current, total, onExit }) => {
               style={{
                 flex: 1, height: 4, borderRadius: 999,
                 background: i < current
-                  ? "#0b363d"
+                  ? "var(--accent-secondary)"
                   : i === current
-                    ? "rgba(11,54,61,0.35)"
-                    : "rgba(11,54,61,0.1)",
+                    ? "rgba(194,116,74,0.4)"
+                    : "var(--border-subtle)",
                 transition: "background 0.2s ease-out",
               }}
             />

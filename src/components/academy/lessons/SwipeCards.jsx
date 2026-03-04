@@ -112,7 +112,7 @@ export const SwipeCards = ({ lesson, onNext, lang = "fr" }) => {
             onClick={() => animate(i > index ? "left" : "right", () => setIndex(i))}
             style={{
               width: i === index ? 22 : 8, height: 8, borderRadius: 999,
-              background: i === index ? "#0b363d" : "rgba(11,54,61,0.15)",
+              background: i === index ? "var(--accent-secondary)" : "var(--border-subtle)",
               border: "none", padding: 0, cursor: "pointer",
               transition: "all 0.2s ease-out",
             }}
@@ -122,7 +122,7 @@ export const SwipeCards = ({ lesson, onNext, lang = "fr" }) => {
 
       <p style={{
         fontFamily: "'DM Sans', sans-serif", fontSize: 12,
-        color: "rgba(11,54,61,0.3)", textAlign: "center", margin: 0,
+        color: "var(--text-tertiary)", textAlign: "center", margin: 0,
       }}>
         {lang === "en" ? "Swipe or tap to navigate" : "Swipez ou tapez pour naviguer"}
       </p>
@@ -134,7 +134,7 @@ export const SwipeCards = ({ lesson, onNext, lang = "fr" }) => {
             onClick={goPrev}
             style={{
               padding: "13px 18px", background: "transparent",
-              color: "var(--text-primary)", border: "1px solid rgba(11,54,61,0.15)",
+              color: "var(--text-primary)", border: "1px solid var(--border-medium)",
               borderRadius: 10, fontFamily: "'DM Sans', sans-serif",
               fontSize: 14, cursor: "pointer",
             }}

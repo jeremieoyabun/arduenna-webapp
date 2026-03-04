@@ -153,6 +153,7 @@ export async function saveModuleProgress(uid, parcoursId, moduleId, answersMap, 
     data.streak.best = Math.max(data.streak.best || 0, data.streak.current);
   }
 
+  data.lastActivityAt = Date.now();
   await setDoc(ref, data);
   await updateLeaderboardEntry(uid, data.xp);
   return { xpGain, avgScore, progressData: data };

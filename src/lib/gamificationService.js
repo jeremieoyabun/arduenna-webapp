@@ -169,8 +169,11 @@ export async function updateLeaderboardEntry(uid, xp) {
 
     let weeklyXp = prev.weeklyXp || 0;
     if (prev.weekStartDate !== weekStartStr) {
-      weeklyXp = 0;
+      weeklyXp = 0; // new week reset
     }
+    // Add XP gained since last update
+    const xpDelta = Math.max(0, (xp || 0) - (prev.xp || 0));
+    weeklyXp += xpDelta;
 
     await setDoc(ref, {
       uid,

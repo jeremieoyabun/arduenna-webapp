@@ -36,10 +36,10 @@ export const TrueFalse = ({ lesson, onNext, lang = "fr" }) => {
     }
 
     if (val === lesson.correct) {
-      return { ...base, background: "#D8F3DC", color: "#1d6432", border: "2px solid #52b069" };
+      return { ...base, background: "rgba(74,155,138,0.15)", color: "#6ec9a8", border: "2px solid #4a9b8a" };
     }
     if (val === answer && val !== lesson.correct) {
-      return { ...base, background: "#FFF3E0", color: "#8a4a00", border: "2px solid #e08c3a", animation: "shake-wrong 0.2s ease-out" };
+      return { ...base, background: "rgba(194,116,74,0.15)", color: "#e0a070", border: "2px solid #c2744a", animation: "shake-wrong 0.2s ease-out" };
     }
     return { ...base, opacity: 0.35 };
   };
@@ -87,14 +87,14 @@ export const TrueFalse = ({ lesson, onNext, lang = "fr" }) => {
       {answered && (
         <div aria-live="polite" style={{
           padding: "14px 16px",
-          background: isCorrect ? "rgba(216,243,220,0.5)" : "rgba(255,243,224,0.6)",
+          background: isCorrect ? "rgba(74,155,138,0.1)" : "rgba(194,116,74,0.1)",
           borderRadius: 10,
-          borderLeft: `3px solid ${isCorrect ? "#52b069" : "#e08c3a"}`,
+          borderLeft: `3px solid ${isCorrect ? "#4a9b8a" : "#c2744a"}`,
         }}>
           <div style={{
             fontFamily: "'DM Sans', sans-serif", fontSize: 12,
             fontWeight: 700, textTransform: "uppercase", letterSpacing: 1,
-            color: isCorrect ? "#1d6432" : "#8a4a00", marginBottom: 6,
+            color: isCorrect ? "#6ec9a8" : "#e0a070", marginBottom: 6,
           }}>
             {isCorrect
               ? (lang === "en" ? "Correct!" : "Correct !")
