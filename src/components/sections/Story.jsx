@@ -6,13 +6,13 @@ export const Story = ({ t, sectionRefs, theme }) => {
       name: t.story.botanical1,
       latin: t.story.botanical1Latin,
       desc: t.story.botanical1Desc,
-      img: isDark ? "/Mirabelle-dark.webp" : "/Mirabelle.svg",
+      img: isDark ? "/Mirabelle-dark.webp" : "/Mirabelle.webp",
     },
     {
       name: t.story.botanical2,
       latin: t.story.botanical2Latin,
       desc: t.story.botanical2Desc,
-      img: isDark ? "/Sapin-dark.webp" : "/Sapin.svg",
+      img: isDark ? "/Sapin-dark.webp" : "/Sapin.webp",
     },
     {
       name: t.story.botanical3,
@@ -39,7 +39,7 @@ export const Story = ({ t, sectionRefs, theme }) => {
       <div className="grid-3">
         {botanicals.map((b, i) => (
           <div key={b.name} className={`card botanical-card reveal reveal--delay-${i + 1}`}>
-            <img src={b.img} alt={b.name} className="botanical-card__img" />
+            <img src={b.img} alt={b.name} className="botanical-card__img" loading="lazy" />
             <h4 className="botanical-card__name">{b.name}</h4>
             <div className="botanical-card__latin">{b.latin}</div>
             <p className="botanical-card__desc">{b.desc}</p>
