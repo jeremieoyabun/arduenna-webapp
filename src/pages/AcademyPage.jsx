@@ -504,15 +504,17 @@ export const AcademyPage = () => {
         left: "50%",
         transform: "translateX(-50%)",
         zIndex: 1000,
+        width: "calc(100% - 32px)",
+        maxWidth: 360,
       }}>
         <nav style={{
           background: "var(--tabbar-bg)",
           backdropFilter: "blur(24px)",
           WebkitBackdropFilter: "blur(24px)",
           borderRadius: 999,
-          padding: "8px",
+          padding: "6px",
           display: "flex",
-          gap: 6,
+          gap: 4,
           boxShadow: "0 4px 20px rgba(0,0,0,0.12)",
           border: "1px solid var(--tabbar-border)",
         }}>
@@ -525,16 +527,16 @@ export const AcademyPage = () => {
                 style={{
                   background: active ? "var(--tab-active-bg)" : "transparent",
                   borderRadius: 999,
-                  padding: active ? "10px 20px" : "10px 14px",
+                  padding: active ? "9px 16px" : "9px 12px",
                   display: "flex",
                   alignItems: "center",
-                  gap: active ? 7 : 0,
+                  gap: active ? 6 : 0,
                   border: "none",
                   cursor: "pointer",
                   transition: "all 0.25s cubic-bezier(0.25,0.46,0.45,0.94)",
                   overflow: "hidden",
                   whiteSpace: "nowrap",
-                  flexShrink: 0,
+                  flexShrink: active ? 0 : 1,
                   color: active ? "var(--tab-active-text)" : "var(--tab-icon)",
                 }}
               >
@@ -542,7 +544,7 @@ export const AcademyPage = () => {
                 {active && (
                   <span style={{
                     fontFamily: "'DM Sans', sans-serif",
-                    fontSize: 13, fontWeight: 700,
+                    fontSize: 12, fontWeight: 700,
                     color: "var(--tab-active-text)",
                     letterSpacing: 0.1,
                   }}>
@@ -667,17 +669,17 @@ const AcademyHeader = ({ xp, onLogout }) => (
     WebkitBackdropFilter: "blur(20px)",
     position: "sticky", top: 0, zIndex: 100,
   }}>
-    <Link to="/" style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: 9 }}>
+    <Link to="/" style={{ textDecoration: "none", display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 0 }}>
       <img
         src="/Arduennagin_logo_vert_.webp"
         alt="Arduenna"
         className="academy-logo"
-        style={{ height: 24, width: "auto", objectFit: "contain", display: "block" }}
+        style={{ height: 18, width: "auto", objectFit: "contain", display: "block" }}
       />
       <span style={{
         fontFamily: "'Cormorant Garamond', Georgia, serif",
-        fontSize: 15, fontStyle: "italic", color: "var(--accent-secondary)",
-        letterSpacing: 0.5,
+        fontSize: 11, fontStyle: "italic", color: "var(--accent-secondary)",
+        letterSpacing: 0.8, marginTop: 1,
       }}>
         Academy
       </span>

@@ -51,11 +51,11 @@ export const NextModuleCard = ({ module, parcoursId, percent, onStart }) => {
         <div style={{
           position: "absolute",
           left: 0, top: 0, bottom: 0,
-          width: "80%",
+          width: "100%",
           zIndex: -1,
-          opacity: 0.18,
-          WebkitMaskImage: "linear-gradient(to right, black 0%, black 15%, transparent 75%)",
-          maskImage: "linear-gradient(to right, black 0%, black 15%, transparent 75%)",
+          opacity: 0.14,
+          WebkitMaskImage: "linear-gradient(to right, black 0%, black 30%, transparent 85%)",
+          maskImage: "linear-gradient(to right, black 0%, black 30%, transparent 85%)",
           pointerEvents: "none",
           overflow: "hidden",
         }}>
@@ -66,7 +66,7 @@ export const NextModuleCard = ({ module, parcoursId, percent, onStart }) => {
               position: "absolute",
               left: 0, top: "50%",
               transform: "translateY(-50%)",
-              height: "160%",
+              height: "200%",
               width: "auto",
               display: "block",
             }}
@@ -91,7 +91,7 @@ export const NextModuleCard = ({ module, parcoursId, percent, onStart }) => {
         {/* Meta */}
         <div style={{
           fontFamily: "'DM Sans', sans-serif",
-          fontSize: 12, color: "var(--text-4)",
+          fontSize: 12, color: "var(--text-2)", fontWeight: 500,
           marginBottom: percent > 0 ? 16 : 22,
         }}>
           {module.lessonCount} activités · {module.duration}

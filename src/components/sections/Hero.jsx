@@ -1,27 +1,6 @@
-export const Hero = ({ t, sectionRefs, scrollTo, theme }) => {
-  const isDark = theme === "dark";
-
+export const Hero = ({ t, sectionRefs, scrollTo }) => {
   return (
     <section id="hero" ref={(el) => (sectionRefs.current.hero = el)} className="hero">
-      {/* Pine illustrations — claire pour fond clair, standard pour dark */}
-      <img
-        src={isDark ? "/Sapin-dark.webp" : "/Sapin-illu-claire.webp"}
-        alt=""
-        aria-hidden="true"
-        className="hero__pine hero__pine--left"
-      />
-      <img
-        src={isDark ? "/Mirabelle-dark.webp" : "/Sapin-illu-claire-02.webp"}
-        alt=""
-        aria-hidden="true"
-        className="hero__pine hero__pine--right"
-      />
-      <img
-        src={isDark ? "/Sapin-dark.webp" : "/pin-illu-claire-01.webp"}
-        alt=""
-        aria-hidden="true"
-        className="hero__pine hero__pine--topleft"
-      />
 
       <div className="hero__content">
         <div className="hero__text">

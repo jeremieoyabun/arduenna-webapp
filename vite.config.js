@@ -7,7 +7,7 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.svg', 'logo-192.png', 'logo-512.png', 'Arduennagin_logo_vert_.webp'],
+      includeAssets: ['favicon.png', 'logo-192.png', 'logo-512.png', 'Arduennagin_logo_vert_.webp'],
       manifest: {
         name: 'Arduenna Academy',
         short_name: 'Arduenna',

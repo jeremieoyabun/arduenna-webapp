@@ -657,6 +657,10 @@ a {
   color: var(--text-primary);
 }
 
+.bottom-nav__item--accent {
+  color: #c2744a;
+}
+
 .bottom-nav__icon {
   width: 26px;
   height: 26px;
@@ -1259,6 +1263,34 @@ a {
   color: var(--text-tertiary);
   margin-top: var(--space-4);
   line-height: var(--leading-normal);
+}
+
+/* Cocktail scroll carousel (mobile) / grid (desktop) */
+.cocktail-scroll {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-6);
+}
+
+@media (max-width: 768px) {
+  .cocktail-scroll {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    gap: 14px;
+    padding: 0 var(--space-4) var(--space-4);
+    scroll-padding-left: var(--space-4);
+    scrollbar-width: none;
+  }
+  .cocktail-scroll::-webkit-scrollbar {
+    display: none;
+  }
+  .cocktail-scroll__item {
+    flex: 0 0 82%;
+    max-width: 82%;
+    scroll-snap-align: start;
+  }
 }
 
 /* Cocktail cards */

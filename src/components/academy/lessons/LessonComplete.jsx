@@ -98,7 +98,7 @@ export const LessonComplete = ({ score, xpGain, onContinue }) => {
           marginBottom: 36,
           display: "flex", flexDirection: "column", alignItems: "center", gap: 4,
         }}>
-          <span style={{ fontSize: 28 }}>⭐</span>
+          <img src="/icons/XP.svg" alt="XP" width="36" height="36" style={{ objectFit: "contain", display: "block" }} />
           <div style={{
             fontFamily: "'DM Sans', sans-serif", fontSize: 22, fontWeight: 700, color: "var(--text-primary)",
           }}>

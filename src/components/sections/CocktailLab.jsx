@@ -48,10 +48,10 @@ export const CocktailLab = ({
         {filteredCocktails.length} {t.cocktails.results}
       </div>
 
-      {/* Cocktail grid */}
-      <div className="grid-2 reveal">
+      {/* Cocktail carousel (mobile) / grid (desktop) */}
+      <div className="cocktail-scroll reveal">
         {filteredCocktails.map((c) => (
-          <div key={c.id} className="card card--interactive cocktail-card cocktail-card--has-img" onClick={() => setSelectedCocktail(c)} role="button" tabIndex={0} onKeyDown={(e) => e.key === "Enter" && setSelectedCocktail(c)}>
+          <div key={c.id} className="card card--interactive cocktail-card cocktail-card--has-img cocktail-scroll__item" onClick={() => setSelectedCocktail(c)} role="button" tabIndex={0} onKeyDown={(e) => e.key === "Enter" && setSelectedCocktail(c)}>
             {/* Cocktail photo */}
             {c.img && (
               <img

@@ -2,7 +2,6 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { productsData } from "../data/products";
 import { cocktailsData } from "../data/cocktails";
 import { Navbar, BottomNav } from "../components/layout/Navbar";
-import { MobileMenu } from "../components/layout/MobileMenu";
 import { Hero } from "../components/sections/Hero";
 import { Story } from "../components/sections/Story";
 import { Awards } from "../components/sections/Awards";
@@ -15,8 +14,14 @@ import { Newsletter } from "../components/sections/Newsletter";
 import { Footer } from "../components/layout/Footer";
 import { IconHome, IconGlass, IconLeafNav, IconBriefcase } from "../components/ui/Icons";
 
+const IconGradCapNav = () => (
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+    <path d="M6 12v5c0 1.66 2.69 3 6 3s6-1.34 6-3v-5" />
+  </svg>
+);
+
 export const HomePage = ({ lang, setLang, theme, toggleTheme, t }) => {
-  const [menuOpen, setMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("hero");
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [selectedCocktail, setSelectedCocktail] = useState(null);
@@ -216,6 +221,7 @@ export const HomePage = ({ lang, setLang, theme, toggleTheme, t }) => {
     { id: "cocktails", label: "Cocktails", Icon: IconGlass },
     { id: "sustainability", label: lang === "fr" ? "Durable" : "Green", Icon: IconLeafNav },
     { id: "toolbox", label: "Pro", Icon: IconBriefcase },
+    { id: "academy", label: "Academy", Icon: IconGradCapNav, href: "/academy" },
   ];
 
   return (
@@ -223,12 +229,10 @@ export const HomePage = ({ lang, setLang, theme, toggleTheme, t }) => {
       {toast && <div className="toast" role="status" aria-live="polite">{toast}</div>}
 
       <Navbar
-        t={t} lang={lang} theme={theme} scrolled={scrolled} menuOpen={menuOpen}
+        t={t} lang={lang} theme={theme} scrolled={scrolled}
         activeSection={activeSection} navSections={navSections} scrollTo={scrollTo}
-        toggleTheme={toggleTheme} setLang={setLang} setMenuOpen={setMenuOpen}
+        toggleTheme={toggleTheme} setLang={setLang}
       />
-
-      <MobileMenu t={t} menuOpen={menuOpen} navSections={navSections} scrollTo={scrollTo} />
 
       <BottomNav activeSection={activeSection} bottomNavItems={bottomNavItems} scrollTo={scrollTo} />
 

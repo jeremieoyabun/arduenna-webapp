@@ -390,10 +390,8 @@ export const HomeDashboard = ({
               <div style={{
                 fontFamily: "'DM Sans', sans-serif",
                 fontSize: 20, fontWeight: 800, color: "var(--text-1)", lineHeight: 1,
-                display: "flex", alignItems: "center", justifyContent: "center", gap: 4,
               }}>
                 {streak}
-                <img src="/icons/Streakk.svg" alt="" width="16" height="16" style={{ objectFit: "contain", display: "block" }} />
               </div>
               <div style={{ ...CAP, fontSize: 9, marginTop: 3 }}>Série</div>
             </div>
