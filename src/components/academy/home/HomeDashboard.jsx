@@ -311,9 +311,6 @@ export const HomeDashboard = ({
             background: "linear-gradient(135deg, var(--surface) 0%, var(--module-tint) 100%)",
           }}
         >
-          {/* Decorative leaf watermark */}
-          <LeafVein style={{ right: -10, top: -6, opacity: 0.045 }} />
-
           {/* Date top-right */}
           <div style={{
             position: "absolute", top: 14, right: 18,
@@ -531,7 +528,7 @@ export const HomeDashboard = ({
               fontSize: 11, color: "var(--text-4)", lineHeight: 1.4,
             }}>
               {streak === 0 ? "Commencez aujourd'hui"
-                : streak === 1 ? "1 jour — bon début"
+                : streak === 1 ? "1 jour, bon début"
                 : `${streak} jour${streak > 1 ? "s" : ""}`}
             </div>
           </div>

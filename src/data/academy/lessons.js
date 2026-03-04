@@ -1,5 +1,5 @@
 /**
- * Lesson content — bilingual FR/EN.
+ * Lesson content, bilingual FR/EN.
  * Parcours 1 full content; Parcours 2-4 placeholders until V1.5.
  * Formats: "swipe" | "mcq" | "truefalse"
  *
@@ -7,18 +7,18 @@
  * LessonEngine picks the correct field based on user lang preference.
  */
 
-// ── MODULE 1.1 — La Forêt d'Arduenna ──────────────────────────────────────
+// ── MODULE 1.1, La Forêt d'Arduenna ──────────────────────────────────────
 
 const univers1 = [
-  // Leçon 1 — Swipe (4 cards)
+  // Leçon 1, Swipe (4 cards)
   {
     type: "swipe",
     cards: [
       {
         titleFr: "La Forêt d'Arduenna",
         titleEn: "The Arduenna Forest",
-        textFr: "Le nom Arduenna vient de la Silva Arduenna — l'ancienne forêt celtique des Ardennes. Un lieu de nature sauvage et préservée au cœur de la Belgique.",
-        textEn: "The name Arduenna comes from Silva Arduenna — the ancient Celtic forest of the Ardennes. A place of wild, unspoiled nature at the heart of Belgium.",
+        textFr: "Le nom Arduenna vient de la Silva Arduenna, l'ancienne forêt celtique des Ardennes. Un lieu de nature sauvage et préservée au cœur de la Belgique.",
+        textEn: "The name Arduenna comes from Silva Arduenna, the ancient Celtic forest of the Ardennes. A place of wild, unspoiled nature at the heart of Belgium.",
         img: "/DSC09950-Modifier-aspect-ratio-1072-1372-1.avif",
       },
       {
@@ -42,7 +42,7 @@ const univers1 = [
       },
     ],
   },
-  // Leçon 2 — 5 QCM
+  // Leçon 2, 5 QCM
   {
     type: "mcq",
     questionFr: "Que signifie le nom « Arduenna » ?",
@@ -80,8 +80,8 @@ const univers1 = [
     optionsFr: ["Son prix bas", "Ses botaniques locales, sa production artisanale et sa double certification Bio EU + B Corp", "Sa distribution mondiale", "Son conditionnement en canette"],
     optionsEn: ["Its low price", "Its local botanicals, artisan production and dual Bio EU + B Corp certification", "Its worldwide distribution", "Its canned packaging"],
     correctIndex: 1,
-    explanationFr: "Arduenna se démarque par ses 3 botaniques ardennaises récoltées à la main, sa production artisanale et sa double certification Bio EU et B Corp — une combinaison unique sur le marché.",
-    explanationEn: "Arduenna stands out through its 3 hand-harvested Ardennais botanicals, artisan production and dual Bio EU and B Corp certification — a unique combination in the market.",
+    explanationFr: "Arduenna se démarque par ses 3 botaniques ardennaises récoltées à la main, sa production artisanale et sa double certification Bio EU et B Corp, une combinaison unique sur le marché.",
+    explanationEn: "Arduenna stands out through its 3 hand-harvested Ardennais botanicals, artisan production and dual Bio EU and B Corp certification, a unique combination in the market.",
   },
   {
     type: "mcq",
@@ -90,10 +90,10 @@ const univers1 = [
     optionsFr: ["Par machine industrielle", "Importées de l'étranger", "À la main dans les Ardennes", "Cultivées en serre"],
     optionsEn: ["By industrial machine", "Imported from abroad", "By hand in the Ardennes", "Grown in a greenhouse"],
     correctIndex: 2,
-    explanationFr: "Les 3 botaniques signatures d'Arduenna — mirabelle, bourgeons de sapin et fleurs de sureau — sont récoltées à la main dans les Ardennes belges, chacune à sa saison optimale.",
-    explanationEn: "Arduenna's 3 signature botanicals — mirabelle plum, fir buds and elderflower — are hand-harvested in the Belgian Ardennes, each at its optimal season.",
+    explanationFr: "Les 3 botaniques signatures d'Arduenna, mirabelle, bourgeons de sapin et fleurs de sureau, sont récoltées à la main dans les Ardennes belges, chacune à sa saison optimale.",
+    explanationEn: "Arduenna's 3 signature botanicals, mirabelle plum, fir buds and elderflower, are hand-harvested in the Belgian Ardennes, each at its optimal season.",
   },
-  // Leçon 3 — 4 vrai/faux
+  // Leçon 3, 4 vrai/faux
   {
     type: "truefalse",
     statementFr: "Arduenna est certifié B Corp.",
@@ -128,10 +128,10 @@ const univers1 = [
   },
 ];
 
-// ── MODULE 1.2 — Les 3 Botaniques ─────────────────────────────────────────
+// ── MODULE 1.2, Les 3 Botaniques ─────────────────────────────────────────
 
 const univers2 = [
-  // Leçon 1 — Swipe (3 cards)
+  // Leçon 1, Swipe (3 cards)
   {
     type: "swipe",
     cards: [
@@ -158,7 +158,7 @@ const univers2 = [
       },
     ],
   },
-  // Leçon 2 — 4 QCM
+  // Leçon 2, 4 QCM
   {
     type: "mcq",
     questionFr: "Quelle botanique apporte la fraîcheur résineuse au gin Arduenna ?",
@@ -199,7 +199,7 @@ const univers2 = [
     explanationFr: "Arduenna utilise 3 botaniques signatures ardennaises : la mirabelle, les bourgeons de sapin et les fleurs de sureau. La philosophie « moins c'est plus » pour un profil aromatique cohérent.",
     explanationEn: "Arduenna uses 3 signature Ardennais botanicals: mirabelle plum, fir buds and elderflower. The 'less is more' philosophy for a coherent aromatic profile.",
   },
-  // Leçon 3 — 3 vrai/faux
+  // Leçon 3, 3 vrai/faux
   {
     type: "truefalse",
     statementFr: "La mirabelle apporte des notes florales au gin Arduenna.",
@@ -226,10 +226,10 @@ const univers2 = [
   },
 ];
 
-// ── MODULE 1.3 — Le Processus ──────────────────────────────────────────────
+// ── MODULE 1.3, Le Processus ──────────────────────────────────────────────
 
 const univers3 = [
-  // Leçon 1 — Swipe (5 cards)
+  // Leçon 1, Swipe (5 cards)
   {
     type: "swipe",
     cards: [
@@ -248,8 +248,8 @@ const univers3 = [
       {
         titleFr: "3. Distillation",
         titleEn: "3. Distillation",
-        textFr: "Distillation lente en alambic cuivre traditionnel. Le maître distillateur sélectionne avec précision le « cœur de chauffe » — la partie la plus pure et aromatique.",
-        textEn: "Slow distillation in a traditional copper pot still. The master distiller precisely selects the 'heart of the run' — the purest and most aromatic part.",
+        textFr: "Distillation lente en alambic cuivre traditionnel. Le maître distillateur sélectionne avec précision le « cœur de chauffe », la partie la plus pure et aromatique.",
+        textEn: "Slow distillation in a traditional copper pot still. The master distiller precisely selects the 'heart of the run', the purest and most aromatic part.",
         img: "/DSC09950-Modifier-aspect-ratio-1072-1372-1.avif",
       },
       {
@@ -267,7 +267,7 @@ const univers3 = [
       },
     ],
   },
-  // Leçon 2 — 4 QCM
+  // Leçon 2, 4 QCM
   {
     type: "mcq",
     questionFr: "Quel type d'alambic est utilisé pour distiller Arduenna ?",
@@ -285,8 +285,8 @@ const univers3 = [
     optionsFr: ["La distillation", "La macération", "La cueillette des botaniques", "La mise en bouteille"],
     optionsEn: ["Distillation", "Maceration", "Harvesting the botanicals", "Bottling"],
     correctIndex: 2,
-    explanationFr: "La cueillette est la première étape — et la plus importante. Botaniques de qualité = gin de qualité. Tout commence dans les forêts ardennaises.",
-    explanationEn: "Harvesting is the first step — and the most important. Quality botanicals = quality gin. Everything begins in the Ardennais forests.",
+    explanationFr: "La cueillette est la première étape, et la plus importante. Botaniques de qualité = gin de qualité. Tout commence dans les forêts ardennaises.",
+    explanationEn: "Harvesting is the first step, and the most important. Quality botanicals = quality gin. Everything begins in the Ardennais forests.",
   },
   {
     type: "mcq",
@@ -305,15 +305,15 @@ const univers3 = [
     optionsFr: ["La partie la plus alcoolisée", "La partie la plus pure et aromatique sélectionnée par le distillateur", "Le premier liquide à sortir de l'alambic", "La température maximale de distillation"],
     optionsEn: ["The most alcoholic part", "The purest and most aromatic part selected by the distiller", "The first liquid to come out of the still", "The maximum distillation temperature"],
     correctIndex: 1,
-    explanationFr: "Le cœur de chauffe est la partie centrale de la distillation, sélectionnée avec précision. C'est la fraction la plus pure et la plus aromatique — celle qui donnera le gin final.",
-    explanationEn: "The heart of the run is the central part of the distillation, precisely selected. It's the purest and most aromatic fraction — the one that will give the final gin.",
+    explanationFr: "Le cœur de chauffe est la partie centrale de la distillation, sélectionnée avec précision. C'est la fraction la plus pure et la plus aromatique, celle qui donnera le gin final.",
+    explanationEn: "The heart of the run is the central part of the distillation, precisely selected. It's the purest and most aromatic fraction, the one that will give the final gin.",
   },
 ];
 
-// ── MODULE 1.4 — B Corp & Bio ──────────────────────────────────────────────
+// ── MODULE 1.4, B Corp & Bio ──────────────────────────────────────────────
 
 const univers4 = [
-  // Leçon 1 — Swipe (3 cards)
+  // Leçon 1, Swipe (3 cards)
   {
     type: "swipe",
     cards: [
@@ -338,7 +338,7 @@ const univers4 = [
       },
     ],
   },
-  // Leçon 2 — 4 QCM
+  // Leçon 2, 4 QCM
   {
     type: "mcq",
     questionFr: "Combien de piliers la certification B Corp évalue-t-elle ?",
@@ -376,8 +376,8 @@ const univers4 = [
       "It's a taste quality standard",
     ],
     correctIndex: 1,
-    explanationFr: "B Corp est une certification indépendante et rigoureuse — pas du marketing. Elle évalue l'entreprise dans sa globalité et exige une performance élevée sur 5 dimensions.",
-    explanationEn: "B Corp is an independent, rigorous certification — not marketing. It assesses the company as a whole and requires high performance across 5 dimensions.",
+    explanationFr: "B Corp est une certification indépendante et rigoureuse, pas du marketing. Elle évalue l'entreprise dans sa globalité et exige une performance élevée sur 5 dimensions.",
+    explanationEn: "B Corp is an independent, rigorous certification, not marketing. It assesses the company as a whole and requires high performance across 5 dimensions.",
   },
   {
     type: "mcq",
@@ -386,10 +386,10 @@ const univers4 = [
     optionsFr: ["Elle est en plastique recyclé", "Elle est en verre 100% recyclable", "Elle est biodégradable", "Elle n'a pas d'emballage"],
     optionsEn: ["It's made from recycled plastic", "It's made from 100% recyclable glass", "It's biodegradable", "It has no packaging"],
     correctIndex: 1,
-    explanationFr: "La bouteille Arduenna est en verre 100% recyclable. Un choix de matériau premium qui est aussi un choix responsable — le verre est recyclable à l'infini sans perte de qualité.",
-    explanationEn: "The Arduenna bottle is made from 100% recyclable glass. A premium material choice that is also a responsible choice — glass is infinitely recyclable without loss of quality.",
+    explanationFr: "La bouteille Arduenna est en verre 100% recyclable. Un choix de matériau premium qui est aussi un choix responsable, le verre est recyclable à l'infini sans perte de qualité.",
+    explanationEn: "The Arduenna bottle is made from 100% recyclable glass. A premium material choice that is also a responsible choice, glass is infinitely recyclable without loss of quality.",
   },
-  // Leçon 3 — 3 vrai/faux
+  // Leçon 3, 3 vrai/faux
   {
     type: "truefalse",
     statementFr: "La certification B Corp est attribuée à vie, sans réévaluation.",

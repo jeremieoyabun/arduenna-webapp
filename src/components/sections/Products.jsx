@@ -21,7 +21,7 @@ export const Products = ({ t, lang, sectionRefs, productsData, selectedProduct, 
               <RadarChart data={p.profile} color={p.color} size={440} />
             </div>
             <div className="product-card__serve">
-              <strong>{t.products.perfectServe}</strong> — {lang === "fr" ? p.perfectServeFr : p.perfectServeEn}
+              <strong>{t.products.perfectServe}</strong> · {lang === "fr" ? p.perfectServeFr : p.perfectServeEn}
             </div>
             <p className="product-card__desc">{lang === "fr" ? p.descFr : p.descEn}</p>
           </div>

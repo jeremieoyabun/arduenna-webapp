@@ -137,7 +137,7 @@ export const cocktailsData = [
   { id: 15, nameFr: "Bloody Ardenne", nameEn: "Bloody Ardenne", product: "gin", difficulty: "medium", season: "allYear",
     bar: "BOM Food & Drinks",
     img: "/Cocktails/Bloody Ardenne.avif",
-    accrocheFr: "Le bloody ardennais — puissant, épicé, inoubliable.", accrocheEn: "The Ardennais bloody — powerful, spiced, unforgettable.",
+    accrocheFr: "Le bloody ardennais, puissant, épicé, inoubliable.", accrocheEn: "The Ardennais bloody, powerful, spiced, unforgettable.",
     ingredientsFr: ["5 cl Arduenna Gin", "12 cl jus de tomate", "1 cl jus de citron", "1 trait Worcestershire sauce", "Tabasco", "Sel de céleri", "Poivre noir", "1 branche de céleri"],
     ingredientsEn: ["5 cl Arduenna Gin", "12 cl tomato juice", "1 cl lemon juice", "1 dash Worcestershire sauce", "Tabasco", "Celery salt", "Black pepper", "1 celery stick"],
     stepsFr: ["Rouler (ne pas shaker) tous les ingrédients avec des glaçons", "Verser dans un verre highball rempli de glace", "Ajuster l'assaisonnement", "Garnir d'une branche de céleri"],

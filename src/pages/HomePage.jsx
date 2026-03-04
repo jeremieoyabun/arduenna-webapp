@@ -22,13 +22,21 @@ export const HomePage = ({ lang, setLang, theme, toggleTheme, t }) => {
   const [selectedCocktail, setSelectedCocktail] = useState(null);
   const [cocktailFilter, setCocktailFilter] = useState("all");
   const [seasonFilter, setSeasonFilter] = useState("all");
-  const [savedCocktails, setSavedCocktails] = useState([]);
-  const [teaserNotifs, setTeaserNotifs] = useState({});
+  const [savedCocktails, setSavedCocktails] = useState(() => {
+    try { return JSON.parse(localStorage.getItem("arduenna_fav_cocktails")) || []; } catch { return []; }
+  });
+  const [teaserNotifs, setTeaserNotifs] = useState(() => {
+    try { return JSON.parse(localStorage.getItem("arduenna_teaser_notifs")) || {}; } catch { return {}; }
+  });
   const [scrolled, setScrolled] = useState(false);
   const [toast, setToast] = useState(null);
   const [heartPulse, setHeartPulse] = useState(null);
 
   const sectionRefs = useRef({});
+
+  // Persist favorites & teaser notifs to localStorage
+  useEffect(() => { localStorage.setItem("arduenna_fav_cocktails", JSON.stringify(savedCocktails)); }, [savedCocktails]);
+  useEffect(() => { localStorage.setItem("arduenna_teaser_notifs", JSON.stringify(teaserNotifs)); }, [teaserNotifs]);
 
   // Scroll detection for nav glass effect
   useEffect(() => {
@@ -99,7 +107,7 @@ export const HomePage = ({ lang, setLang, theme, toggleTheme, t }) => {
   const shareCocktail = async (cocktail) => {
     const name = lang === "fr" ? cocktail.nameFr : cocktail.nameEn;
     const shareData = {
-      title: `${name} — Arduenna`,
+      title: `${name} - Arduenna`,
       text: lang === "fr"
         ? `Découvrez la recette ${name} avec Arduenna 🍸`
         : `Discover the ${name} recipe with Arduenna 🍸`,

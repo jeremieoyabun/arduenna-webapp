@@ -28,7 +28,7 @@ export const Hero = ({ t, sectionRefs, scrollTo, theme }) => {
           <h1 className="hero__heading">
             <span className="hero__heading-main">{t.hero.tagline}</span>
             <span className="hero__heading-italic">
-              — <em>{t.hero.tagline2}</em> —
+              <em>{t.hero.tagline2}</em>
             </span>
           </h1>
 
