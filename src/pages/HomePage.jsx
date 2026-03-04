@@ -8,6 +8,7 @@ import { Awards } from "../components/sections/Awards";
 import { Products } from "../components/sections/Products";
 import { CocktailLab } from "../components/sections/CocktailLab";
 import { Toolbox } from "../components/sections/Toolbox";
+import { AcademyPromo } from "../components/sections/AcademyPromo";
 import { Sustainability } from "../components/sections/Sustainability";
 import { Teasers } from "../components/sections/Teasers";
 import { Newsletter } from "../components/sections/Newsletter";
@@ -270,6 +271,7 @@ export const HomePage = ({ lang, setLang, theme, toggleTheme, t }) => {
         shareCocktail={shareCocktail} downloadRecipeCard={downloadRecipeCard}
       />
       <Toolbox t={t} sectionRefs={sectionRefs} />
+      <AcademyPromo t={t} />
       <Sustainability t={t} sectionRefs={sectionRefs} />
       <Teasers t={t} teaserNotifs={teaserNotifs} setTeaserNotifs={setTeaserNotifs} />
       <Newsletter t={t} />
