@@ -202,7 +202,7 @@ export const AcademyPage = () => {
 
   // ── Accueil tab ──────────────────────────────────────────────────────────
 
-  const photoURL = user.photoURL || profile?.avatarUrl || null;
+  const photoURL = profile?.avatarUrl || user.photoURL || null;
 
   const renderAccueil = () => (
     <HomeDashboard
