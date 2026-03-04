@@ -49,7 +49,7 @@ export const ParcoursGrid = ({ onSelectParcours, getParcoursCompletedCount }) =>
             onClick={isPlayable ? () => onSelectParcours(p.id) : undefined}
             style={{
               ...cardStyle,
-              opacity: isPlayable ? 1 : 0.6,
+              opacity: isPlayable ? 1 : 0.55,
               cursor: isPlayable ? "pointer" : "default",
               position: "relative",
               overflow: "hidden",
@@ -58,9 +58,9 @@ export const ParcoursGrid = ({ onSelectParcours, getParcoursCompletedCount }) =>
             {/* Icon */}
             <div style={{
               width: 60, height: 60, borderRadius: 14, flexShrink: 0,
-              background: isPlayable ? "rgba(194,116,74,0.08)" : "rgba(11,54,61,0.04)",
+              background: isPlayable ? "rgba(194,116,74,0.08)" : "var(--border-subtle)",
               display: "flex", alignItems: "center", justifyContent: "center",
-              color: isPlayable ? "#c2744a" : "rgba(11,54,61,0.25)",
+              color: isPlayable ? "#c2744a" : "var(--text-tertiary)",
             }}>
               {PARCOURS_ICONS[p.id]}
             </div>
@@ -103,7 +103,7 @@ export const ParcoursGrid = ({ onSelectParcours, getParcoursCompletedCount }) =>
               ) : (
                 <div style={{
                   fontFamily: "'DM Sans', sans-serif", fontSize: 11,
-                  color: "var(--text-muted)",
+                  color: "var(--text-tertiary)",
                 }}>
                   {moduleCount} modules
                 </div>
@@ -113,13 +113,13 @@ export const ParcoursGrid = ({ onSelectParcours, getParcoursCompletedCount }) =>
             {/* Right side */}
             <div style={{ flexShrink: 0 }}>
               {isPlayable ? (
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(11,54,61,0.3)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-tertiary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <polyline points="9 18 15 12 9 6" />
                 </svg>
               ) : (
                 <div style={{
                   fontFamily: "'DM Sans', sans-serif", fontSize: 10,
-                  color: "var(--text-muted)", textAlign: "center",
+                  color: "var(--text-tertiary)", textAlign: "center",
                 }}>
                   Bientôt
                 </div>

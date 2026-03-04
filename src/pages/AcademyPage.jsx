@@ -19,6 +19,7 @@ import {
   checkInactivityNotification,
   cancelStreakReminder,
 } from "../lib/notificationService";
+import { updateLeaderboardEntry } from "../lib/gamificationService";
 import { modulesData } from "../data/academy/modules";
 import { parcoursData } from "../data/academy/parcours";
 
@@ -122,6 +123,12 @@ export const AcademyPage = () => {
     const cleanup = setupOnlineListener(() => progressHook.refreshProgress());
     return cleanup;
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Sync leaderboard entry on load (catches up if previous writes failed)
+  useEffect(() => {
+    if (progressLoading || !user || !xp) return;
+    updateLeaderboardEntry(user.uid, xp).catch(() => {});
+  }, [progressLoading, user?.uid, xp]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Notification setup — after progress loads
   useEffect(() => {
