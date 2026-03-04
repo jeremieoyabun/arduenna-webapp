@@ -95,13 +95,13 @@ export const LeaderboardView = () => {
       <h2 style={{
         fontFamily: "'Cormorant Garamond', Georgia, serif",
         fontSize: 22, fontWeight: 400, fontStyle: "italic",
-        color: "var(--text-primary)", marginBottom: 8, textAlign: "center",
+        color: "var(--text-primary)", marginBottom: 2, textAlign: "center",
       }}>
         Classement
       </h2>
       <p style={{
         fontFamily: "'DM Sans', sans-serif", fontSize: 12,
-        color: "var(--text-tertiary)", textAlign: "center", marginBottom: 24,
+        color: "var(--text-tertiary)", textAlign: "center", marginBottom: 32,
       }}>
         Les meilleurs apprentis Arduenna
       </p>

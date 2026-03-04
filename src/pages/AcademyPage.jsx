@@ -645,7 +645,7 @@ const ProfileHeader = ({ user, profile, photoURL, firstName, role, refreshProfil
 
       {/* Editable name */}
       {editingName ? (
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8, marginBottom: 6 }}>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8, marginBottom: 4 }}>
           <input
             autoFocus
             value={nameValue}
@@ -673,7 +673,7 @@ const ProfileHeader = ({ user, profile, photoURL, firstName, role, refreshProfil
       ) : (
         <div
           onClick={() => { setNameValue(firstName); setEditingName(true); }}
-          style={{ cursor: "pointer", display: "inline-flex", alignItems: "center", gap: 6, marginBottom: 6 }}
+          style={{ cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 6, marginBottom: 4 }}
         >
           <h2 style={{
             fontFamily: "'Cormorant Garamond', Georgia, serif",
@@ -692,11 +692,11 @@ const ProfileHeader = ({ user, profile, photoURL, firstName, role, refreshProfil
       {role && (
         <div style={{
           display: "inline-block",
-          padding: "4px 14px", borderRadius: 999,
+          padding: "3px 14px", borderRadius: 999,
           background: "rgba(194,116,74,0.13)",
           border: "1px solid rgba(194,116,74,0.22)",
-          fontFamily: "'DM Sans', sans-serif", fontSize: 12, color: "var(--accent-secondary)",
-          marginBottom: 6,
+          fontFamily: "'DM Sans', sans-serif", fontSize: 11, color: "var(--accent-secondary)",
+          marginBottom: 8,
         }}>
           {ROLE_LABELS_PROFILE[role] || role}
         </div>
