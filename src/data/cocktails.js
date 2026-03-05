@@ -203,6 +203,6 @@ export const awardsData = [
   { year: "2022", title: "Europe Wine & Spirits Trophy", detail: "Double Gold", tier: "gold" },
   { year: "2022", title: "Women's International Trophy", detail: "Gold", tier: "gold" },
   { year: "2022", title: "Yellow Line Design Awards", detail: "Gold", tier: "gold" },
-  { year: "2022", title: "Concours Int'l de Lyon", detail: "Silver", tier: "silver" },
+  { year: "2022", title: "Concours International de Lyon", detail: "Silver", tier: "silver" },
   { year: "2021", title: "IWSC Gin & Tonic", detail: "Bronze", tier: "bronze" },
 ];

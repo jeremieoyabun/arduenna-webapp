@@ -20,27 +20,47 @@ export const Awards = ({ t }) => (
         return (
           <div
             key={i}
-            className={`card card--flat reveal reveal--delay-${(i % 3) + 1}`}
+            className={`reveal reveal--delay-${(i % 3) + 1}`}
             style={{
               borderLeft: `3px solid ${tier.border}`,
               background: tier.bg,
-              padding: "16px 18px",
+              borderRadius: "var(--radius-lg)",
+              padding: "14px 16px",
               display: "flex",
               alignItems: "center",
-              gap: 14,
+              gap: 12,
+              position: "relative",
+              overflow: "hidden",
             }}
           >
-            {/* Year circle */}
+            {/* Subtle leaf watermark */}
+            <img
+              src="/icons/leaf-right.svg"
+              alt=""
+              aria-hidden="true"
+              style={{
+                position: "absolute",
+                right: -4, top: "50%",
+                transform: "translateY(-50%)",
+                height: "80%",
+                width: "auto",
+                opacity: 0.08,
+                pointerEvents: "none",
+              }}
+            />
+
+            {/* Year badge */}
             <div style={{
-              width: 48, height: 48,
+              width: 44, height: 44,
               borderRadius: "50%",
               border: `1.5px solid ${tier.border}`,
               display: "flex", alignItems: "center", justifyContent: "center",
               flexShrink: 0,
+              position: "relative",
             }}>
               <span style={{
                 fontFamily: "var(--font-display)",
-                fontSize: 15, fontWeight: 600,
+                fontSize: 14, fontWeight: 600,
                 color: tier.color,
                 lineHeight: 1,
               }}>
@@ -49,21 +69,21 @@ export const Awards = ({ t }) => (
             </div>
 
             {/* Text */}
-            <div style={{ minWidth: 0 }}>
+            <div style={{ minWidth: 0, position: "relative" }}>
               <div style={{
                 fontFamily: "var(--font-display)",
-                fontSize: 14, fontWeight: 500,
+                fontSize: 13, fontWeight: 500,
                 color: "var(--text-primary)",
-                lineHeight: 1.25,
-                marginBottom: 3,
+                lineHeight: 1.3,
+                marginBottom: 2,
               }}>
                 {a.title}
               </div>
               <div style={{
                 fontFamily: "var(--font-body)",
-                fontSize: 11, fontWeight: 600,
+                fontSize: 10, fontWeight: 600,
                 textTransform: "uppercase",
-                letterSpacing: "0.1em",
+                letterSpacing: "0.12em",
                 color: tier.color,
               }}>
                 {a.detail}
