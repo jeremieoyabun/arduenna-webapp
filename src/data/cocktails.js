@@ -197,10 +197,12 @@ export const cocktailsData = [
 ];
 
 export const awardsData = [
-  { year: "2025", title: "World Gin Awards", detail: "Silver", tier: "silver" },
-  { year: "2023", title: "London Awards", detail: "Gin of the Year", tier: "gold" },
-  { year: "2022", title: "Europe Wine & Spirits", detail: "Double Gold", tier: "gold" },
-  { year: "2022", title: "Women's Int'l Trophy", detail: "Winner", tier: "silver" },
-  { year: "2022", title: "Yellow Line Design", detail: "Gold", tier: "gold" },
+  { year: "2025", title: "World Drinks Awards", detail: "Silver", tier: "silver" },
+  { year: "2023", title: "World Gin Awards", detail: "Bronze", tier: "bronze" },
+  { year: "2023", title: "Gin of the Year London", detail: "Gold", tier: "gold" },
+  { year: "2022", title: "Europe Wine & Spirits Trophy", detail: "Double Gold", tier: "gold" },
+  { year: "2022", title: "Women's International Trophy", detail: "Gold", tier: "gold" },
+  { year: "2022", title: "Yellow Line Design Awards", detail: "Gold", tier: "gold" },
+  { year: "2022", title: "Concours Int'l de Lyon", detail: "Silver", tier: "silver" },
   { year: "2021", title: "IWSC Gin & Tonic", detail: "Bronze", tier: "bronze" },
 ];

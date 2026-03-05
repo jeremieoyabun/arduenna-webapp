@@ -1,9 +1,9 @@
 import { awardsData } from "../../data/cocktails";
 
 const tierStyle = {
-  gold:   { color: "#c9910a", bg: "rgba(212,165,116,0.10)", border: "rgba(212,165,116,0.30)" },
-  silver: { color: "#7a8fa6", bg: "rgba(160,160,160,0.08)",  border: "rgba(160,160,160,0.25)"  },
-  bronze: { color: "#a07040", bg: "rgba(194,139,106,0.08)",  border: "rgba(194,139,106,0.25)"  },
+  gold:   { color: "#c9910a", bg: "rgba(212,165,116,0.08)", border: "rgba(212,165,116,0.25)" },
+  silver: { color: "#7a8fa6", bg: "rgba(160,160,160,0.06)", border: "rgba(160,160,160,0.20)" },
+  bronze: { color: "#a07040", bg: "rgba(194,139,106,0.06)", border: "rgba(194,139,106,0.20)" },
 };
 
 export const Awards = ({ t }) => (
@@ -14,95 +14,60 @@ export const Awards = ({ t }) => (
       <h2 className="section-title">{t.awards.title}</h2>
     </div>
 
-    <div className="grid-3 reveal">
+    <div className="grid-4 reveal">
       {awardsData.map((a, i) => {
         const tier = tierStyle[a.tier] ?? tierStyle.bronze;
         return (
           <div
             key={i}
-            className="card card--flat award-card"
+            className={`card card--flat reveal reveal--delay-${(i % 3) + 1}`}
             style={{
-              borderTop: `3px solid ${tier.border}`,
+              borderLeft: `3px solid ${tier.border}`,
               background: tier.bg,
-              textAlign: "center",
-              padding: "var(--space-8) var(--space-4)",
-              position: "relative",
-              overflow: "hidden",
+              padding: "16px 18px",
+              display: "flex",
+              alignItems: "center",
+              gap: 14,
             }}
           >
-            {/* Leaf decorations */}
-            <img
-              src="/icons/leaf-left.svg"
-              alt=""
-              loading="lazy"
-              style={{
-                position: "absolute",
-                left: 6, top: "50%",
-                transform: "translateY(-50%)",
-                height: "50%",
-                width: "auto",
-                opacity: 0.22,
-                pointerEvents: "none",
-              }}
-            />
-            <img
-              src="/icons/leaf-right.svg"
-              alt=""
-              loading="lazy"
-              style={{
-                position: "absolute",
-                right: 6, top: "50%",
-                transform: "translateY(-50%)",
-                height: "50%",
-                width: "auto",
-                opacity: 0.22,
-                pointerEvents: "none",
-              }}
-            />
-
-            {/* Year — large */}
+            {/* Year circle */}
             <div style={{
-              fontFamily: "var(--font-display)",
-              fontSize: 36, fontWeight: 700,
-              color: tier.color,
-              lineHeight: 1, marginBottom: 8,
-              position: "relative",
+              width: 48, height: 48,
+              borderRadius: "50%",
+              border: `1.5px solid ${tier.border}`,
+              display: "flex", alignItems: "center", justifyContent: "center",
+              flexShrink: 0,
             }}>
-              {a.year}
+              <span style={{
+                fontFamily: "var(--font-display)",
+                fontSize: 15, fontWeight: 600,
+                color: tier.color,
+                lineHeight: 1,
+              }}>
+                {a.year}
+              </span>
             </div>
 
-            {/* Medal detail (Gold / Silver / etc) */}
-            <div style={{
-              fontFamily: "var(--font-body)",
-              fontSize: "var(--text-xs)",
-              fontWeight: 700,
-              textTransform: "uppercase",
-              letterSpacing: "0.15em",
-              color: tier.color,
-              marginBottom: 10,
-              position: "relative",
-            }}>
-              {a.detail}
-            </div>
-
-            {/* Thin separator */}
-            <div style={{
-              width: 32, height: 1,
-              background: tier.border,
-              margin: "0 auto 10px",
-              position: "relative",
-            }} />
-
-            {/* Award name */}
-            <div style={{
-              fontFamily: "var(--font-display)",
-              fontSize: "var(--text-base)",
-              fontWeight: 500,
-              color: "var(--text-primary)",
-              lineHeight: 1.3,
-              position: "relative",
-            }}>
-              {a.title}
+            {/* Text */}
+            <div style={{ minWidth: 0 }}>
+              <div style={{
+                fontFamily: "var(--font-display)",
+                fontSize: 14, fontWeight: 500,
+                color: "var(--text-primary)",
+                lineHeight: 1.25,
+                marginBottom: 3,
+              }}>
+                {a.title}
+              </div>
+              <div style={{
+                fontFamily: "var(--font-body)",
+                fontSize: 11, fontWeight: 600,
+                textTransform: "uppercase",
+                letterSpacing: "0.1em",
+                color: tier.color,
+              }}>
+                {a.detail}
+              </div>
             </div>
           </div>
         );
