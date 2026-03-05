@@ -33,18 +33,32 @@ export const Awards = ({ t }) => (
               overflow: "hidden",
             }}
           >
-            {/* Subtle leaf watermark */}
+            {/* Subtle leaf watermarks */}
+            <img
+              src="/icons/leaf-left.svg"
+              alt=""
+              aria-hidden="true"
+              style={{
+                position: "absolute",
+                left: 6, top: "50%",
+                transform: "translateY(-50%)",
+                height: "60%",
+                width: "auto",
+                opacity: 0.06,
+                pointerEvents: "none",
+              }}
+            />
             <img
               src="/icons/leaf-right.svg"
               alt=""
               aria-hidden="true"
               style={{
                 position: "absolute",
-                right: -4, top: "50%",
+                right: 6, top: "50%",
                 transform: "translateY(-50%)",
-                height: "80%",
+                height: "60%",
                 width: "auto",
-                opacity: 0.08,
+                opacity: 0.06,
                 pointerEvents: "none",
               }}
             />
