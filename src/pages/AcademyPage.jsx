@@ -552,6 +552,8 @@ const InstallBanner = () => {
   if (isStandalone || dismissed || wasDismissed) return null;
 
   const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+  const isIOSSafari = isIOS && /Safari/.test(navigator.userAgent) && !/CriOS|FxiOS|OPiOS|EdgiOS/.test(navigator.userAgent);
+  const isIOSNonSafari = isIOS && !isIOSSafari;
 
   const handleDismiss = () => {
     setDismissed(true);
@@ -602,9 +604,11 @@ const InstallBanner = () => {
           fontFamily: "'DM Sans', sans-serif", fontSize: 12,
           color: "var(--text-secondary)", lineHeight: 1.4,
         }}>
-          {isIOS
-            ? <>Tapez <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ verticalAlign: "-2px" }}><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8M16 6l-4-4-4 4M12 2v13"/></svg> puis <strong>« Sur l'écran d'accueil »</strong></>
-            : "Accédez à l'Academy en un tap depuis votre écran d'accueil"
+          {isIOSNonSafari
+            ? <>Ouvrez cette page dans <strong>Safari</strong> pour installer l'app sur votre écran d'accueil</>
+            : isIOS
+              ? <>Tapez <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ verticalAlign: "-2px" }}><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8M16 6l-4-4-4 4M12 2v13"/></svg> puis <strong>« Sur l'écran d'accueil »</strong></>
+              : "Accédez à l'Academy en un tap depuis votre écran d'accueil"
           }
         </div>
       </div>
