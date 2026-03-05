@@ -23,8 +23,10 @@ export default defineConfig({
         ],
       },
       workbox: {
-        // Precache all static assets
+        // Precache all static assets (exclude large source images)
         globPatterns: ['**/*.{js,css,html,ico,svg,webp,avif,woff,woff2,ttf,png}'],
+        globIgnores: ['**/Quizz/**/*.png', '**/Quizz/**/*.jpg', '**/Quizz/**/*.xmp'],
+        maximumFileSizeToCacheInBytes: 3 * 1024 * 1024, // 3MB
         // Runtime caching strategies
         runtimeCaching: [
           {

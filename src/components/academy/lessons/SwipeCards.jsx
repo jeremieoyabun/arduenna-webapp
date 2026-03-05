@@ -10,23 +10,26 @@ const L = (obj, key, lang) => obj[key + (lang === "en" ? "En" : "Fr")] ?? obj[ke
 export const SwipeCards = ({ lesson, onNext, lang = "fr" }) => {
   const { cards } = lesson;
   const [index, setIndex] = useState(0);
-  const [animDir, setAnimDir] = useState(null); // "left" | "right" | null
+  const [fade, setFade] = useState(false); // true = fading out
 
   const isLast = index === cards.length - 1;
 
-  const animate = (dir, afterFn) => {
-    setAnimDir(dir);
-    setTimeout(() => { afterFn(); setAnimDir(null); }, 180);
+  const switchTo = (newIndex) => {
+    setFade(true);
+    setTimeout(() => {
+      setIndex(newIndex);
+      setFade(false);
+    }, 150);
   };
 
   const goNext = () => {
     if (isLast) { onNext(); return; }
-    animate("left", () => setIndex(i => i + 1));
+    switchTo(index + 1);
   };
 
   const goPrev = () => {
     if (index === 0) return;
-    animate("right", () => setIndex(i => i - 1));
+    switchTo(index - 1);
   };
 
   const { dragX, onPointerDown, onPointerMove, onPointerUp } = useSwipeGesture({
@@ -38,9 +41,9 @@ export const SwipeCards = ({ lesson, onNext, lang = "fr" }) => {
   const card = cards[index];
   const hasImg = !!card.img;
 
-  const slideStyle = animDir
-    ? { transform: `translateX(${animDir === "left" ? "-60px" : "60px"})`, opacity: 0, transition: "transform 0.18s ease-out, opacity 0.18s ease-out" }
-    : { transform: `translateX(${dragX}px)`, transition: dragX !== 0 ? "none" : "transform 0.25s cubic-bezier(0.34,1.56,0.64,1)" };
+  const slideStyle = fade
+    ? { opacity: 0, transition: "opacity 0.15s ease-out" }
+    : { opacity: 1, transform: `translateX(${dragX}px)`, transition: dragX !== 0 ? "none" : "opacity 0.2s ease-out" };
 
   return (
     <div style={{ padding: "24px 20px", display: "flex", flexDirection: "column", gap: 20 }}>
@@ -110,7 +113,7 @@ export const SwipeCards = ({ lesson, onNext, lang = "fr" }) => {
         {cards.map((_, i) => (
           <button
             key={i}
-            onClick={() => animate(i > index ? "left" : "right", () => setIndex(i))}
+            onClick={() => switchTo(i)}
             style={{
               width: i === index ? 22 : 8, height: 8, borderRadius: 999,
               background: i === index ? "var(--accent-secondary)" : "var(--border-subtle)",
