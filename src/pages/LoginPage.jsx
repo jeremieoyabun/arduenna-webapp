@@ -113,7 +113,7 @@ export const LoginPage = () => {
           color: "var(--text-primary)",
           textDecoration: "none",
           fontFamily: "'DM Sans', sans-serif",
-          fontSize: 13,
+          fontSize: 14,
           opacity: 0.5,
           transition: "opacity 0.2s ease",
         }}
@@ -169,7 +169,7 @@ export const LoginPage = () => {
               border: "1px solid rgba(11,54,61,0.15)",
               borderRadius: 8,
               fontFamily: "'DM Sans', sans-serif",
-              fontSize: 13,
+              fontSize: 14,
               fontWeight: 500,
               cursor: "pointer",
               transition: "all 0.2s ease-out",
@@ -187,7 +187,7 @@ export const LoginPage = () => {
               border: "1px solid rgba(11,54,61,0.15)",
               borderRadius: 8,
               fontFamily: "'DM Sans', sans-serif",
-              fontSize: 13,
+              fontSize: 14,
               fontWeight: 500,
               cursor: "pointer",
               transition: "all 0.2s ease-out",
@@ -235,7 +235,7 @@ export const LoginPage = () => {
           margin: "var(--space-4) 0",
         }}>
           <div style={{ flex: 1, height: 1, background: "rgba(11,54,61,0.1)" }} />
-          <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, color: "rgba(11,54,61,0.35)" }}>ou</span>
+          <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 14, color: "rgba(11,54,61,0.35)" }}>ou</span>
           <div style={{ flex: 1, height: 1, background: "rgba(11,54,61,0.1)" }} />
         </div>
 
@@ -278,7 +278,7 @@ export const LoginPage = () => {
             <div style={{ marginBottom: "var(--space-5)" }}>
               <div style={{
                 fontFamily: "'DM Sans', sans-serif",
-                fontSize: 11,
+                fontSize: 14,
                 color: "rgba(11,54,61,0.5)",
                 textTransform: "uppercase",
                 letterSpacing: 2,
@@ -300,7 +300,7 @@ export const LoginPage = () => {
                       border: "1px solid rgba(11,54,61,0.12)",
                       borderRadius: 6,
                       fontFamily: "'DM Sans', sans-serif",
-                      fontSize: 11,
+                      fontSize: 14,
                       cursor: "pointer",
                       transition: "all 0.2s ease-out",
                     }}
@@ -316,7 +316,7 @@ export const LoginPage = () => {
           {error && (
             <p style={{
               color: "#c2744a",
-              fontSize: 13,
+              fontSize: 14,
               fontFamily: "'DM Sans', sans-serif",
               marginBottom: "var(--space-4)",
               textAlign: "center",
@@ -354,7 +354,7 @@ export const LoginPage = () => {
               border: "none",
               color: "rgba(11,54,61,0.4)",
               fontFamily: "'DM Sans', sans-serif",
-              fontSize: 12,
+              fontSize: 14,
               margin: "var(--space-3) auto 0",
               display: "block",
               cursor: "pointer",
@@ -373,7 +373,7 @@ export const LoginPage = () => {
             marginTop: "var(--space-6)",
             color: "#c2744a",
             fontFamily: "'DM Sans', sans-serif",
-            fontSize: 13,
+            fontSize: 14,
             textDecoration: "none",
           }}
         >

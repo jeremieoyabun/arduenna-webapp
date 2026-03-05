@@ -90,7 +90,7 @@ export const AlertsPanel = ({ enrichedUsers }) => {
                   {u.displayName || u.firstName || u.email || "—"}
                 </div>
                 <div style={{
-                  fontFamily: "'DM Sans', sans-serif", fontSize: 11,
+                  fontFamily: "'DM Sans', sans-serif", fontSize: 12,
                   color: "var(--text-tertiary)",
                 }}>
                   {ROLE_LABELS[u.role] || u.role || "—"}
@@ -102,7 +102,7 @@ export const AlertsPanel = ({ enrichedUsers }) => {
                 padding: "4px 10px", borderRadius: 999, flexShrink: 0,
                 background: "rgba(194,116,74,0.08)",
                 border: "1px solid rgba(194,116,74,0.18)",
-                fontFamily: "'DM Sans', sans-serif", fontSize: 11, fontWeight: 500,
+                fontFamily: "'DM Sans', sans-serif", fontSize: 12, fontWeight: 500,
                 color: "var(--accent-secondary)",
               }}>
                 {daysSince != null ? `+${daysSince}j` : lastLogin}

@@ -15,7 +15,7 @@ export const NextModuleCard = ({ module, parcoursId, percent, onStart }) => {
 
   const CAP = {
     fontFamily: "'DM Sans', sans-serif",
-    fontSize: 10, fontWeight: 600,
+    fontSize: 12, fontWeight: 600,
     color: "var(--text-3)",
     textTransform: "uppercase", letterSpacing: "2.5px",
   };
@@ -126,7 +126,7 @@ export const NextModuleCard = ({ module, parcoursId, percent, onStart }) => {
             </div>
             <div style={{
               fontFamily: "'DM Sans', sans-serif",
-              fontSize: 10, color: "var(--text-4)",
+              fontSize: 12, color: "var(--text-4)",
               marginTop: 5,
             }}>
               {percent}% complété

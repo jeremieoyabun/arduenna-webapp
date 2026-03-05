@@ -3,7 +3,7 @@ import { BadgeGlyph, PadlockSVG } from "../gamification/BadgeGlyph";
 
 const CAP = {
   fontFamily: "'DM Sans', sans-serif",
-  fontSize: 10, fontWeight: 600,
+  fontSize: 12, fontWeight: 600,
   color: "var(--text-3)",
   textTransform: "uppercase", letterSpacing: "2.5px",
 };
@@ -23,7 +23,7 @@ export const BadgesRow = ({ earnedBadgeIds = [], onViewAll, newBadgeId }) => {
           onClick={onViewAll}
           style={{
             background: "none", border: "none", cursor: "pointer", padding: 0,
-            fontFamily: "'DM Sans', sans-serif", fontSize: 11, fontWeight: 500,
+            fontFamily: "'DM Sans', sans-serif", fontSize: 12, fontWeight: 500,
             color: "#c2744a",
             display: "flex", alignItems: "center", gap: 3,
           }}

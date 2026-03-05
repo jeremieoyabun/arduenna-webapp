@@ -75,7 +75,7 @@ export const Awards = ({ t }) => (
             }}>
               <span style={{
                 fontFamily: "var(--font-display)",
-                fontSize: 13, fontWeight: 600,
+                fontSize: 14, fontWeight: 600,
                 color: tier.color,
                 lineHeight: 1,
               }}>
@@ -87,16 +87,16 @@ export const Awards = ({ t }) => (
             <div style={{ position: "relative" }}>
               <div style={{
                 fontFamily: "var(--font-display)",
-                fontSize: 13, fontWeight: 500,
+                fontSize: 15, fontWeight: 500,
                 color: "var(--text-primary)",
                 lineHeight: 1.3,
-                marginBottom: 2,
+                marginBottom: 3,
               }}>
                 {a.title}
               </div>
               <div style={{
                 fontFamily: "var(--font-body)",
-                fontSize: 10, fontWeight: 600,
+                fontSize: 12, fontWeight: 600,
                 textTransform: "uppercase",
                 letterSpacing: "0.12em",
                 color: tier.color,

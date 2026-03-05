@@ -53,7 +53,7 @@ export const CertificateCard = ({ parcoursTitle, completedAt, userName, color = 
           </div>
           <div style={{
             fontFamily: "'DM Sans', sans-serif",
-            fontSize: 11, color: "var(--text-tertiary)",
+            fontSize: 12, color: "var(--text-tertiary)",
             paddingLeft: 26,
           }}>
             Obtenu le {dateStr}

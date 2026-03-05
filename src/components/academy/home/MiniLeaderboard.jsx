@@ -14,7 +14,7 @@ const LEVELS = [
 
 const CAP = {
   fontFamily: "'DM Sans', sans-serif",
-  fontSize: 10, fontWeight: 600,
+  fontSize: 12, fontWeight: 600,
   color: "var(--text-3)",
   textTransform: "uppercase", letterSpacing: "2.5px",
 };
@@ -59,7 +59,7 @@ export const MiniLeaderboard = ({ onViewAll }) => {
             style={{
               background: "none", border: "none", cursor: "pointer",
               fontFamily: "'DM Sans', sans-serif",
-              fontSize: 11, color: "#c2744a", fontWeight: 500,
+              fontSize: 12, color: "#c2744a", fontWeight: 500,
               padding: 0, display: "flex", alignItems: "center", gap: 3,
             }}
           >
@@ -179,14 +179,14 @@ export const MiniLeaderboard = ({ onViewAll }) => {
                   <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 4, flexShrink: 0 }}>
                     {badgeDots > 0 && (
                       <div style={{
-                        fontFamily: "'DM Sans', sans-serif", fontSize: 10,
+                        fontFamily: "'DM Sans', sans-serif", fontSize: 12,
                         color: "var(--text-4)",
                       }}>
                         {badgeDots} badge{badgeDots > 1 ? "s" : ""}
                       </div>
                     )}
                     <div style={{
-                      fontFamily: "'DM Sans', sans-serif", fontSize: 11, fontWeight: 700,
+                      fontFamily: "'DM Sans', sans-serif", fontSize: 12, fontWeight: 700,
                       color: "var(--text-2)",
                     }}>
                       {entry.xp} XP
@@ -200,7 +200,7 @@ export const MiniLeaderboard = ({ onViewAll }) => {
           {/* XP gap — how far the user is from the rank just above */}
           {userRank >= 3 && entries[userRank] && entries[userRank - 1] && (
             <div style={{
-              fontFamily: "'DM Sans', sans-serif", fontSize: 10,
+              fontFamily: "'DM Sans', sans-serif", fontSize: 12,
               color: "var(--text-4)", textAlign: "center",
               fontStyle: "italic", paddingBottom: 6,
             }}>

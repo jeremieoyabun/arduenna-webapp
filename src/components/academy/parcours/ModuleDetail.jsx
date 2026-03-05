@@ -101,7 +101,7 @@ export const ModuleDetail = ({ moduleId, parcoursId, onBack, onStart, getModuleP
 
         {/* Lesson breakdown */}
         <div style={{
-          fontFamily: "'DM Sans', sans-serif", fontSize: 11,
+          fontFamily: "'DM Sans', sans-serif", fontSize: 12,
           color: "var(--text-tertiary)", textTransform: "uppercase",
           letterSpacing: 1.5, marginBottom: 12,
         }}>

@@ -93,7 +93,7 @@ export const AdminPage = () => {
             </div>
             <div style={{
               fontFamily: "'DM Sans', sans-serif",
-              fontSize: 10, color: "var(--text-tertiary)",
+              fontSize: 12, color: "var(--text-tertiary)",
               textTransform: "uppercase", letterSpacing: "1.5px",
             }}>
               Arduenna Academy
@@ -104,7 +104,7 @@ export const AdminPage = () => {
         {/* Refresh indicator */}
         {dataLoading && (
           <div style={{
-            fontFamily: "'DM Sans', sans-serif", fontSize: 11,
+            fontFamily: "'DM Sans', sans-serif", fontSize: 12,
             color: "var(--text-muted)", fontStyle: "italic",
           }}>
             Chargement...
@@ -154,7 +154,7 @@ export const AdminPage = () => {
                 background: "none", border: "none", cursor: "pointer",
                 display: "flex", flexDirection: "column", alignItems: "center",
                 gap: 2, padding: "6px 12px",
-                fontFamily: "'DM Sans', sans-serif", fontSize: 10,
+                fontFamily: "'DM Sans', sans-serif", fontSize: 12,
                 letterSpacing: "0.08em",
                 color: active ? "var(--accent-secondary)" : "var(--text-muted)",
                 position: "relative",

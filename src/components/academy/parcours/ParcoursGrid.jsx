@@ -94,7 +94,7 @@ export const ParcoursGrid = ({ onSelectParcours, getParcoursCompletedCount }) =>
                     }} />
                   </div>
                   <span style={{
-                    fontFamily: "'DM Sans', sans-serif", fontSize: 11,
+                    fontFamily: "'DM Sans', sans-serif", fontSize: 12,
                     color: "var(--text-tertiary)", flexShrink: 0,
                   }}>
                     {completedCount}/{moduleCount}
@@ -102,7 +102,7 @@ export const ParcoursGrid = ({ onSelectParcours, getParcoursCompletedCount }) =>
                 </div>
               ) : (
                 <div style={{
-                  fontFamily: "'DM Sans', sans-serif", fontSize: 11,
+                  fontFamily: "'DM Sans', sans-serif", fontSize: 12,
                   color: "var(--text-tertiary)",
                 }}>
                   {moduleCount} modules
@@ -118,7 +118,7 @@ export const ParcoursGrid = ({ onSelectParcours, getParcoursCompletedCount }) =>
                 </svg>
               ) : (
                 <div style={{
-                  fontFamily: "'DM Sans', sans-serif", fontSize: 10,
+                  fontFamily: "'DM Sans', sans-serif", fontSize: 12,
                   color: "var(--text-tertiary)", textAlign: "center",
                 }}>
                   Bientôt

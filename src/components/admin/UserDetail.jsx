@@ -129,7 +129,7 @@ export const UserDetail = ({ user, onClose }) => {
                 {val}
               </div>
               <div style={{
-                fontFamily: "'DM Sans', sans-serif", fontSize: 10,
+                fontFamily: "'DM Sans', sans-serif", fontSize: 12,
                 color: "var(--text-muted)",
                 textTransform: "uppercase", letterSpacing: "1px",
               }}>
@@ -147,7 +147,7 @@ export const UserDetail = ({ user, onClose }) => {
         }}>
           <div style={{
             fontFamily: "'DM Sans', sans-serif",
-            fontSize: 10, color: "var(--text-tertiary)",
+            fontSize: 12, color: "var(--text-tertiary)",
             textTransform: "uppercase", letterSpacing: "1.5px", marginBottom: 12,
           }}>
             Progression
@@ -175,7 +175,7 @@ export const UserDetail = ({ user, onClose }) => {
                     {completedAt && <span style={{ color: "#3a7a6b", marginLeft: 6 }}>✓</span>}
                   </span>
                   <span style={{
-                    fontFamily: "'DM Sans', sans-serif", fontSize: 11,
+                    fontFamily: "'DM Sans', sans-serif", fontSize: 12,
                     color: "var(--text-tertiary)",
                   }}>
                     {doneCount}/{totalExpected}
@@ -206,7 +206,7 @@ export const UserDetail = ({ user, onClose }) => {
           }}>
             <div style={{
               fontFamily: "'DM Sans', sans-serif",
-              fontSize: 10, color: "var(--text-tertiary)",
+              fontSize: 12, color: "var(--text-tertiary)",
               textTransform: "uppercase", letterSpacing: "1.5px", marginBottom: 12,
             }}>
               Badges ({badges.length})
@@ -222,7 +222,7 @@ export const UserDetail = ({ user, onClose }) => {
                 }}>
                   <span style={{ fontSize: 14 }}>{BADGE_ICONS[b.id] || "🏅"}</span>
                   <span style={{
-                    fontFamily: "'DM Sans', sans-serif", fontSize: 11,
+                    fontFamily: "'DM Sans', sans-serif", fontSize: 12,
                     color: "var(--accent-secondary)",
                   }}>
                     {BADGE_LABELS[b.id] || b.id}

@@ -55,7 +55,7 @@ export const TrueFalse = ({ lesson, onNext, lang = "fr" }) => {
         boxShadow: "0 2px 12px rgba(11,54,61,0.04)",
       }}>
         <div style={{
-          fontFamily: "'DM Sans', sans-serif", fontSize: 11,
+          fontFamily: "'DM Sans', sans-serif", fontSize: 12,
           fontWeight: 600, textTransform: "uppercase", letterSpacing: 1.5,
           color: "var(--text-tertiary)", marginBottom: 14,
         }}>

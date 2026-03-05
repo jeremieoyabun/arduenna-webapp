@@ -72,7 +72,7 @@ export const CSVExport = ({ enrichedUsers }) => {
       }}>
         <div style={{
           fontFamily: "'DM Sans', sans-serif",
-          fontSize: 10, color: "var(--text-tertiary)",
+          fontSize: 12, color: "var(--text-tertiary)",
           textTransform: "uppercase", letterSpacing: "1.5px",
           marginBottom: 14,
         }}>

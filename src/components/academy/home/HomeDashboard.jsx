@@ -14,7 +14,7 @@ const ROLE_LABELS = {
 
 const CAP = {
   fontFamily: "'DM Sans', sans-serif",
-  fontSize: 10, fontWeight: 600,
+  fontSize: 12, fontWeight: 600,
   color: "var(--text-3)",
   textTransform: "uppercase", letterSpacing: "2.5px",
 };
@@ -191,7 +191,7 @@ const UpgradePackCard = ({ title, features, lockLabel, ctaLabel, ctaHref, delay 
       </div>
       <div style={{
         fontFamily: "'DM Sans', sans-serif",
-        fontSize: 11, color: "var(--text-4)", lineHeight: 1.45, marginBottom: 10,
+        fontSize: 12, color: "var(--text-4)", lineHeight: 1.45, marginBottom: 10,
       }}>
         {features}
       </div>
@@ -199,7 +199,7 @@ const UpgradePackCard = ({ title, features, lockLabel, ctaLabel, ctaHref, delay 
         href={ctaHref}
         style={{
           fontFamily: "'DM Sans', sans-serif",
-          fontSize: 11, fontWeight: 600, color: "#c2744a",
+          fontSize: 12, fontWeight: 600, color: "#c2744a",
           textDecoration: "none",
           display: "inline-flex", alignItems: "center", gap: 4,
         }}
@@ -314,7 +314,7 @@ export const HomeDashboard = ({
           <div style={{
             position: "absolute", top: 14, right: 18,
             fontFamily: "'DM Sans', sans-serif",
-            fontSize: 11, color: "var(--text-4)",
+            fontSize: 12, color: "var(--text-4)",
             letterSpacing: "0.3px",
           }}>
             {dateCap}
@@ -362,7 +362,7 @@ export const HomeDashboard = ({
                 background: "rgba(194,116,74,0.12)",
                 border: "1px solid rgba(194,116,74,0.22)",
                 fontFamily: "'DM Sans', sans-serif",
-                fontSize: 10, fontWeight: 600, color: "#c2744a",
+                fontSize: 12, fontWeight: 600, color: "#c2744a",
                 textTransform: "uppercase", letterSpacing: "1.5px",
               }}>
                 {ROLE_LABELS[role] || "Apprenti"}
@@ -472,7 +472,7 @@ export const HomeDashboard = ({
                 {xpToNext !== null ? (
                   <span style={{
                     fontFamily: "'DM Sans', sans-serif",
-                    fontSize: 11, fontWeight: 700,
+                    fontSize: 12, fontWeight: 700,
                     color: "#c2744a", letterSpacing: "0.2px",
                   }}>
                     encore {xpToNext} XP → {nextLevel?.title}
@@ -480,7 +480,7 @@ export const HomeDashboard = ({
                 ) : (
                   <span style={{
                     fontFamily: "'DM Sans', sans-serif",
-                    fontSize: 11, color: "var(--text-3)", fontStyle: "italic",
+                    fontSize: 12, color: "var(--text-3)", fontStyle: "italic",
                   }}>
                     Niveau maximum atteint
                   </span>
@@ -522,7 +522,7 @@ export const HomeDashboard = ({
             <StreakTally count={streak} />
             <div style={{
               fontFamily: "'DM Sans', sans-serif",
-              fontSize: 11, color: "var(--text-4)", lineHeight: 1.4,
+              fontSize: 12, color: "var(--text-4)", lineHeight: 1.4,
             }}>
               {streak === 0 ? "Commencez aujourd'hui"
                 : streak === 1 ? "1 jour, bon début"
@@ -584,7 +584,7 @@ export const HomeDashboard = ({
                 </span>
                 {isPlayable ? (
                   <span style={{
-                    fontFamily: "'DM Sans', sans-serif", fontSize: 11, fontWeight: 600,
+                    fontFamily: "'DM Sans', sans-serif", fontSize: 12, fontWeight: 600,
                     color: percent === 100 ? color : "var(--text-4)",
                   }}>
                     {done}/{total}

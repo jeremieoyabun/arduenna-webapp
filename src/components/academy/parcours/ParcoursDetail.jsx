@@ -55,7 +55,7 @@ export const ParcoursDetail = ({ parcoursId, onBack, onSelectModule, getModulePe
       {/* Modules list */}
       <div style={{ padding: "20px 20px 0" }}>
         <div style={{
-          fontFamily: "'DM Sans', sans-serif", fontSize: 11,
+          fontFamily: "'DM Sans', sans-serif", fontSize: 12,
           color: "var(--text-tertiary)", textTransform: "uppercase",
           letterSpacing: 1.5, marginBottom: 14,
         }}>

@@ -30,7 +30,7 @@ const Stat = ({ icon, value, label, sub }) => (
     </div>
     <div style={{
       fontFamily: "'DM Sans', sans-serif",
-      fontSize: 11, color: "var(--text-tertiary)",
+      fontSize: 12, color: "var(--text-tertiary)",
       textTransform: "uppercase", letterSpacing: "1.2px",
     }}>
       {label}
@@ -38,7 +38,7 @@ const Stat = ({ icon, value, label, sub }) => (
     {sub && (
       <div style={{
         fontFamily: "'DM Sans', sans-serif",
-        fontSize: 11, color: "var(--text-muted)", marginTop: 4,
+        fontSize: 12, color: "var(--text-muted)", marginTop: 4,
       }}>
         {sub}
       </div>
@@ -75,7 +75,7 @@ export const AdminOverview = ({ enrichedUsers }) => {
       }}>
         <div style={{
           fontFamily: "'DM Sans', sans-serif",
-          fontSize: 10, color: "var(--text-tertiary)",
+          fontSize: 12, color: "var(--text-tertiary)",
           textTransform: "uppercase", letterSpacing: "1.5px",
           marginBottom: 16,
         }}>
@@ -96,7 +96,7 @@ export const AdminOverview = ({ enrichedUsers }) => {
                 {PARCOURS_LABELS[id]}
               </span>
               <span style={{
-                fontFamily: "'DM Sans', sans-serif", fontSize: 11,
+                fontFamily: "'DM Sans', sans-serif", fontSize: 12,
                 color: "var(--text-tertiary)",
               }}>
                 {completed}/{started} · {rate}%
@@ -125,7 +125,7 @@ export const AdminOverview = ({ enrichedUsers }) => {
       }}>
         <div style={{
           fontFamily: "'DM Sans', sans-serif",
-          fontSize: 10, color: "var(--text-tertiary)",
+          fontSize: 12, color: "var(--text-tertiary)",
           textTransform: "uppercase", letterSpacing: "1.5px",
           marginBottom: 14,
         }}>

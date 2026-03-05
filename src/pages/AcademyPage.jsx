@@ -75,7 +75,7 @@ const card = {
 
 const label = {
   fontFamily: "'DM Sans', sans-serif",
-  fontSize: 10,
+  fontSize: 14,
   color: "var(--text-3)",
   textTransform: "uppercase",
   letterSpacing: "2.5px",
@@ -285,13 +285,13 @@ export const AcademyPage = () => {
               <div key={p.id} style={{ marginBottom: 14 }}>
                 <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 6 }}>
                   <span style={{
-                    fontFamily: "'DM Sans', sans-serif", fontSize: 13,
+                    fontFamily: "'DM Sans', sans-serif", fontSize: 14,
                     color: active ? "var(--text-2)" : "var(--text-4)",
                     fontWeight: active ? 500 : 400,
                   }}>
                     {p.titleFr}
                   </span>
-                  <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 11, fontWeight: 600, color: pct === 100 ? p.color : "var(--text-4)" }}>
+                  <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 14, fontWeight: 600, color: pct === 100 ? p.color : "var(--text-4)" }}>
                     {active ? `${done}/${total}` : "—"}
                   </span>
                 </div>
@@ -314,7 +314,7 @@ export const AcademyPage = () => {
           <BadgeGrid earnedBadges={earnedBadges} />
           {earnedBadges.length === 0 && (
             <div style={{
-              fontFamily: "'DM Sans', sans-serif", fontSize: 12,
+              fontFamily: "'DM Sans', sans-serif", fontSize: 14,
               color: "var(--text-4)", textAlign: "center",
               marginTop: 12, fontStyle: "italic",
             }}>
@@ -357,7 +357,7 @@ export const AcademyPage = () => {
                     background: "var(--border-subtle)",
                     border: "1px solid var(--border-subtle)",
                     borderRadius: 6,
-                    fontFamily: "'DM Sans', sans-serif", fontSize: 12, fontWeight: 500,
+                    fontFamily: "'DM Sans', sans-serif", fontSize: 14, fontWeight: 500,
                     color: "var(--text-2)", cursor: "pointer",
                   }}
                 >
@@ -375,7 +375,7 @@ export const AcademyPage = () => {
                 background: "transparent", color: "#c2744a",
                 border: "1px solid rgba(194,116,74,0.3)",
                 borderRadius: 10,
-                fontFamily: "'DM Sans', sans-serif", fontSize: 13, fontWeight: 600,
+                fontFamily: "'DM Sans', sans-serif", fontSize: 14, fontWeight: 600,
                 cursor: "pointer",
               }}
             >
@@ -509,7 +509,7 @@ export const AcademyPage = () => {
                 {active && (
                   <span style={{
                     fontFamily: "'DM Sans', sans-serif",
-                    fontSize: 12, fontWeight: 700,
+                    fontSize: 14, fontWeight: 700,
                     color: "var(--tab-active-text)",
                     letterSpacing: 0.1,
                   }}>
@@ -629,7 +629,7 @@ const ProfileHeader = ({ user, profile, photoURL, firstName, role, refreshProfil
             position: "absolute", inset: 0, borderRadius: 999,
             background: "rgba(0,0,0,0.4)", display: "flex",
             alignItems: "center", justifyContent: "center",
-            color: "#fef8ec", fontSize: 11, fontFamily: "'DM Sans', sans-serif",
+            color: "#fef8ec", fontSize: 14, fontFamily: "'DM Sans', sans-serif",
           }}>
             ...
           </div>
@@ -664,7 +664,7 @@ const ProfileHeader = ({ user, profile, photoURL, firstName, role, refreshProfil
             style={{
               background: "#c2744a", color: "#fef8ec", border: "none",
               borderRadius: 6, padding: "4px 10px", cursor: "pointer",
-              fontFamily: "'DM Sans', sans-serif", fontSize: 11, fontWeight: 600,
+              fontFamily: "'DM Sans', sans-serif", fontSize: 14, fontWeight: 600,
             }}
           >
             OK
@@ -695,14 +695,14 @@ const ProfileHeader = ({ user, profile, photoURL, firstName, role, refreshProfil
           padding: "3px 14px", borderRadius: 999,
           background: "rgba(194,116,74,0.13)",
           border: "1px solid rgba(194,116,74,0.22)",
-          fontFamily: "'DM Sans', sans-serif", fontSize: 11, color: "var(--accent-secondary)",
+          fontFamily: "'DM Sans', sans-serif", fontSize: 14, color: "var(--accent-secondary)",
           marginBottom: 8,
         }}>
           {ROLE_LABELS_PROFILE[role] || role}
         </div>
       )}
 
-      <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, color: "var(--text-3)", marginTop: 4 }}>
+      <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 14, color: "var(--text-3)", marginTop: 4 }}>
         {user.email}
       </div>
     </div>
@@ -720,7 +720,7 @@ const SettingRow = ({ icon, title, action }) => (
     <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
       <span style={{ fontSize: 16 }}>{icon}</span>
       <span style={{
-        fontFamily: "'DM Sans', sans-serif", fontSize: 13,
+        fontFamily: "'DM Sans', sans-serif", fontSize: 14,
         color: "var(--text-2)",
       }}>
         {title}
@@ -827,7 +827,7 @@ const AcademyHeader = ({ xp, onLogout }) => (
       />
       <span style={{
         fontFamily: "'Cormorant Garamond', Georgia, serif",
-        fontSize: 11, fontStyle: "italic", color: "var(--accent-secondary)",
+        fontSize: 14, fontStyle: "italic", color: "var(--accent-secondary)",
         letterSpacing: 0.8, marginTop: 1,
       }}>
         Academy
@@ -842,7 +842,7 @@ const AcademyHeader = ({ xp, onLogout }) => (
           border: "1px solid rgba(194,116,74,0.20)",
           color: "#D4A574",
           padding: "5px 12px", borderRadius: 999,
-          fontFamily: "'DM Sans', sans-serif", fontSize: 12, fontWeight: 700,
+          fontFamily: "'DM Sans', sans-serif", fontSize: 14, fontWeight: 700,
           letterSpacing: 0.3,
         }}>
           <XPDiamond /> {xp}

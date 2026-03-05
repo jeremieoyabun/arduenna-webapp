@@ -143,7 +143,7 @@ export const LeaderboardView = () => {
                 </div>
               )}
               <div style={{
-                fontFamily: "'DM Sans', sans-serif", fontSize: 10,
+                fontFamily: "'DM Sans', sans-serif", fontSize: 12,
                 color: "var(--text-secondary)", marginBottom: 4,
                 maxWidth: 68, textAlign: "center",
                 overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",
@@ -220,7 +220,7 @@ export const LeaderboardView = () => {
                   {entry.displayName}{isMe ? " (vous)" : ""}
                 </div>
                 <div style={{
-                  fontFamily: "'DM Sans', sans-serif", fontSize: 11,
+                  fontFamily: "'DM Sans', sans-serif", fontSize: 12,
                   color: "var(--text-tertiary)",
                 }}>
                   {ROLE_LABELS[entry.role] || entry.role || "—"}

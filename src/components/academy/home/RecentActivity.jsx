@@ -48,7 +48,7 @@ export const RecentActivity = ({ progress, onOpenModule, maxItems = 3 }) => {
     >
       <div style={{
         fontFamily: "'DM Sans', sans-serif",
-        fontSize: 10, color: "var(--text-tertiary)",
+        fontSize: 12, color: "var(--text-tertiary)",
         textTransform: "uppercase", letterSpacing: "1.5px",
         marginBottom: 14,
       }}>
@@ -93,7 +93,7 @@ export const RecentActivity = ({ progress, onOpenModule, maxItems = 3 }) => {
                   {titleFr}
                 </div>
                 <div style={{
-                  fontFamily: "'DM Sans', sans-serif", fontSize: 11,
+                  fontFamily: "'DM Sans', sans-serif", fontSize: 12,
                   color: "var(--text-tertiary)",
                 }}>
                   {dateStr}

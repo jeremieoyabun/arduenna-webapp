@@ -57,7 +57,7 @@ export const BadgeUnlockModal = ({ badgeId, onDismiss }) => {
 
         {/* Eyebrow */}
         <div style={{
-          fontFamily: "'DM Sans', sans-serif", fontSize: 11,
+          fontFamily: "'DM Sans', sans-serif", fontSize: 12,
           fontWeight: 700, textTransform: "uppercase",
           letterSpacing: 2, color: "var(--accent-secondary)",
           marginBottom: 8,

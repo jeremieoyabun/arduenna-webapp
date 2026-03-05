@@ -59,7 +59,7 @@ export const TeamView = ({ enrichedUsers }) => {
               borderColor: roleFilter === r ? "#0b363d" : "var(--border-light)",
               background: roleFilter === r ? "#0b363d" : "var(--bg-surface)",
               color: roleFilter === r ? "#fef8ec" : "var(--text-secondary)",
-              fontFamily: "'DM Sans', sans-serif", fontSize: 11, fontWeight: 500,
+              fontFamily: "'DM Sans', sans-serif", fontSize: 12, fontWeight: 500,
               cursor: "pointer",
             }}
           >
@@ -68,7 +68,7 @@ export const TeamView = ({ enrichedUsers }) => {
         ))}
         <span style={{
           marginLeft: "auto", alignSelf: "center",
-          fontFamily: "'DM Sans', sans-serif", fontSize: 11,
+          fontFamily: "'DM Sans', sans-serif", fontSize: 12,
           color: "var(--text-muted)",
         }}>
           {filtered.length} utilisateur{filtered.length !== 1 ? "s" : ""}
@@ -139,7 +139,7 @@ export const TeamView = ({ enrichedUsers }) => {
                   {u.displayName || u.firstName || u.email || "—"}
                 </div>
                 <div style={{
-                  fontFamily: "'DM Sans', sans-serif", fontSize: 11,
+                  fontFamily: "'DM Sans', sans-serif", fontSize: 12,
                   color: "var(--text-tertiary)",
                 }}>
                   {ROLE_LABELS[u.role] || u.role || "—"}
@@ -157,7 +157,7 @@ export const TeamView = ({ enrichedUsers }) => {
                   {prog?.xp || 0} XP
                 </div>
                 <div style={{
-                  fontFamily: "'DM Sans', sans-serif", fontSize: 10,
+                  fontFamily: "'DM Sans', sans-serif", fontSize: 12,
                   color: "var(--text-tertiary)",
                 }}>
                   {completedParcours} parcours · {avgScore != null ? `${avgScore}%` : "—"} · {lastLogin}

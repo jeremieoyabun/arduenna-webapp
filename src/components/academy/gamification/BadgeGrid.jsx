@@ -29,7 +29,7 @@ export const BadgeGrid = ({ earnedBadges = [] }) => {
             </div>
             <span style={{
               fontFamily: "'DM Sans', sans-serif",
-              fontSize: 11, textAlign: "center",
+              fontSize: 12, textAlign: "center",
               color: earned ? "#c2744a" : "var(--text-4)",
               lineHeight: 1.25,
               maxWidth: 72,
