@@ -66,7 +66,7 @@ export const SwipeCards = ({ lesson, onNext, lang = "fr" }) => {
         {/* Optional image */}
         {hasImg && (
           <div style={{
-            width: "100%", height: 200,
+            width: "100%", height: 280,
             background: card.imgContain ? "var(--color-cream, #fef8ec)" : "transparent",
             display: "flex", alignItems: "center", justifyContent: "center",
             overflow: "hidden",
@@ -78,6 +78,7 @@ export const SwipeCards = ({ lesson, onNext, lang = "fr" }) => {
               style={{
                 width: "100%", height: "100%",
                 objectFit: card.imgContain ? "contain" : "cover",
+                objectPosition: card.imgContain ? "center" : "top",
                 padding: card.imgContain ? "16px" : 0,
                 display: "block",
               }}
