@@ -14,7 +14,7 @@ export const Awards = ({ t }) => (
       <h2 className="section-title">{t.awards.title}</h2>
     </div>
 
-    <div className="grid-4 reveal">
+    <div className="awards-grid reveal">
       {awardsData.map((a, i) => {
         const tier = tierStyle[a.tier] ?? tierStyle.bronze;
         return (
