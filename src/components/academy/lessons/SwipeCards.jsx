@@ -1,35 +1,36 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSwipeGesture } from "../../../hooks/useSwipeGesture";
 
 /**
  * Swipe card lesson format. User swipes/taps through N cards, then clicks "Compris →" to proceed.
- * Cards can optionally include an `img` path and `imgContain` boolean.
+ * All card images are preloaded on mount to eliminate loading delay on swipe.
  */
 const L = (obj, key, lang) => obj[key + (lang === "en" ? "En" : "Fr")] ?? obj[key + "Fr"] ?? "";
 
 export const SwipeCards = ({ lesson, onNext, lang = "fr" }) => {
   const { cards } = lesson;
   const [index, setIndex] = useState(0);
-  const [fade, setFade] = useState(false); // true = fading out
+
+  // Preload all card images on mount
+  useEffect(() => {
+    cards.forEach(c => {
+      if (c.img) {
+        const img = new Image();
+        img.src = c.img;
+      }
+    });
+  }, [cards]);
 
   const isLast = index === cards.length - 1;
 
-  const switchTo = (newIndex) => {
-    setFade(true);
-    setTimeout(() => {
-      setIndex(newIndex);
-      setFade(false);
-    }, 150);
-  };
-
   const goNext = () => {
     if (isLast) { onNext(); return; }
-    switchTo(index + 1);
+    setIndex(index + 1);
   };
 
   const goPrev = () => {
     if (index === 0) return;
-    switchTo(index - 1);
+    setIndex(index - 1);
   };
 
   const { dragX, onPointerDown, onPointerMove, onPointerUp } = useSwipeGesture({
@@ -41,71 +42,86 @@ export const SwipeCards = ({ lesson, onNext, lang = "fr" }) => {
   const card = cards[index];
   const hasImg = !!card.img;
 
-  const slideStyle = fade
-    ? { opacity: 0, transition: "opacity 0.15s ease-out" }
-    : { opacity: 1, transform: `translateX(${dragX}px)`, transition: dragX !== 0 ? "none" : "opacity 0.2s ease-out" };
-
   return (
     <div style={{ padding: "24px 20px", display: "flex", flexDirection: "column", gap: 20 }}>
-      {/* Card */}
+      {/* Card stack — all cards rendered, only active one visible */}
       <div
         style={{
-          background: "var(--bg-surface)",
-          borderRadius: 16,
-          padding: hasImg ? 0 : "36px 28px",
-          border: "1px solid var(--border-light)",
-          boxShadow: "0 4px 24px var(--border-light)",
+          position: "relative",
           minHeight: 240,
           cursor: "grab",
           userSelect: "none",
           touchAction: "pan-y",
-          overflow: "hidden",
-          ...slideStyle,
         }}
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
         onPointerUp={onPointerUp}
       >
-        {/* Optional image */}
-        {hasImg && (
-          <div style={{
-            width: "100%", height: 280,
-            background: card.imgContain ? "var(--color-cream, #fef8ec)" : "transparent",
-            display: "flex", alignItems: "center", justifyContent: "center",
-            overflow: "hidden",
-          }}>
-            <img
-              src={card.img}
-              alt=""
-              aria-hidden="true"
+        {cards.map((c, i) => {
+          const isActive = i === index;
+          const cHasImg = !!c.img;
+          return (
+            <div
+              key={i}
               style={{
-                width: "100%", height: "100%",
-                objectFit: card.imgContain ? "contain" : "cover",
-                objectPosition: card.imgContain ? "center" : "top",
-                padding: card.imgContain ? "16px" : 0,
-                display: "block",
+                position: i === 0 ? "relative" : "absolute",
+                top: 0, left: 0, width: "100%",
+                background: "var(--bg-surface)",
+                borderRadius: 16,
+                padding: cHasImg ? 0 : "36px 28px",
+                border: "1px solid var(--border-light)",
+                boxShadow: "0 4px 24px var(--border-light)",
+                overflow: "hidden",
+                opacity: isActive ? 1 : 0,
+                pointerEvents: isActive ? "auto" : "none",
+                transform: isActive ? `translateX(${dragX}px)` : "none",
+                transition: dragX !== 0 ? "none" : "opacity 0.12s ease-out",
+                zIndex: isActive ? 1 : 0,
               }}
-            />
-          </div>
-        )}
+            >
+              {/* Image */}
+              {cHasImg && (
+                <div style={{
+                  width: "100%", height: 280,
+                  background: c.imgContain ? "var(--color-cream, #fef8ec)" : "transparent",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  overflow: "hidden",
+                }}>
+                  <img
+                    src={c.img}
+                    alt=""
+                    aria-hidden="true"
+                    style={{
+                      width: "100%", height: "100%",
+                      objectFit: c.imgContain ? "contain" : "cover",
+                      objectPosition: c.imgContain ? "center" : "top",
+                      padding: c.imgContain ? "16px" : 0,
+                      display: "block",
+                    }}
+                  />
+                </div>
+              )}
 
-        {/* Text content */}
-        <div style={{ padding: hasImg ? "20px 24px 24px" : 0 }}>
-          <div style={{
-            fontFamily: "'Cormorant Garamond', Georgia, serif",
-            fontSize: 24, fontWeight: 600, fontStyle: "italic",
-            color: "var(--text-primary)", marginBottom: 14, lineHeight: 1.2,
-          }}>
-            {L(card, "title", lang)}
-          </div>
-          <p style={{
-            fontFamily: "'DM Sans', sans-serif",
-            fontSize: 15, lineHeight: 1.7,
-            color: "var(--text-secondary)", margin: 0,
-          }}>
-            {L(card, "text", lang)}
-          </p>
-        </div>
+              {/* Text content */}
+              <div style={{ padding: cHasImg ? "20px 24px 24px" : 0 }}>
+                <div style={{
+                  fontFamily: "'Cormorant Garamond', Georgia, serif",
+                  fontSize: 24, fontWeight: 600, fontStyle: "italic",
+                  color: "var(--text-primary)", marginBottom: 14, lineHeight: 1.2,
+                }}>
+                  {L(c, "title", lang)}
+                </div>
+                <p style={{
+                  fontFamily: "'DM Sans', sans-serif",
+                  fontSize: 15, lineHeight: 1.7,
+                  color: "var(--text-secondary)", margin: 0,
+                }}>
+                  {L(c, "text", lang)}
+                </p>
+              </div>
+            </div>
+          );
+        })}
       </div>
 
       {/* Dots */}
@@ -113,7 +129,7 @@ export const SwipeCards = ({ lesson, onNext, lang = "fr" }) => {
         {cards.map((_, i) => (
           <button
             key={i}
-            onClick={() => switchTo(i)}
+            onClick={() => setIndex(i)}
             style={{
               width: i === index ? 22 : 8, height: 8, borderRadius: 999,
               background: i === index ? "var(--accent-secondary)" : "var(--border-subtle)",
