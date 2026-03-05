@@ -79,10 +79,10 @@ export const SwipeCards = ({ lesson, onNext, lang = "fr" }) => {
                 zIndex: isActive ? 1 : 0,
               }}
             >
-              {/* Image */}
+              {/* Image — capped at 40vh so text + buttons always fit on small screens */}
               {cHasImg && (
                 <div style={{
-                  width: "100%", height: 280,
+                  width: "100%", height: "clamp(180px, 40vh, 280px)",
                   background: c.imgContain ? "var(--color-cream, #fef8ec)" : "transparent",
                   display: "flex", alignItems: "center", justifyContent: "center",
                   overflow: "hidden",

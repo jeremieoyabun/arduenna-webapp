@@ -348,6 +348,7 @@ const univers4 = [
         titleEn: "Sustainability initiatives",
         textFr: "Depuis 2022, Arduenna propose une solution de remplissage en magasins partenaires : moins de gaspillage de verre et un tarif réduit. Collaboration uniquement avec des partenaires européens partageant les mêmes valeurs responsables.",
         textEn: "Since 2022, Arduenna offers a bottle refilling solution in partner stores: less glass waste and a reduced price. Collaboration only with European partners sharing the same responsible values.",
+        img: "/Quizz/01/Card-Initiatives-durables.webp",
       },
     ],
   },
