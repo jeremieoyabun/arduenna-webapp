@@ -79,7 +79,7 @@
   --max-width-narrow: 900px;
   --max-width-text: 680px;
   --nav-height: 64px;
-  --bottom-nav-height: 72px;
+  --bottom-nav-height: 80px;
 
   /* Radii */
   --radius-sm: 6px;
@@ -640,12 +640,12 @@ a {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 4px;
+  gap: 5px;
   background: none;
   border: none;
   color: var(--text-secondary);
   font-family: var(--font-body);
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: var(--tracking-wide);
   text-transform: uppercase;
   cursor: pointer;
@@ -662,8 +662,8 @@ a {
 }
 
 .bottom-nav__icon {
-  width: 26px;
-  height: 26px;
+  width: 30px;
+  height: 30px;
   display: flex;
   align-items: center;
   justify-content: center;

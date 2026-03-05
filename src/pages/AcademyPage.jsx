@@ -174,30 +174,35 @@ export const AcademyPage = () => {
 
   // ── Navigation handlers ──────────────────────────────────────────────────
 
+  const scrollTop = () => window.scrollTo(0, 0);
+
   const openParcours = (parcoursId) => {
     setSelectedParcoursId(parcoursId);
     setView("parcours-detail");
+    scrollTop();
   };
 
   const openModule = (moduleId) => {
     setSelectedModuleId(moduleId);
     setView("module-detail");
+    scrollTop();
   };
 
   const startLesson = () => {
-    // Mission 9 will wire this to LessonEngine
     setView("lesson");
+    scrollTop();
   };
 
   const goBack = () => {
-    if (view === "lesson") { setView("module-detail"); return; }
-    if (view === "module-detail") { setView("parcours-detail"); return; }
-    if (view === "parcours-detail") { setView("tabs"); return; }
+    if (view === "lesson") { setView("module-detail"); scrollTop(); return; }
+    if (view === "module-detail") { setView("parcours-detail"); scrollTop(); return; }
+    if (view === "parcours-detail") { setView("tabs"); scrollTop(); return; }
   };
 
   const switchTab = (tabId) => {
     setView("tabs");
     setActiveTab(tabId);
+    scrollTop();
   };
 
   // ── Accueil tab ──────────────────────────────────────────────────────────

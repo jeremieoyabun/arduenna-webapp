@@ -1,5 +1,5 @@
 import { lazy, Suspense, useState, useEffect } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import { translations } from "./data/translations";
 import { AgeGate } from "./components/layout/AgeGate";
 import { useAuth } from "./components/auth/AuthProvider";
@@ -28,6 +28,10 @@ export default function ArduennaWebapp() {
   const [lang, setLang] = useState("fr");
   const [theme, setTheme] = useState("light");
   const { user } = useAuth();
+  const { pathname } = useLocation();
+
+  // Scroll to top on route change
+  useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
   const [ageVerified, setAgeVerified] = useState(() => {
     try { return localStorage.getItem("arduenna_age_ok") === "1"; } catch { return false; }
   });
