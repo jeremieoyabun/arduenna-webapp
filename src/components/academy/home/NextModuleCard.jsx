@@ -7,10 +7,10 @@ export const NextModuleCard = ({ module, parcoursId, percent, onStart }) => {
   if (!module) return null;
 
   const PARCOURS_META = {
-    univers:  { label: "L'Univers Arduenna", color: "#4a9b8a", bg: "/Les3botanniques.webp" },
-    gamme:    { label: "La Gamme",           color: "#c2744a", bg: "/Lagamme.webp" },
-    cocktail: { label: "Le Cocktail Lab",    color: "#7ab8c4", bg: "/5cocktails-signatures.webp" },
-    vente:    { label: "Vendre Arduenna",    color: "#c9a84c", bg: "/vendre-arduenna.webp" },
+    univers:  { label: "L'Univers Arduenna", color: "#4a9b8a", bg: "/Quizz/01/Les3botanniques.webp" },
+    gamme:    { label: "La Gamme",           color: "#c2744a", bg: "/Quizz/01/Lagamme.webp" },
+    cocktail: { label: "Le Cocktail Lab",    color: "#7ab8c4", bg: "/Quizz/01/5cocktails-signatures.webp" },
+    vente:    { label: "Vendre Arduenna",    color: "#c9a84c", bg: "/Quizz/01/vendre-arduenna.webp" },
   };
 
   const CAP = {
