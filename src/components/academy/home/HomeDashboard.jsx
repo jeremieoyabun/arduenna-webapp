@@ -148,7 +148,7 @@ const LeafVein = ({ style }) => (
 
 // ── Padlock ───────────────────────────────────────────────────────────────────
 const PadlockSmall = () => (
-  <img src="/icons/Better-Lock-Icon.webp" alt="" width="14" height="14" style={{ objectFit: "contain", display: "block", opacity: 0.9 }} />
+  <img src="/icons/Padlock.svg" alt="" width="14" height="14" style={{ objectFit: "contain", display: "block", opacity: 0.9 }} />
 );
 
 // ── Upgrade pack card (UI-only, CTA link) ─────────────────────────────────────

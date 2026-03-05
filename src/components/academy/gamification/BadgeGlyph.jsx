@@ -50,10 +50,10 @@ export const BadgeGlyph = ({ id, size = 36 }) => {
   return FALLBACK[id] || <span style={{ fontSize: size - 4, lineHeight: 1 }}>✦</span>;
 };
 
-/** Better-Lock-Icon padlock */
+/** Padlock icon */
 export const PadlockSVG = ({ size = 14 }) => (
   <img
-    src="/icons/Better-Lock-Icon.webp"
+    src="/icons/Padlock.svg"
     alt=""
     width={size}
     height={size}
