@@ -19,14 +19,14 @@ const univers1 = [
         titleEn: "The Arduenna Forest",
         textFr: "Le nom Arduenna vient de la Silva Arduenna, l'ancienne forêt celtique des Ardennes. Un lieu de nature sauvage et préservée au cœur de la Belgique.",
         textEn: "The name Arduenna comes from Silva Arduenna, the ancient Celtic forest of the Ardennes. A place of wild, unspoiled nature at the heart of Belgium.",
-        img: "/DSC09950-Modifier-aspect-ratio-1072-1372-1.avif",
+        img: "/Quizz/01/Card-1.webp",
       },
       {
         titleFr: "Une distillerie artisanale belge",
         titleEn: "A Belgian artisan distillery",
         textFr: "Arduenna est une distillerie artisanale née au cœur des Ardennes belges. Fondée par une famille passionnée, elle produit un gin bio d'exception depuis ses débuts.",
         textEn: "Arduenna is an artisan distillery born in the heart of the Belgian Ardennes. Founded by a passionate family, it has crafted an exceptional organic gin since its beginnings.",
-        img: "/DSC09957-Modifier-aspect-ratio-1072-1372-2.avif",
+        img: "/Quizz/01/Card-3-Distillation.webp",
       },
       {
         titleFr: "Les fondateurs",
