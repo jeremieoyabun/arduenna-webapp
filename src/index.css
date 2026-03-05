@@ -1367,6 +1367,10 @@ a {
 /* Toolbox cards */
 .toolbox-card {
   padding: var(--space-6);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .toolbox-card__icon {

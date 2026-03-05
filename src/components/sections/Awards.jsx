@@ -22,15 +22,16 @@ export const Awards = ({ t }) => (
             key={i}
             className={`reveal reveal--delay-${(i % 3) + 1}`}
             style={{
-              borderLeft: `3px solid ${tier.border}`,
               background: tier.bg,
+              border: `1px solid ${tier.border}`,
               borderRadius: "var(--radius-lg)",
-              padding: "14px 16px",
+              padding: "16px 12px",
               display: "flex",
+              flexDirection: "column",
               alignItems: "center",
-              gap: 12,
+              textAlign: "center",
+              gap: 8,
               position: "relative",
-              overflow: "hidden",
             }}
           >
             {/* Subtle leaf watermarks */}
@@ -40,11 +41,11 @@ export const Awards = ({ t }) => (
               aria-hidden="true"
               style={{
                 position: "absolute",
-                left: 6, top: "50%",
+                left: 4, top: "50%",
                 transform: "translateY(-50%)",
-                height: "60%",
+                height: "55%",
                 width: "auto",
-                opacity: 0.06,
+                opacity: 0.05,
                 pointerEvents: "none",
               }}
             />
@@ -54,18 +55,18 @@ export const Awards = ({ t }) => (
               aria-hidden="true"
               style={{
                 position: "absolute",
-                right: 6, top: "50%",
+                right: 4, top: "50%",
                 transform: "translateY(-50%)",
-                height: "60%",
+                height: "55%",
                 width: "auto",
-                opacity: 0.06,
+                opacity: 0.05,
                 pointerEvents: "none",
               }}
             />
 
             {/* Year badge */}
             <div style={{
-              width: 44, height: 44,
+              width: 40, height: 40,
               borderRadius: "50%",
               border: `1.5px solid ${tier.border}`,
               display: "flex", alignItems: "center", justifyContent: "center",
@@ -74,7 +75,7 @@ export const Awards = ({ t }) => (
             }}>
               <span style={{
                 fontFamily: "var(--font-display)",
-                fontSize: 14, fontWeight: 600,
+                fontSize: 13, fontWeight: 600,
                 color: tier.color,
                 lineHeight: 1,
               }}>
@@ -83,7 +84,7 @@ export const Awards = ({ t }) => (
             </div>
 
             {/* Text */}
-            <div style={{ minWidth: 0, position: "relative" }}>
+            <div style={{ position: "relative" }}>
               <div style={{
                 fontFamily: "var(--font-display)",
                 fontSize: 13, fontWeight: 500,
