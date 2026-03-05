@@ -101,7 +101,7 @@ export const LeaderboardView = () => {
       </h2>
       <p style={{
         fontFamily: "'DM Sans', sans-serif", fontSize: 12,
-        color: "var(--text-tertiary)", textAlign: "center", marginBottom: 32,
+        color: "var(--text-tertiary)", textAlign: "center", marginBottom: 44,
       }}>
         Les meilleurs apprentis Arduenna
       </p>
