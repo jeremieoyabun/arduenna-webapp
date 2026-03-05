@@ -97,9 +97,6 @@ export const MiniLeaderboard = ({ onViewAll }) => {
               const initial = (entry.displayName || "?")[0].toUpperCase();
               const lvl = getLevelForXP(entry.xp || 0);
               const lvlPercent = getLevelPercent(entry.xp || 0, lvl);
-              // Badge dots: 1 dot per 200 XP, max 3
-              const badgeDots = Math.min(3, Math.floor((entry.xp || 0) / 200));
-
               return (
                 <div key={entry.uid} style={{
                   display: "flex", alignItems: "center", gap: 10,
@@ -175,22 +172,12 @@ export const MiniLeaderboard = ({ onViewAll }) => {
                     </div>
                   </div>
 
-                  {/* Badge count + XP total */}
-                  <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 4, flexShrink: 0 }}>
-                    {badgeDots > 0 && (
-                      <div style={{
-                        fontFamily: "'DM Sans', sans-serif", fontSize: 12,
-                        color: "var(--text-4)",
-                      }}>
-                        {badgeDots} badge{badgeDots > 1 ? "s" : ""}
-                      </div>
-                    )}
-                    <div style={{
-                      fontFamily: "'DM Sans', sans-serif", fontSize: 12, fontWeight: 700,
-                      color: "var(--text-2)",
-                    }}>
-                      {entry.xp} XP
-                    </div>
+                  {/* XP total */}
+                  <div style={{
+                    fontFamily: "'DM Sans', sans-serif", fontSize: 12, fontWeight: 700,
+                    color: "var(--text-2)", flexShrink: 0,
+                  }}>
+                    {entry.xp} XP
                   </div>
                 </div>
               );
