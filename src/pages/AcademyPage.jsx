@@ -454,8 +454,7 @@ export const AcademyPage = () => {
       <AcademyHeader xp={xp} onLogout={handleLogout} />
       {xpGain && <XPFloatIndicator amount={xpGain} />}
 
-      {/* Install banner for iOS / Android */}
-      {activeTab === "accueil" && <InstallBanner />}
+      {/* Install banner removed — iOS Safari install UX unreliable */}
 
       {/* Tab content */}
       {activeTab === "accueil" && renderAccueil()}
