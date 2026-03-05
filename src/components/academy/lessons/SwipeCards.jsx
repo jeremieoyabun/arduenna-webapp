@@ -136,14 +136,18 @@ export const SwipeCards = ({ lesson, onNext, lang = "fr" }) => {
         {index > 0 && (
           <button
             onClick={goPrev}
+            aria-label="Précédent"
             style={{
-              padding: "13px 18px", background: "transparent",
+              padding: "14px 20px", background: "transparent",
               color: "var(--text-primary)", border: "1px solid var(--border-medium)",
-              borderRadius: 10, fontFamily: "'DM Sans', sans-serif",
-              fontSize: 14, cursor: "pointer",
+              borderRadius: 10, cursor: "pointer",
+              display: "flex", alignItems: "center", justifyContent: "center",
+              minWidth: 52, minHeight: 52,
             }}
           >
-            ←
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="15 18 9 12 15 6" />
+            </svg>
           </button>
         )}
         <button

@@ -39,6 +39,8 @@ export const LessonComplete = ({ score, xpGain, onContinue }) => {
   const [showConfetti, setShowConfetti] = useState(true);
 
   useEffect(() => {
+    // Haptic feedback on XP gain
+    if (navigator.vibrate) navigator.vibrate([80, 40, 80]);
     const t = setTimeout(() => setShowConfetti(false), 2500);
     return () => clearTimeout(t);
   }, []);
