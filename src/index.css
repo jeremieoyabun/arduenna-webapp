@@ -1191,7 +1191,7 @@ a {
   gap: var(--space-4);
 }
 
-@media (max-width: 480px) {
+@media (max-width: 768px) {
   .awards-grid {
     grid-template-columns: 1fr;
   }
