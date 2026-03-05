@@ -21,6 +21,7 @@ export const Awards = ({ t }) => (
           <div
             key={i}
             className={`reveal reveal--delay-${(i % 3) + 1}`}
+            spellCheck={false}
             style={{
               background: tier.bg,
               border: `1px solid ${tier.border}`,
@@ -32,6 +33,7 @@ export const Awards = ({ t }) => (
               textAlign: "center",
               gap: 8,
               position: "relative",
+              textDecoration: "none",
             }}
           >
             {/* Subtle leaf watermarks */}
