@@ -174,7 +174,7 @@ export const AcademyPage = () => {
 
   // ── Navigation handlers ──────────────────────────────────────────────────
 
-  const scrollTop = () => window.scrollTo(0, 0);
+  const scrollTop = () => setTimeout(() => window.scrollTo({ top: 0, behavior: "instant" }), 0);
 
   const openParcours = (parcoursId) => {
     setSelectedParcoursId(parcoursId);
@@ -454,6 +454,9 @@ export const AcademyPage = () => {
       <AcademyHeader xp={xp} onLogout={handleLogout} />
       {xpGain && <XPFloatIndicator amount={xpGain} />}
 
+      {/* Install banner for iOS / Android */}
+      {activeTab === "accueil" && <InstallBanner />}
+
       {/* Tab content */}
       {activeTab === "accueil" && renderAccueil()}
       {activeTab === "parcours" && (
@@ -526,6 +529,111 @@ export const AcademyPage = () => {
           })}
         </nav>
       </div>
+    </div>
+  );
+};
+
+// ── Install banner (iOS + Android) ───────────────────────────────────────────
+
+const InstallBanner = () => {
+  const [dismissed, setDismissed] = useState(false);
+  const [deferredPrompt, setDeferredPrompt] = useState(null);
+
+  useEffect(() => {
+    // Listen for Android / Chrome install prompt
+    const handler = (e) => { e.preventDefault(); setDeferredPrompt(e); };
+    window.addEventListener("beforeinstallprompt", handler);
+    return () => window.removeEventListener("beforeinstallprompt", handler);
+  }, []);
+
+  // Already installed as PWA or dismissed
+  const isStandalone = window.matchMedia("(display-mode: standalone)").matches || navigator.standalone;
+  const wasDismissed = (() => { try { return localStorage.getItem("arduenna_install_dismissed") === "1"; } catch { return false; } })();
+  if (isStandalone || dismissed || wasDismissed) return null;
+
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+
+  const handleDismiss = () => {
+    setDismissed(true);
+    try { localStorage.setItem("arduenna_install_dismissed", "1"); } catch {}
+  };
+
+  const handleInstall = async () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      await deferredPrompt.userChoice;
+      setDeferredPrompt(null);
+      handleDismiss();
+    }
+  };
+
+  // Don't show on desktop without prompt
+  if (!isIOS && !deferredPrompt) return null;
+
+  return (
+    <div style={{
+      margin: "12px 16px 0",
+      padding: "14px 16px",
+      background: "var(--bg-surface, #0E2A2F)",
+      borderRadius: 14,
+      border: "1px solid var(--border-light)",
+      display: "flex",
+      alignItems: "center",
+      gap: 12,
+    }}>
+      <div style={{
+        width: 40, height: 40, borderRadius: 10, flexShrink: 0,
+        background: "rgba(194,116,74,0.15)",
+        display: "flex", alignItems: "center", justifyContent: "center",
+      }}>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c2744a" strokeWidth="2" strokeLinecap="round">
+          <path d="M12 5v14M5 12l7-7 7 7" />
+        </svg>
+      </div>
+
+      <div style={{ flex: 1, minWidth: 0 }}>
+        <div style={{
+          fontFamily: "'DM Sans', sans-serif", fontSize: 14, fontWeight: 600,
+          color: "var(--text-primary)", marginBottom: 2,
+        }}>
+          Installer l'app
+        </div>
+        <div style={{
+          fontFamily: "'DM Sans', sans-serif", fontSize: 12,
+          color: "var(--text-secondary)", lineHeight: 1.4,
+        }}>
+          {isIOS
+            ? <>Tapez <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ verticalAlign: "-2px" }}><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8M16 6l-4-4-4 4M12 2v13"/></svg> puis <strong>« Sur l'écran d'accueil »</strong></>
+            : "Accédez à l'Academy en un tap depuis votre écran d'accueil"
+          }
+        </div>
+      </div>
+
+      {!isIOS && deferredPrompt && (
+        <button
+          onClick={handleInstall}
+          style={{
+            padding: "8px 14px", background: "#c2744a", color: "#fff",
+            border: "none", borderRadius: 8, fontSize: 13, fontWeight: 600,
+            fontFamily: "'DM Sans', sans-serif", cursor: "pointer", flexShrink: 0,
+          }}
+        >
+          Installer
+        </button>
+      )}
+
+      <button
+        onClick={handleDismiss}
+        aria-label="Fermer"
+        style={{
+          background: "none", border: "none", padding: 4, cursor: "pointer",
+          color: "var(--text-tertiary)", flexShrink: 0,
+        }}
+      >
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <path d="M18 6L6 18M6 6l12 12"/>
+        </svg>
+      </button>
     </div>
   );
 };
