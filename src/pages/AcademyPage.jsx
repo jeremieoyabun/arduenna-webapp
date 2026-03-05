@@ -256,9 +256,9 @@ export const AcademyPage = () => {
         {/* Stats 2×2 */}
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 16 }}>
           {[
-            { img: "/icons/XP.svg", value: xp, lbl: "XP total" },
-            { img: "/icons/Streakk.svg", value: `${streak}j`, lbl: "Streak" },
-            { img: "/icons/Modules.svg", value: p1completed, lbl: "Modules faits" },
+            { img: "/icons/XP.svg", value: xp, lbl: profile?.lang === "en" ? "Total XP" : "XP total" },
+            { img: "/icons/Streakk.svg", value: `${streak}${profile?.lang === "en" ? "d" : "j"}`, lbl: "Streak" },
+            { img: "/icons/Modules.svg", value: p1completed, lbl: profile?.lang === "en" ? "Completed" : "Modules faits" },
             { img: "/icons/Badges.svg", value: earnedBadges.length, lbl: "Badges" },
           ].map(({ img, value, lbl }) => (
             <div key={lbl} style={{ ...card, padding: "16px 18px", display: "flex", alignItems: "center", gap: 12 }}>
