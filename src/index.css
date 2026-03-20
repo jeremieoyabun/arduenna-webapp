@@ -1125,7 +1125,7 @@ a {
 
 .hero__dash {
   display: inline-block;
-  width: 32px;
+  width: 24px;
   vertical-align: middle;
   opacity: 0.3;
   margin: 0 var(--space-5);
