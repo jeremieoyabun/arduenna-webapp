@@ -1115,6 +1115,7 @@ a {
   font-size: 1.15em;
   letter-spacing: 0.01em;
   margin-top: 0.15em;
+  white-space: nowrap;
 }
 
 .hero__heading em {
