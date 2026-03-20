@@ -1134,6 +1134,7 @@ a {
   font-size: 0;
   line-height: 0;
   flex-shrink: 0;
+  transform: translateY(10px);
 }
 
 .hero__subtitle {
