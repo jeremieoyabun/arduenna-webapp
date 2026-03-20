@@ -1108,19 +1108,19 @@ a {
 }
 
 .hero__heading-italic {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-style: italic;
   font-weight: 300;
   color: var(--text-primary);
   font-size: 1.15em;
   letter-spacing: 0.01em;
   margin-top: 0.15em;
-  white-space: nowrap;
 }
 
 .hero__heading em {
   font-style: italic;
-  padding-left: 0.8em;
 }
 
 .hero__dash {
